@@ -2,10 +2,10 @@ import numpy as np
 from scipy import stats
 import pandas as pd
 
-csvDataSetFile_v1 = '/Users/Hilmer/Documents/hilmer/UFRJ/2019.2/dataset_SQPC1_Parasite_v1.csv'
+csvDataSetFile_v1 = '/Users/Hilmer/PycharmProjects/measuresoftgram/datasetPrototipo/dataset_SQPC1_Parasite_v1.csv'
 df_v1 = pd.read_csv(csvDataSetFile_v1, sep=';',header=None, names=['T_Effectiveness', 'T_Efficiency', 'T_Satisfaction'])
 
-csvDataSetFile_v2 = '/Users/Hilmer/Documents/hilmer/UFRJ/2019.2/dataset_SQPC1_Parasite_v2.csv'
+csvDataSetFile_v2 = '/Users/Hilmer/PycharmProjects/measuresoftgram/datasetPrototipo/dataset_SQPC1_Parasite_v1.csv'
 df_v2 = pd.read_csv(csvDataSetFile_v1, sep=';',header=None, names=['T_Effectiveness', 'T_Efficiency', 'T_Satisfaction'])
 
 
