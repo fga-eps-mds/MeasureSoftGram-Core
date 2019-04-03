@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 #Parâmetros do data set
 
 
-csvDataSetFile = '/Users/Hilmer/Documents/hilmer/UFRJ/2019.2/dataset_SQPC1_Parasite_v1.csv'
+csvDataSetFile = '/Users/Hilmer/PycharmProjects/measuresoftgram/datasetPrototipo/dataset_SQPC1_Parasite_v1.csv'
+
 df = pd.read_csv(csvDataSetFile, sep=';',header=None, names=['T_Effectiveness', 'T_Efficiency', 'T_Satisfaction'])
 
 
