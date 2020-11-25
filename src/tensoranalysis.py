@@ -141,6 +141,10 @@ print('\n***********************Imprimindo mode-0 X1 *************#############'
 print(ts.unfold(X1, 0))
 
 
+print('\n***********************Imprimindo mode-1 X1 *************#############')
+#print(ts.unfold(X1, 1))
+
+
 print('\n***********************Imprimindo a similaridade tensores X e Y *************#############')
 
 X = ts.tensor(np.arange(24).reshape((3, 4, 2)))
