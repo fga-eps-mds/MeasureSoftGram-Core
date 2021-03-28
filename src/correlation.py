@@ -14,7 +14,7 @@ df = pd.read_csv(csvDataSetFile, sep=';',header=None, names=['T_Effectiveness', 
 
 k2, normal_Test_Pval = stats.normaltest(np.array(df.values).astype(float), axis=None)
 
-if(normal_Test_Pval < 0.055):
+if(normal_Test_Pval < 0.05):
     cm = df.corr(method='spearman')
 else:
     cm = df.corr(method='pearson')
@@ -133,7 +133,7 @@ norma_tensorly1 = tl.norm(T,2,0)
 print(norma_tensorly)
 print(tl.norm(T))
 
-# realiza o produto interno do T X T com tensorly, o que produz um escalar. OBS: Não está disponível no tensorly
+# realiza o produto interno do T X T com tensorly, o que produz um escalar.
 print(tl.tenalg.inner(T,T))
 
 # realiza o produto externo do T X T com numpy, o que produz um tensor. OBS: Não está disponível no tensorly
