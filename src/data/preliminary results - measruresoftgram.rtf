@@ -1,0 +1,125 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2577
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww23120\viewh12260\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Python 3.8.5 (default, Jul 21 2020, 10:48:26) \
+runfile('/Users/Hilmer/PycharmProjects/measuresoftgram/src/measuresoftgram-ht.py', wdir='/Users/Hilmer/PycharmProjects/measuresoftgram/src')\
+\
+********** Descriptive Statitics ***********\
+Descriptive Statitics from Q-Rapids: DescribeResult(nobs=83, minmax=(array([0.495]), array([0.58666667])), mean=array([0.5452372]), variance=array([0.0003307]), skewness=array([-0.05288009]), kurtosis=array([1.03955366]))\
+Min: 0.495\
+Max: 0.58666667\
+Mean: 0.5452372\
+Median: 0.54214286\
+Std: 0.01807517\
+Variance: 0.00032671\
+\
+Descriptive Statitics from MeasuresotGram: DescribeResult(nobs=83, minmax=(array([0.35786674]), array([0.4274391])), mean=array([0.40065491]), variance=array([0.00016653]), skewness=array([-0.80978293]), kurtosis=array([3.02485758]))\
+Min: 0.35786674\
+Max: 0.4274391\
+Mean: 0.40065491\
+Median: 0.39884509\
+Std: 0.01282673\
+Variance: 0.00016452\
+********************************************\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+** Testing Normality - Santo Agostinho **\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+- MeasuresftGram has a normal distribution\
+\
+- Q-Rapids has a normal distribution\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+   Testing Homoscedastic - Bartletts test\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+- At least one group in MeasureSoftGram has a variance that is not equal to the Q-Rapids.\
+\
+Bartletts statistics: 9.406867228526453F-test p-value: 0.002161742595356195\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97-\
+            Paired T-tes statistics\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97-\
+- The MeasureSoftGram and Q-Rapids have not the same mean populations.\
+\
+Paired T-test Statistics=211.2132750965, p=0.0000000000\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97-\
+               F-test statistics\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97-\
+The variance population between Q-Rapids and  MeasureSoftGram are not equal. From evidence we could observe the MeasureSoftGram has less variability than Q-Rapids.\
+\
+F-test statistics: 1.9857890163574945F-test p-value: 0.00108064603843816\
+\
+\
+\
+\
+metric_list = ['files',\
+               'functions',\
+               'complexity',\
+               'comment_lines_density',\
+               'duplicated_lines_density',\
+               'coverage',\
+               'ncloc',\
+               'security_rating',\
+               'tests',\
+               'test_success_density',\
+               'test_execution_time',\
+               'reliability_rating']\
+\
+\
+https://sonarcloud.io/api/measures/component_tree?component=fga-eps-mds_2020-2-G4-Demands&metricKeys=files,functions,complexity,coverage,ncloc,comment_lines_density,duplicated_lines_density,security_rating,tests,test_success_density,test_execution_time,reliability_rating&ps=500\
+\
+\
+Requisito:\
+\
+a) a chamada a api do sonar deve ser orquestrada no pipeline. \
+\
+b) no reposit\'f3rio de documenta\'e7\'e3o, criar uma pasta/diret\'f3rio com o seguinte nome: <analytics-raw-data>  . Esta pasta dever\'e1 conter os TODOS arquivos gerados com as m\'e9tricas fornecidas pelo sonar, para cada release.\
+\
+c) criar uma fun\'e7\'e3o no respectivo pipeline para disponibilizar o arquivo coletado com as m\'e9tricas das releases em um diret\'f3rio exclusivo/consolidado, no reposit\'f3rio de documenta\'e7\'e3o.\
+\
+d) o nome do arquivo arquivo .json a ser gerado deve seguir o seguinte formato: <fga-eps-mds-2021_1-NOME_PROJETO-DATA_RELEASE>  onde, release_date deve ter o seguinte formato: DD-MM-YYYY\
+\
+\
+\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\fs34 \cf0 \
+\
+Eu gostaria de saber a opini\'e3o de voc\'eas sobre o andamento do trabalho dos times, em particular do time que est\'e1 atendendo o Instituto de Identifica\'e7\'e3o. \
+Digo isso pelo fato do time que est\'e1 trabalhando com o Bruno Garajau ser mais organizado e tamb\'e9m pelo escopo do projeto estar, na minha percep\'e7\'e3o, mais \'93redondo\'94. Para voc\'eas terem uma ideia, o time do arquivo geral teve o desligamento de um dos estudantes do 4o. semestre h\'e1 duas semanas atr\'e1s e eles se sentiram assumiram a decis\'e3o em continuar com a forma\'e7\'e3o, sem eu precisar intervir nos outros times para fazer a recomposi\'e7\'e3o.\
+J\'e1 o projeto do II, al\'e9m de haver representantes de diferentes \'e1reas de neg\'f3cio, o que para os alunos em uma primeira experi\'eancia \'e9 de fato mais dif\'edcil,  o time tem apresentado dificuldade de organiza\'e7\'e3o e comunica\'e7\'e3o. Considerando tamb\'e9m outras evid\'eancias, essa tem sido minha percep\'e7\'e3o. Esse contexto do projeto do II me deixou um pouco preocupado e por isso \'e9 importante eu balancear minha percep\'e7\'e3o considerando a opini\'e3o voc\'eas.\
+Antecipadamente, agrade\'e7o a aten\'e7\'e3o de voc\'eas.\
+\
+Abs\
+Hilmer R. Neri\
+Universidade de Bras\'edlia\
+Engenharia de Software\
+\
+\
+ricardocb@policiacivil.go.gov.br\
+\pard\pardeftab720\partightenfactor0
+\cf0 brunosv@policiacivil.go.gov.br\
+dirleijunior@gmail.com\
+\
+\
+\
+\
+\
+\
+Pessoal, as disciplinas est\'e3o configuradas na plataforma Aprender 3 da UnB. Por favor, realizarem suas inscri\'e7\'f5es!\
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+FGA0206 - ENGENHARIA DE PRODUTO DE SOFTWARE - TA - 2021/1\
+senha: eps-2021-1-hrn\
+\
+FGA0138 - M\'c9TODOS DE DESENVOLVIMENTO DE SOFTWARE - Turma: B - 2021/1\
+senha: mds-2021-1-hrn\
+\
+Qualidade essa que, ainda precisa ser garantida continuamente de forma a acompanhar as frequentes libera\'e7\'f5es de \
+}
