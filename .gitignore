@@ -2,3 +2,4 @@
 confs.txt
 /src/jsonteste.py
 /src/*.checkpoint.ipynb
+__pycache__
