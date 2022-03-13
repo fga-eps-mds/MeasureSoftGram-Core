@@ -1,0 +1,7 @@
+**
+!/src/**
+!server.py
+!requirements.txt
+
+# caches
+**/__pycache__
