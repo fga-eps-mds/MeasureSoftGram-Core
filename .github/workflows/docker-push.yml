@@ -3,8 +3,6 @@ name: Docker image deploy
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   docker:
