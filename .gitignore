@@ -13,3 +13,8 @@ coverage.xml
 
 # Tox
 .tox
+
+.vscode
+
+# analytics-raw-data
+analytics-raw-data/
