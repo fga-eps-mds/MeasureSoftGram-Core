@@ -63,12 +63,9 @@ def generate_file_dataframe_per_release(metric_list, json, language_extension):
     df = pd.DataFrame(columns=df_columns)
 
     for file in json:
-        try:
-            if file['language'] == language_extension:
-                for measure in file['measures']:
-                    df.at[file['path'], measure['metric']] = measure['value']
-        except:
-            pass
+        if file['language'] == language_extension:
+            for measure in file['measures']:
+                df.at[file['path'], measure['metric']] = measure['value']
 
     df.reset_index(inplace=True)
     df = df.rename({'index': 'path'}, axis=1).drop(['files'], axis=1)
