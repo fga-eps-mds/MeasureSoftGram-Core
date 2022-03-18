@@ -6,9 +6,9 @@ import pytest
 
 
 ERROR_TEST_DATA = [
-    ('tests/unit/data/zero_number_of_files.json'),
-    ('tests/unit/data/zero_number_of_functions.json'),
-    ('tests/unit/data/zero_cyclomatic_complexity.json')
+    ('tests/unit/data/zero_number_of_files.json', 'The number of files is lesser or equal than 0'),
+    ('tests/unit/data/zero_number_of_functions.json', 'The number of functions of all files is lesser or equal than 0'),
+    ('tests/unit/data/zero_cyclomatic_complexity.json', 'The cyclomatic complexity of all files is lesser or equal than 0')
 ]
 
 
@@ -18,12 +18,14 @@ SUCCESS_TEST_DATA = [
 ]
 
 
-@pytest.mark.parametrize("file_path", ERROR_TEST_DATA)
-def test_non_complex_files_density_error(file_path):
+@pytest.mark.parametrize("file_path,error_msg", ERROR_TEST_DATA)
+def test_non_complex_files_density_error(file_path, error_msg):
     json = glob(file_path)
 
-    with pytest.raises(InvalidMetricValue):
+    with pytest.raises(InvalidMetricValue) as error:
         non_complex_files_density(create_file_df(json))
+
+    assert str(error.value) == error_msg
 
 
 @pytest.mark.parametrize("file_path,expected_result", SUCCESS_TEST_DATA)
