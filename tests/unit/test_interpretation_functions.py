@@ -27,7 +27,7 @@ INVALID_ARGUMENTS_TEST_DATA = [
 
 
 @pytest.mark.parametrize("file_path,error_msg", ERROR_TEST_DATA)
-def test_non_complex_files_density_error(file_path, error_msg):
+def test_non_complex_files_density_error_metrics(file_path, error_msg):
     json = glob(file_path)
 
     with pytest.raises(InvalidMetricValue) as error:
@@ -47,7 +47,7 @@ def test_non_complex_files_density(file_path, expected_result):
 
 
 @pytest.mark.parametrize("data_frame", INVALID_ARGUMENTS_TEST_DATA)
-def test_non_complex_files_density_error(data_frame):
+def test_non_complex_files_density_error_arguments(data_frame):
 
     with pytest.raises(InvalidInterpretationFunctionArguments) as error:
         non_complex_files_density(data_frame)
