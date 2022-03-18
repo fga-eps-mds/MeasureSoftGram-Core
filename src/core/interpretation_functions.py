@@ -1,4 +1,5 @@
-from .exceptions import InvalidMetricValue
+from .exceptions import InvalidMetricValue, InvalidInterpretationFunctionArguments
+import pandas as pd
 
 
 def non_complex_files_density(data_frame):
@@ -10,6 +11,9 @@ def non_complex_files_density(data_frame):
     """
 
     CYCLOMATIC_COMPLEXITY_THRESHOLD = 10
+
+    if not isinstance(data_frame, pd.DataFrame):
+        raise InvalidInterpretationFunctionArguments('Expected data_frame to be a pandas.DataFrame')
 
     files_complexity = data_frame['complexity'].astype(float)
     files_functions = data_frame['functions'].astype(float)
