@@ -41,7 +41,7 @@ def create_base_component_df(json_list):
 
         base_component_df['filename'] = os.path.basename(i)
 
-        df = df.append(base_component_df, ignore_index=True)
+        df = pd.concat([df, base_component_df], ignore_index=True)
 
     return df
 
@@ -91,6 +91,6 @@ def create_file_df(json_list):
 
         file_component_df['filename'] = os.path.basename(i)
 
-        df = df.append(file_component_df, ignore_index=True)
+        df = pd.concat([df, file_component_df], ignore_index=True)
 
     return df
