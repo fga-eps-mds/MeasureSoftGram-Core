@@ -63,7 +63,7 @@ def commented_files_density(data_frame):
         raise InvalidMetricValue('The number of files comment lines density is lesser than 0')
 
     files_between_thresholds_df = data_frame[files_comment_lines_density.between(
-        MINIMUM_COMMENT_DENSITY_THRESHOLD, MAXIMUM_COMMENT_DENSITY_THRESHOLD, inclusive=True)]
+        MINIMUM_COMMENT_DENSITY_THRESHOLD, MAXIMUM_COMMENT_DENSITY_THRESHOLD, inclusive='both')]
 
     return len(files_between_thresholds_df) / number_of_files
 
