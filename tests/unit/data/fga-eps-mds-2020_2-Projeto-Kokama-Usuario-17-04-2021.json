@@ -1,0 +1,1817 @@
+{
+    "paging": {
+        "pageIndex": 1,
+        "pageSize": 500,
+        "total": 36
+    },
+    "baseComponent": {
+        "id": "AXlITv6LQWJLk2bd0boT",
+        "key": "lievertom_2020.2-Projeto-Kokama-Front-end",
+        "name": "2020_2-Projeto-Kokama-Front-end",
+        "qualifier": "TRK",
+        "measures": [
+            {
+                "metric": "complexity",
+                "value": "89"
+            },
+            {
+                "metric": "duplicated_lines_density",
+                "value": "0.0",
+                "bestValue": true
+            },
+            {
+                "metric": "functions",
+                "value": "52"
+            },
+            {
+                "metric": "ncloc",
+                "value": "1113"
+            },
+            {
+                "metric": "reliability_rating",
+                "value": "1.0",
+                "bestValue": true
+            },
+            {
+                "metric": "security_rating",
+                "value": "1.0",
+                "bestValue": true
+            },
+            {
+                "metric": "comment_lines_density",
+                "value": "3.6",
+                "bestValue": false
+            },
+            {
+                "metric": "files",
+                "value": "24"
+            }
+        ]
+    },
+    "components": [
+        {
+            "id": "AXlIa67mKM637zIRqbOE",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/api",
+            "name": "api",
+            "qualifier": "DIR",
+            "path": "projeto-kokama/src/api",
+            "measures": [
+                {
+                    "metric": "complexity",
+                    "value": "0"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "functions",
+                    "value": "0"
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "5"
+                },
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbOD",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/api/Api.ts",
+            "name": "Api.ts",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/api/Api.ts",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "0"
+                },
+                {
+                    "metric": "functions",
+                    "value": "0"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "5"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIT3f2INWbrKoEBpWJ",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/App.tsx",
+            "name": "App.tsx",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/App.tsx",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "9"
+                },
+                {
+                    "metric": "functions",
+                    "value": "9"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "4.9",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "98"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbOC",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/assets",
+            "name": "assets",
+            "qualifier": "DIR",
+            "path": "projeto-kokama/src/assets",
+            "measures": [
+                {
+                    "metric": "complexity",
+                    "value": "0"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "functions",
+                    "value": "0"
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "11"
+                },
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                }
+            ]
+        },
+        {
+            "id": "AXlIT3f2INWbrKoEBpWS",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/babel.config.js",
+            "name": "babel.config.js",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/babel.config.js",
+            "language": "js",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "1"
+                },
+                {
+                    "metric": "functions",
+                    "value": "1"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "18"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbOB",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/assets/Colors.ts",
+            "name": "Colors.ts",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/assets/Colors.ts",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "0"
+                },
+                {
+                    "metric": "functions",
+                    "value": "0"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "11"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbOK",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/components",
+            "name": "components",
+            "qualifier": "DIR",
+            "path": "projeto-kokama/src/components",
+            "measures": [
+                {
+                    "metric": "complexity",
+                    "value": "14"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "functions",
+                    "value": "8"
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "214"
+                },
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.5",
+                    "bestValue": false
+                },
+                {
+                    "metric": "files",
+                    "value": "4"
+                }
+            ]
+        },
+        {
+            "id": "AXlIT3f2INWbrKoEBpWL",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/config",
+            "name": "config",
+            "qualifier": "DIR",
+            "path": "projeto-kokama/src/config",
+            "measures": [
+                {
+                    "metric": "complexity",
+                    "value": "0"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "functions",
+                    "value": "0"
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "5"
+                },
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "files",
+                    "value": "2"
+                }
+            ]
+        },
+        {
+            "id": "AXlIT3f2INWbrKoEBpWK",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/config/constants.ts",
+            "name": "constants.ts",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/config/constants.ts",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "0"
+                },
+                {
+                    "metric": "functions",
+                    "value": "0"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "3"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbOM",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/utils/dictionary.ts",
+            "name": "dictionary.ts",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/utils/dictionary.ts",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "9"
+                },
+                {
+                    "metric": "functions",
+                    "value": "4"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "38"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIT3f2INWbrKoEBpWU",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:get-ip-address.py",
+            "name": "get-ip-address.py",
+            "qualifier": "FIL",
+            "path": "get-ip-address.py",
+            "language": "py",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "3"
+                },
+                {
+                    "metric": "functions",
+                    "value": "0"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "24"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbOJ",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/components/History.tsx",
+            "name": "History.tsx",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/components/History.tsx",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "5"
+                },
+                {
+                    "metric": "functions",
+                    "value": "3"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "70"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbOG",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/components/HistoryTitle.tsx",
+            "name": "HistoryTitle.tsx",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/components/HistoryTitle.tsx",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "4"
+                },
+                {
+                    "metric": "functions",
+                    "value": "1"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "55"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIT3f2INWbrKoEBpWQ",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/index.tsx",
+            "name": "index.tsx",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/index.tsx",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "1"
+                },
+                {
+                    "metric": "functions",
+                    "value": "1"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "16"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIT3f2INWbrKoEBpWN",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/screens/Translation/index.tsx",
+            "name": "index.tsx",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/screens/Translation/index.tsx",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "42"
+                },
+                {
+                    "metric": "functions",
+                    "value": "21"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "10.1",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "286"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbN3",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/screens/KokamaStories/index.tsx",
+            "name": "index.tsx",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/screens/KokamaStories/index.tsx",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "4"
+                },
+                {
+                    "metric": "functions",
+                    "value": "3"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "39"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbN7",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/screens/Story/index.tsx",
+            "name": "index.tsx",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/screens/Story/index.tsx",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "1"
+                },
+                {
+                    "metric": "functions",
+                    "value": "1"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "22"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbN-",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/screens/Learning/index.tsx",
+            "name": "index.tsx",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/screens/Learning/index.tsx",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "2"
+                },
+                {
+                    "metric": "functions",
+                    "value": "2"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "24"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIT3f2INWbrKoEBpWM",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/screens/Translation/interface.ts",
+            "name": "interface.ts",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/screens/Translation/interface.ts",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "0"
+                },
+                {
+                    "metric": "functions",
+                    "value": "0"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "14"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbN2",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/screens/KokamaStories/interface.ts",
+            "name": "interface.ts",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/screens/KokamaStories/interface.ts",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "0"
+                },
+                {
+                    "metric": "functions",
+                    "value": "0"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "5"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbN5",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/screens/KokamaStories",
+            "name": "KokamaStories",
+            "qualifier": "DIR",
+            "path": "projeto-kokama/src/screens/KokamaStories",
+            "measures": [
+                {
+                    "metric": "complexity",
+                    "value": "4"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "functions",
+                    "value": "3"
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "109"
+                },
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.9",
+                    "bestValue": false
+                },
+                {
+                    "metric": "files",
+                    "value": "3"
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbN_",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/screens/Learning",
+            "name": "Learning",
+            "qualifier": "DIR",
+            "path": "projeto-kokama/src/screens/Learning",
+            "measures": [
+                {
+                    "metric": "complexity",
+                    "value": "2"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "functions",
+                    "value": "2"
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "46"
+                },
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "2.1",
+                    "bestValue": false
+                },
+                {
+                    "metric": "files",
+                    "value": "2"
+                }
+            ]
+        },
+        {
+            "id": "AXlIT3f2INWbrKoEBpWT",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama",
+            "name": "projeto-kokama",
+            "qualifier": "DIR",
+            "path": "projeto-kokama",
+            "measures": [
+                {
+                    "metric": "complexity",
+                    "value": "86"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "functions",
+                    "value": "52"
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "1089"
+                },
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "3.7",
+                    "bestValue": false
+                },
+                {
+                    "metric": "files",
+                    "value": "23"
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbOA",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/screens",
+            "name": "screens",
+            "qualifier": "DIR",
+            "path": "projeto-kokama/src/screens",
+            "measures": [
+                {
+                    "metric": "complexity",
+                    "value": "50"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "functions",
+                    "value": "27"
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "676"
+                },
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "5.1",
+                    "bestValue": false
+                },
+                {
+                    "metric": "files",
+                    "value": "10"
+                }
+            ]
+        },
+        {
+            "id": "AXlIT3f2INWbrKoEBpWR",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src",
+            "name": "src",
+            "qualifier": "DIR",
+            "path": "projeto-kokama/src",
+            "measures": [
+                {
+                    "metric": "complexity",
+                    "value": "76"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "functions",
+                    "value": "42"
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "973"
+                },
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "3.7",
+                    "bestValue": false
+                },
+                {
+                    "metric": "files",
+                    "value": "21"
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbOH",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/components/Stories.tsx",
+            "name": "Stories.tsx",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/components/Stories.tsx",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "3"
+                },
+                {
+                    "metric": "functions",
+                    "value": "3"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "2.1",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "47"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbN8",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/screens/Story",
+            "name": "Story",
+            "qualifier": "DIR",
+            "path": "projeto-kokama/src/screens/Story",
+            "measures": [
+                {
+                    "metric": "complexity",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "functions",
+                    "value": "1"
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "46"
+                },
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "2.1",
+                    "bestValue": false
+                },
+                {
+                    "metric": "files",
+                    "value": "2"
+                }
+            ]
+        },
+        {
+            "id": "AXlIT3f2INWbrKoEBpWO",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/screens/Translation/styles.ts",
+            "name": "styles.ts",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/screens/Translation/styles.ts",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "1"
+                },
+                {
+                    "metric": "functions",
+                    "value": "0"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.6",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "175"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbN4",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/screens/KokamaStories/styles.ts",
+            "name": "styles.ts",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/screens/KokamaStories/styles.ts",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "0"
+                },
+                {
+                    "metric": "functions",
+                    "value": "0"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "1.5",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "65"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbN6",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/screens/Story/styles.ts",
+            "name": "styles.ts",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/screens/Story/styles.ts",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "0"
+                },
+                {
+                    "metric": "functions",
+                    "value": "0"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "4.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "24"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbN9",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/screens/Learning/styles.ts",
+            "name": "styles.ts",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/screens/Learning/styles.ts",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "0"
+                },
+                {
+                    "metric": "functions",
+                    "value": "0"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "4.3",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "22"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbOI",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/components/TopMenu.tsx",
+            "name": "TopMenu.tsx",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/components/TopMenu.tsx",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "2"
+                },
+                {
+                    "metric": "functions",
+                    "value": "1"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "42"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIT3f2INWbrKoEBpWP",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/screens/Translation",
+            "name": "Translation",
+            "qualifier": "DIR",
+            "path": "projeto-kokama/src/screens/Translation",
+            "measures": [
+                {
+                    "metric": "complexity",
+                    "value": "43"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "functions",
+                    "value": "21"
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "475"
+                },
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "6.5",
+                    "bestValue": false
+                },
+                {
+                    "metric": "files",
+                    "value": "3"
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbOL",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/utils/translation.ts",
+            "name": "translation.ts",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/utils/translation.ts",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "2"
+                },
+                {
+                    "metric": "functions",
+                    "value": "2"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "8"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbOF",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/config/urls.ts",
+            "name": "urls.ts",
+            "qualifier": "FIL",
+            "path": "projeto-kokama/src/config/urls.ts",
+            "language": "ts",
+            "measures": [
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "complexity",
+                    "value": "0"
+                },
+                {
+                    "metric": "functions",
+                    "value": "0"
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "2"
+                },
+                {
+                    "metric": "files",
+                    "value": "1"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "test_success_density",
+                    "value": "100.0",
+                    "bestValue": true
+                }
+            ]
+        },
+        {
+            "id": "AXlIa67mKM637zIRqbON",
+            "key": "lievertom_2020.2-Projeto-Kokama-Front-end:projeto-kokama/src/utils",
+            "name": "utils",
+            "qualifier": "DIR",
+            "path": "projeto-kokama/src/utils",
+            "measures": [
+                {
+                    "metric": "complexity",
+                    "value": "11"
+                },
+                {
+                    "metric": "duplicated_lines_density",
+                    "value": "0.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "functions",
+                    "value": "6"
+                },
+                {
+                    "metric": "ncloc",
+                    "value": "46"
+                },
+                {
+                    "metric": "reliability_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "security_rating",
+                    "value": "1.0",
+                    "bestValue": true
+                },
+                {
+                    "metric": "comment_lines_density",
+                    "value": "0.0",
+                    "bestValue": false
+                },
+                {
+                    "metric": "files",
+                    "value": "2"
+                }
+            ]
+        }
+    ]
+}
