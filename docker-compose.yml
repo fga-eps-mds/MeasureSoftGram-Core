@@ -1,10 +1,16 @@
 version: "3.8"
 services:
-  web:
+  core:
     build: .
     ports:
-      - "6000:5000"
+      - "7000:5000"
     volumes:
       - ./src:/code/src
       - ./server.py:/code/server.py
     restart: on-failure
+    networks:
+      - measuresoftgram
+  
+networks:
+  measuresoftgram:
+    external: true
