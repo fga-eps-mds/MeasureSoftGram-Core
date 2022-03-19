@@ -60,3 +60,30 @@ def commented_files_density(data_frame):
         MINIMUM_COMMENT_DENSITY_THRESHOLD, MAXIMUM_COMMENT_DENSITY_THRESHOLD, inclusive=True)]
 
     return len(files_between_thresholds_df) / number_of_files
+
+
+def absence_of_duplications(data_frame):
+    """
+    Calculates duplicated files absence (m3).
+
+    This function calculates the duplicated files absence measure (m3)
+    used to assess the changeability quality subcharacteristic.
+    """
+
+    DUPLICATED_LINES_THRESHOLD = 5.0
+
+    if not isinstance(data_frame, pd.DataFrame):
+        raise InvalidInterpretationFunctionArguments('Expected data_frame to be a pandas.DataFrame')
+
+    files_duplicated_lines_density = data_frame['duplicated_lines_density'].astype(float)
+    number_of_files = len(data_frame)
+
+    if number_of_files <= 0:
+        raise InvalidMetricValue('The number of files is lesser or equal than 0')
+
+    if files_duplicated_lines_density.sum() < 0:
+        raise InvalidMetricValue('The number of files duplicated lines density is lesser than 0')
+
+    files_below_threshold_df = data_frame[files_duplicated_lines_density < DUPLICATED_LINES_THRESHOLD]
+
+    return len(files_below_threshold_df) / number_of_files
