@@ -57,6 +57,10 @@ INVALID_ARGUMENTS_TEST_DATA = [
 
 @pytest.mark.parametrize("interpretation_func,file_path,error_msg", INVALID_METRICS_TEST_DATA)
 def test_interpretation_functions_invalid_metrics(interpretation_func, file_path, error_msg):
+    """
+    Test cases in which the interpretation functions should raise an InvalidMetricValue exception
+    """
+
     json = glob(file_path)
 
     with pytest.raises(InvalidMetricValue) as error:
@@ -71,6 +75,10 @@ def test_interpretation_functions_invalid_metrics(interpretation_func, file_path
 
 @pytest.mark.parametrize("interpretation_func,file_path,expected_result", SUCCESS_TEST_DATA)
 def test_interpretation_functions_success(interpretation_func, file_path, expected_result):
+    """
+    Test cases in which the interpretation functions should return a valid measure
+    """
+
     json = glob(file_path)
 
     result = interpretation_func(create_file_df(json))
@@ -84,6 +92,9 @@ def test_interpretation_functions_success(interpretation_func, file_path, expect
 
 @pytest.mark.parametrize("interpretation_func,data_frame", INVALID_ARGUMENTS_TEST_DATA)
 def test_non_complex_files_density_error_arguments(interpretation_func, data_frame):
+    """
+    Test cases in which the interpretation functions should raise an InvalidInterpretationFunctionArguments exception
+    """
 
     with pytest.raises(InvalidInterpretationFunctionArguments) as error:
         interpretation_func(data_frame)
