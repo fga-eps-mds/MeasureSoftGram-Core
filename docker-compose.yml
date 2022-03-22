@@ -1,6 +1,7 @@
 version: "3.8"
 services:
   core:
+    container_name: measuresoftgram-core
     build: .
     ports:
       - "7000:5000"
@@ -10,7 +11,7 @@ services:
     restart: on-failure
     networks:
       - measuresoftgram
-  
+
 networks:
   measuresoftgram:
     external: true
