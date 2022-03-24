@@ -1,6 +1,6 @@
 # 2021-2-MeasureSoftGram-Core
 
-[![codecov](https://codecov.io/gh/fga-eps-mds/2021-2-MeasureSoftGram-CLI/branch/master/graph/badge.svg?token=XRPXP8LH9I)](https://app.codecov.io/gh/fga-eps-mds/2021-2-MeasureSoftGram-Core)
+[![codecov](https://codecov.io/gh/fga-eps-mds/2021-2-MeasureSoftGram-Core/branch/develop/graph/badge.svg?token=XRPXP8LH9I)](https://app.codecov.io/gh/fga-eps-mds/2021-2-MeasureSoftGram-Core)
 
 # What is it?
 
