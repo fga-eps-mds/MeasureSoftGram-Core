@@ -6,7 +6,19 @@
 
 The MeasureSoftGram-Core is a Software system for continuous quality of product observation and multidimensional use in continuous design engineering software and is where you have the innovative mathematical models for software analysis.
 
-## Another informations
+# Contribute
+
+Do you want to contribute with our project? Access our [contribution guide](https://github.com/fga-eps-mds/2021-2-MeasureSoftGram-Core/blob/develop/CONTRIBUTING.md) where we explain how you do it. 
+
+# License
+
+AGPL-3.0 License
+
+## Documentation
+
+The documentation of this project can be accessed at this website: [Documentation](https://github.com/fga-eps-mds/2021-2-MeasureSoftGram-Doc).
+
+# Another informations
 
 Our services are available on [Docker Hub](https://hub.docker.com/):
 - [Core](https://hub.docker.com/r/measuresoftgram/core)
