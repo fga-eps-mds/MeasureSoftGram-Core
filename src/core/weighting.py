@@ -1,6 +1,9 @@
 import pandas as pd
 import json
 import os
+import numpy as np
+import tensorly as ts
+from .interpretation_functions import non_complex_files_density, commented_files_density, absence_of_duplications
 
 METRICS_LIST = [
     'files',
@@ -90,3 +93,55 @@ def create_file_df(json_list):
         df = pd.concat([df, file_component_df], ignore_index=True)
 
     return df
+
+
+file_component_df = create_file_df(json)
+
+# ________________________________________________________________________________________________________________
+
+
+def create_metrics_df(df):
+    m1_list = [non_complex_files_density(df)]
+    m2_list = [commented_files_density(df)]
+    m3_list = [absence_of_duplications(df)]
+
+    return pd.DataFrame({'m1': m1_list, 'm2': m2_list, 'm3': m3_list})
+
+
+def create_sc_tensor(measures_list, size_z):
+
+    return ts.tensor(measures_list).reshape((measures_list.shape[0], measures_list.shape[1], size_z))
+
+
+def implement_metric_to_tensor():
+
+    measures_list = []
+    t_sc_tensor_list = []
+
+    metrics_df = create_metrics_df(file_component_df)
+
+    measures_list.append(np.array([metrics_df['m1'].astype(float),
+                                   metrics_df['m2'].astype(float),
+                                   metrics_df['m3'].astype(float)]))
+
+    return t_sc_tensor_list.append(create_sc_tensor(measures_list[0], 1))
+
+
+def t_weighted(t_sc_tensor_list):
+
+    t_sc_weighted_list = []
+
+    metrics_1 = metrics_2 = metrics_3 = 0.3374  # 33%
+    SC_EM_Weights = np.array([metrics_1, metrics_2, metrics_3])
+
+    for i in range(len(t_sc_tensor_list)):
+
+        t_sc_weighted = np.empty(t_sc_tensor_list[i].shape)
+
+        for j in range(t_sc_tensor_list[i].ndim):
+
+            t_sc_weighted[:, :, 0][j] = np.tensordot(t_sc_tensor_list[i][:, :, 0][j],
+                                                     SC_EM_Weights[j], 0)
+        t_sc_weighted_list.append(t_sc_weighted)
+
+    t_sc_weighted_list[0]
