@@ -24,6 +24,7 @@ jobs:
         run: pip install tox
       - name: Run tests
         run: tox -- --cov=src --cov-report=xml --junitxml=junittest.xml
+        continue-on-error: true
       - name: fix code coverage paths
         run: |
           sed -i 's/\/home\/runner\/work\/2021-2-MeasureSoftGram-Core\/2021-2-MeasureSoftGram-Core\//\/github\/workspace\//g' coverage.xml
