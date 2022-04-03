@@ -20,3 +20,9 @@ class InvalidWeightSize(MeasureSoftGramCoreException):
     """Raised when the size of the weight and measures are not equal"""
 
     pass
+
+
+class InvalidWeightingOperation(MeasureSoftGramCoreException):
+    """Raised when the weighting operation return a invalid result"""
+
+    pass
