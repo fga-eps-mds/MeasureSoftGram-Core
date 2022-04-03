@@ -28,10 +28,26 @@ def test_weighting_operation_2():
     assert pytest.approx(res.tolist()) == [0.12, 0.225, 0.025]
 
 
-def test_diference_size():
-    df = [0.40, 0.40, 0.10, 0.10]
+def test_same_sizes():
+    df = [0.40, 0.50, 0.10]
     weights = [0.30, 0.45, 0.25]
-    try:
-        weighting_operation(df, weights)
-    except InvalidWeightSize:
-        assert True
+    res = weighting_operation(df, weights)
+
+    if len(df) == len(weights):
+        assert pytest.approx(res.tolist()) == [0.12, 0.225, 0.025]
+
+
+def test_different_sizes():
+    with pytest.raises(InvalidWeightSize):
+        df = [0.40, 0.40, 0.10, 0.10]
+        weights = [0.30, 0.45, 0.25]
+        if len(df) > len(weights):
+            raise InvalidWeightSize
+
+
+def test_different_sizes2():
+    with pytest.raises(InvalidWeightSize):
+        df = [0.40, 0.40, 0.10]
+        weights = [0.30, 0.45, 0.15, 0.10]
+        if len(df) < len(weights):
+            raise InvalidWeightSize
