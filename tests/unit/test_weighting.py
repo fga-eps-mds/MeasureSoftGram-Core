@@ -26,6 +26,25 @@ VALID_WEIGHTING_OPERATION = [
 ]
 
 
+VALID_SIZES = [
+    ([0.30], [1.00]),
+    ([0.30, 0.32], [0.30, 0.70]),
+    ([0.30, 0.32, 0.12], [0.30, 0.45, 0.25]),
+    ([0.30, 0.32, 0.02, 0.10], [0.30, 0.45, 0.15, 0.10]),
+    ([0.30, 0.32, 0.02, 0.05, 0.05], [0.30, 0.45, 0.15, 0.05, 0.05]),
+]
+
+
+INVALID_SIZES = [
+    ([0.30], [0.30, 0.70]),
+    ([0.30, 0.45], [1.00]),
+    ([0.30, 0.32], [0.30, 0.45, 0.25]),
+    ([0.30, 0.32, 0.12], [0.30, 0.70]),
+    ([0.30, 0.32, 0.02], [0.30, 0.45, 0.15, 0.10]),
+    ([0.30, 0.32, 0.02, 0.10], [0.30, 0.45, 0.25]),
+]
+
+
 @pytest.mark.parametrize("df, weights, res", VALID_WEIGHTING_OPERATION)
 def test_valid_weighting_operation(df, weights, res):
     """
@@ -48,26 +67,21 @@ def test_invalid_weighting_operation(df, weights, res):
             raise InvalidWeightingOperation
 
 
-def test_same_sizes():
-    df = [0.40, 0.50, 0.10]
-    weights = [0.30, 0.45, 0.25]
-    res = weighting_operation(df, weights)
+@pytest.mark.parametrize("df, weights", VALID_SIZES)
+def test_same_sizes(df, weights):
+    """
+    Test cases in which the size of the weight and measures are the same
+    """
 
-    if len(df) == len(weights):
-        assert pytest.approx(res.tolist()) == [0.12, 0.225, 0.025]
+    assert len(df) == len(weights)
 
 
-def test_different_sizes():
+@pytest.mark.parametrize("df, weights", INVALID_SIZES)
+def test_different_sizes(df, weights):
+    """
+    Test cases in which the size of the weight and measures are not the same
+    """
+
     with pytest.raises(InvalidWeightSize):
-        df = [0.40, 0.40, 0.10, 0.10]
-        weights = [0.30, 0.45, 0.25]
-        if len(df) > len(weights):
-            raise InvalidWeightSize
-
-
-def test_different_sizes2():
-    with pytest.raises(InvalidWeightSize):
-        df = [0.40, 0.40, 0.10]
-        weights = [0.30, 0.45, 0.15, 0.10]
-        if len(df) < len(weights):
+        if len(df) != len(weights):
             raise InvalidWeightSize
