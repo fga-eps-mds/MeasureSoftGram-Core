@@ -1,12 +1,12 @@
 import numpy as np
 
-from src.core.exceptions import InvalidWeightSize
+from src.core.exceptions import InvalidEqualityOfWeightAndValues
 
 
-def weighting_operation(df, weights):
-    if len(df) != len(weights):
-        raise InvalidWeightSize
+def weighting_operation(values, weights):
+    if len(values) != len(weights):
+        raise InvalidEqualityOfWeightAndValues
     else:
-        df = np.array(df)
+        values = np.array(values)
         weights = np.array(weights)
-        return df * weights
+        return values * weights
