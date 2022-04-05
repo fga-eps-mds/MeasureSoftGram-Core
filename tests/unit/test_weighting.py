@@ -1,7 +1,7 @@
 from src.core.weighting import weighting_operation
 import pytest
 
-from src.core.exceptions import InvalidWeightSize, InvalidWeightingOperation
+from src.core.exceptions import InvalidEqualityOfWeightAndValues, InvalidWeightingOperation
 
 
 # @pytest.mark.parametrize()
@@ -45,43 +45,43 @@ INVALID_SIZES = [
 ]
 
 
-@pytest.mark.parametrize("df, weights, res", VALID_WEIGHTING_OPERATION)
-def test_valid_weighting_operation(df, weights, res):
+@pytest.mark.parametrize("values, weights, res", VALID_WEIGHTING_OPERATION)
+def test_valid_weighting_operation(values, weights, res):
     """
     Test cases in which the weighting operation should return a valid result
     """
 
-    check = weighting_operation(df, weights)
+    check = weighting_operation(values, weights)
     assert pytest.approx(check.tolist()) == res
 
 
-@pytest.mark.parametrize("df, weights, res", INVALID_WEIGHTING_OPERATION)
-def test_invalid_weighting_operation(df, weights, res):
+@pytest.mark.parametrize("values, weights, res", INVALID_WEIGHTING_OPERATION)
+def test_invalid_weighting_operation(values, weights, res):
     """
     Test cases in which the weighting operation returns a invalid result
     """
 
     with pytest.raises(InvalidWeightingOperation):
-        check = weighting_operation(df, weights)
+        check = weighting_operation(values, weights)
         if pytest.approx(check.tolist()) != res:
             raise InvalidWeightingOperation
 
 
-@pytest.mark.parametrize("df, weights", VALID_SIZES)
-def test_same_sizes(df, weights):
+@pytest.mark.parametrize("values, weights", VALID_SIZES)
+def test_same_sizes(values, weights):
     """
-    Test cases in which the size of the weight and measures are the same
-    """
-
-    assert len(df) == len(weights)
-
-
-@pytest.mark.parametrize("df, weights", INVALID_SIZES)
-def test_different_sizes(df, weights):
-    """
-    Test cases in which the size of the weight and measures are not the same
+    Test cases in which the size of the weight and values are the same
     """
 
-    with pytest.raises(InvalidWeightSize):
-        if len(df) != len(weights):
-            raise InvalidWeightSize
+    assert len(values) == len(weights)
+
+
+@pytest.mark.parametrize("values, weights", INVALID_SIZES)
+def test_different_sizes(values, weights):
+    """
+    Test cases in which the size of the weight and values are not the same
+    """
+
+    with pytest.raises(InvalidEqualityOfWeightAndValues):
+        if len(values) != len(weights):
+            raise InvalidEqualityOfWeightAndValues
