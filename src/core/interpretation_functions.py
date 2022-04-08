@@ -1,5 +1,6 @@
 from .exceptions import InvalidMetricValue, InvalidInterpretationFunctionArguments
 import pandas as pd
+import numpy as np
 
 
 def check_arguments(data_frame):
@@ -14,6 +15,26 @@ def check_number_of_files(number_of_files):
         raise InvalidMetricValue("The number of files is lesser or equal than 0")
 
 
+def interpolate_series(series, x, y):
+    """
+    Interpolates a series using the given x and y values.
+
+    This function interpolates a series using the given x and y values.
+    """
+
+    return [np.interp(item / 100, x, y) for item in series]
+
+
+def create_coordinate_pair(min_threshhold, max_threshold):
+    """
+    Creates a pair of values.
+
+    This function creates a pair of coordinates (x, y).
+    """
+
+    return np.array([min_threshhold, max_threshold]), np.array([1, 0])
+
+
 def non_complex_files_density(data_frame):
     """
     Calculates non-complex files density (m1).
@@ -22,12 +43,13 @@ def non_complex_files_density(data_frame):
     used to assess the changeability quality subcharacteristic.
     """
 
-    CYCLOMATIC_COMPLEXITY_THRESHOLD = 10
-
     check_arguments(data_frame)
 
+    # files_complexity = m1 metric
     files_complexity = data_frame["complexity"].astype(float)
+    # files_functions = m2 metric
     files_functions = data_frame["functions"].astype(float)
+    # number_of_files = m3 metric
     number_of_files = len(data_frame)
 
     check_number_of_files(number_of_files)
@@ -42,11 +64,16 @@ def non_complex_files_density(data_frame):
             "The number of functions of all files is lesser or equal than 0"
         )
 
-    files_beneath_threshold_df = data_frame[
-        (files_complexity / files_functions) < CYCLOMATIC_COMPLEXITY_THRESHOLD
-    ]
+    # m0 =
+    m0 = np.median(files_complexity / files_functions)
 
-    return len(files_beneath_threshold_df) / number_of_files
+    x, y = create_coordinate_pair(0, m0)
+
+    files_in_thresholds_df = (files_complexity / files_functions) <= m0
+
+    IF1 = np.interp(list(files_in_thresholds_df[(files_functions > 0)]), x, y)
+
+    return sum(IF1) / number_of_files
 
 
 def commented_files_density(data_frame):
@@ -62,8 +89,12 @@ def commented_files_density(data_frame):
 
     check_arguments(data_frame)
 
-    files_comment_lines_density = data_frame["comment_lines_density"].astype(float)
+    # number_of_files = m3 metric
     number_of_files = len(data_frame)
+    # files_comment_lines_density = m4 metric
+    files_comment_lines_density = data_frame["comment_lines_density"].astype(
+        float
+    )  # m4
 
     check_number_of_files(number_of_files)
 
@@ -72,7 +103,11 @@ def commented_files_density(data_frame):
             "The number of files comment lines density is lesser than 0"
         )
 
-    files_between_thresholds_df = data_frame[
+    x, y = create_coordinate_pair(
+        MINIMUM_COMMENT_DENSITY_THRESHOLD / 100, MAXIMUM_COMMENT_DENSITY_THRESHOLD / 100
+    )
+
+    files_between_thresholds = files_comment_lines_density[
         files_comment_lines_density.between(
             MINIMUM_COMMENT_DENSITY_THRESHOLD,
             MAXIMUM_COMMENT_DENSITY_THRESHOLD,
@@ -80,7 +115,9 @@ def commented_files_density(data_frame):
         )
     ]
 
-    return len(files_between_thresholds_df) / number_of_files
+    em2i = interpolate_series(files_between_thresholds, x, y)
+
+    return np.sum(em2i) / number_of_files
 
 
 def absence_of_duplications(data_frame):
@@ -95,9 +132,11 @@ def absence_of_duplications(data_frame):
 
     check_arguments(data_frame)
 
+    # files_duplicated_lines_density = m5 metric
     files_duplicated_lines_density = data_frame["duplicated_lines_density"].astype(
         float
     )
+    # number_of_files = m3 metric
     number_of_files = len(data_frame)
 
     check_number_of_files(number_of_files)
@@ -107,8 +146,12 @@ def absence_of_duplications(data_frame):
             "The number of files duplicated lines density is lesser than 0"
         )
 
-    files_below_threshold_df = data_frame[
+    x, y = create_coordinate_pair(0, DUPLICATED_LINES_THRESHOLD / 100)
+
+    files_below_threshold = files_duplicated_lines_density[
         files_duplicated_lines_density < DUPLICATED_LINES_THRESHOLD
     ]
 
-    return len(files_below_threshold_df) / number_of_files
+    em2i = interpolate_series(files_below_threshold, x, y)
+
+    return np.sum(em2i) / number_of_files
