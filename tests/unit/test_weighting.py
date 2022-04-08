@@ -1,29 +1,13 @@
 from src.core.weighting import weighting_operation
 import pytest
 
-from src.core.exceptions import ValuesAndWeightsOfDifferentSizes, InvalidWeightingOperation
-
-
-INVALID_WEIGHTING_OPERATION = [
-    ([0.30, 0.32, 0.12], [0.30, 0.45, 0.25], [0.90, 0.18, 0.30]),
-    ([0.40, 0.50, 0.10], [0.30, 0.45, 0.25], [0.20, 0.20, 0.25]),
-    ([0.20, 0.30, 0.50], [0.25, 0.40, 0.35], [0.50, 0.12, 0.175]),
-]
+from src.core.exceptions import ValuesAndWeightsOfDifferentSizes
 
 
 VALID_WEIGHTING_OPERATION = [
     ([0.30, 0.32, 0.12], [0.30, 0.45, 0.25], [0.09, 0.144, 0.03]),
     ([0.40, 0.50, 0.10], [0.30, 0.45, 0.25], [0.12, 0.225, 0.025]),
     ([0.20, 0.30, 0.50], [0.25, 0.40, 0.35], [0.05, 0.12, 0.175]),
-]
-
-
-VALID_SIZES = [
-    ([0.30], [1.00]),
-    ([0.30, 0.32], [0.30, 0.70]),
-    ([0.30, 0.32, 0.12], [0.30, 0.45, 0.25]),
-    ([0.30, 0.32, 0.02, 0.10], [0.30, 0.45, 0.15, 0.10]),
-    ([0.30, 0.32, 0.02, 0.05, 0.05], [0.30, 0.45, 0.15, 0.05, 0.05]),
 ]
 
 
@@ -47,27 +31,6 @@ def test_valid_weighting_operation(values, weights, res):
     assert pytest.approx(result.tolist()) == res
 
 
-#@pytest.mark.parametrize("values, weights, res", INVALID_WEIGHTING_OPERATION)
-#def test_invalid_weighting_operation(values, weights, res):
-#    """
-#    Test cases in which the weighting operation returns a invalid result
-#    """
-#
-#    with pytest.raises(InvalidWeightingOperation):
-#        result = weighting_operation(values, weights)
-#        if pytest.approx(result.tolist()) != res:
-#            raise InvalidWeightingOperation
-
-
-#@pytest.mark.parametrize("values, weights", VALID_SIZES)
-#def test_same_sizes(values, weights):
-#    """
-#   Test cases in which the size of the weight and values are the same
-#    """
-#
-#    assert len(values) == len(weights)
-
-
 @pytest.mark.parametrize("values, weights", INVALID_SIZES)
 def test_different_sizes(values, weights):
     """
@@ -75,6 +38,4 @@ def test_different_sizes(values, weights):
     """
 
     with pytest.raises(ValuesAndWeightsOfDifferentSizes):
-        weighting_operation(values,weights)
-        #if len(values) != len(weights):
-            #raise ValuesAndWeightsOfDifferentSizes
+        weighting_operation(values, weights)
