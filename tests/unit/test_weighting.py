@@ -1,7 +1,7 @@
 from src.core.weighting import weighting_operation
 import pytest
 
-from src.core.exceptions import InvalidEqualityOfWeightAndValues, InvalidWeightingOperation
+from src.core.exceptions import ValuesAndWeightsOfDifferentSizes, InvalidWeightingOperation
 
 
 INVALID_WEIGHTING_OPERATION = [
@@ -43,8 +43,8 @@ def test_valid_weighting_operation(values, weights, res):
     Test cases in which the weighting operation should return a valid result
     """
 
-    check = weighting_operation(values, weights)
-    assert pytest.approx(check.tolist()) == res
+    result = weighting_operation(values, weights)
+    assert pytest.approx(result.tolist()) == res
 
 
 #@pytest.mark.parametrize("values, weights, res", INVALID_WEIGHTING_OPERATION)
@@ -54,8 +54,8 @@ def test_valid_weighting_operation(values, weights, res):
 #    """
 #
 #    with pytest.raises(InvalidWeightingOperation):
-#        check = weighting_operation(values, weights)
-#        if pytest.approx(check.tolist()) != res:
+#        result = weighting_operation(values, weights)
+#        if pytest.approx(result.tolist()) != res:
 #            raise InvalidWeightingOperation
 
 
@@ -74,7 +74,7 @@ def test_different_sizes(values, weights):
     Test cases in which the size of the weight and values are not the same
     """
 
-    with pytest.raises(InvalidEqualityOfWeightAndValues):
+    with pytest.raises(ValuesAndWeightsOfDifferentSizes):
         weighting_operation(values,weights)
         #if len(values) != len(weights):
-            #raise InvalidEqualityOfWeightAndValues
+            #raise ValuesAndWeightsOfDifferentSizes
