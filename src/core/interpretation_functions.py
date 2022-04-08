@@ -154,7 +154,7 @@ def absence_of_duplications(data_frame):
     x, y = create_coordinate_pair(0, DUPLICATED_LINES_THRESHOLD / 100)
 
     files_below_threshold = files_duplicated_lines_density[
-        files_duplicated_lines_density < DUPLICATED_LINES_THRESHOLD
+        files_duplicated_lines_density <= DUPLICATED_LINES_THRESHOLD
     ]
 
     em3i = interpolate_series(files_below_threshold, x, y)
