@@ -17,7 +17,7 @@ class InvalidInterpretationFunctionArguments(MeasureSoftGramCoreException):
 
 
 class InvalidEqualityOfWeightAndValues(MeasureSoftGramCoreException):
-    """Raised when the size of the weight and values are not equal"""
+    """Raised when the length of the weight and values are not equal"""
 
     pass
 

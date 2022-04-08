@@ -4,14 +4,6 @@ import pytest
 from src.core.exceptions import InvalidEqualityOfWeightAndValues, InvalidWeightingOperation
 
 
-# @pytest.mark.parametrize()
-# def test_weighting_operation():
-#     list_whatever = function_asda()
-#     tensor = create_sc_tensor(list_whatever, 1)
-#     res = operation_ponderacao(tensor)
-#     assert res == [[[0.23234132]], [[0.00202036]], [[0.30709461]]]
-
-
 INVALID_WEIGHTING_OPERATION = [
     ([0.30, 0.32, 0.12], [0.30, 0.45, 0.25], [0.90, 0.18, 0.30]),
     ([0.40, 0.50, 0.10], [0.30, 0.45, 0.25], [0.20, 0.20, 0.25]),
@@ -55,25 +47,25 @@ def test_valid_weighting_operation(values, weights, res):
     assert pytest.approx(check.tolist()) == res
 
 
-@pytest.mark.parametrize("values, weights, res", INVALID_WEIGHTING_OPERATION)
-def test_invalid_weighting_operation(values, weights, res):
-    """
-    Test cases in which the weighting operation returns a invalid result
-    """
+#@pytest.mark.parametrize("values, weights, res", INVALID_WEIGHTING_OPERATION)
+#def test_invalid_weighting_operation(values, weights, res):
+#    """
+#    Test cases in which the weighting operation returns a invalid result
+#    """
+#
+#    with pytest.raises(InvalidWeightingOperation):
+#        check = weighting_operation(values, weights)
+#        if pytest.approx(check.tolist()) != res:
+#            raise InvalidWeightingOperation
 
-    with pytest.raises(InvalidWeightingOperation):
-        check = weighting_operation(values, weights)
-        if pytest.approx(check.tolist()) != res:
-            raise InvalidWeightingOperation
 
-
-@pytest.mark.parametrize("values, weights", VALID_SIZES)
-def test_same_sizes(values, weights):
-    """
-    Test cases in which the size of the weight and values are the same
-    """
-
-    assert len(values) == len(weights)
+#@pytest.mark.parametrize("values, weights", VALID_SIZES)
+#def test_same_sizes(values, weights):
+#    """
+#   Test cases in which the size of the weight and values are the same
+#    """
+#
+#    assert len(values) == len(weights)
 
 
 @pytest.mark.parametrize("values, weights", INVALID_SIZES)
@@ -83,5 +75,6 @@ def test_different_sizes(values, weights):
     """
 
     with pytest.raises(InvalidEqualityOfWeightAndValues):
-        if len(values) != len(weights):
-            raise InvalidEqualityOfWeightAndValues
+        weighting_operation(values,weights)
+        #if len(values) != len(weights):
+            #raise InvalidEqualityOfWeightAndValues
