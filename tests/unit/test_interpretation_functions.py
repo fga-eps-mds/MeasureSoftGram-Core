@@ -51,7 +51,7 @@ SUCCESS_TEST_DATA = [
     (
         non_complex_files_density,
         "tests/unit/data/fga-eps-mds-2020_2-Projeto-Kokama-Usuario-17-04-2021.json",
-        1.0,
+        0.0,
     ),
     (
         non_complex_files_density,
@@ -66,7 +66,7 @@ SUCCESS_TEST_DATA = [
     (
         commented_files_density,
         "tests/unit/data/fga-eps-mds_2021-2-SiGeD-Frontend-03-15-2022-23_57_08.json",
-        0.005988023952095809,
+        0.0050299401197604785,
     ),
     (
         commented_files_density,
@@ -157,7 +157,9 @@ def test_interpretation_functions_success(
         f"{interpretation_func.__name__}(create_file_df('{file_path.split('/')[-1]}'))"
     )
 
-    assert result == expected_result, f"Expected: {function_call} == {expected_result}"
+    assert (
+        pytest.approx(result) == expected_result
+    ), f"Expected: {function_call} == {expected_result}"
 
     assert 0 <= result <= 1.0, f"Expected: 0 <= {function_call} <= 1.0"
 
