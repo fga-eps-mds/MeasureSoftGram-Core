@@ -160,3 +160,40 @@ def absence_of_duplications(data_frame):
     em3i = interpolate_series(files_below_threshold, x, y)
 
     return np.sum(em3i) / number_of_files
+
+
+def test_coverage(data_frame):
+    """
+    Calculates test coverage (em6).
+
+    This function calculates the test coverage measure (em6)
+    used to assess the testing status subcharacteristic.
+    """
+
+    MINIMUM_COVERAGE_THRESHOLD = 60
+    MAXIMUM_COVERAGE_THRESHOLD = 90
+
+    check_arguments(data_frame)
+
+    # number_of_files = m3 metric
+    number_of_files = len(data_frame)
+    # test_coverage = m6 metric
+    test_coverage = data_frame["coverage"].astype(float)
+
+    check_number_of_files(number_of_files)
+
+    x, y = create_coordinate_pair(
+        MINIMUM_COVERAGE_THRESHOLD / 100, MAXIMUM_COVERAGE_THRESHOLD / 100
+    )
+
+    files_between_thresholds = test_coverage[
+        test_coverage.between(
+            MINIMUM_COVERAGE_THRESHOLD,
+            MAXIMUM_COVERAGE_THRESHOLD,
+            inclusive="both",
+        )
+    ]
+
+    em6i = interpolate_series(files_between_thresholds, x, y)
+
+    return np.sum(em6i) / number_of_files
