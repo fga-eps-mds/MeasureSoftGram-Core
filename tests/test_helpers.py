@@ -72,7 +72,7 @@ def generate_file_dataframe_per_release(metric_list, json, language_extension):
     return df
 
 
-def create_file_df(json_list):
+def create_file_df(json_list, language_extension="js"):
 
     df = pd.DataFrame()
 
@@ -83,7 +83,7 @@ def create_file_df(json_list):
         file_component_data = metric_per_file(file_component)
 
         file_component_df = generate_file_dataframe_per_release(
-            METRICS_LIST, file_component_data, language_extension="js"
+            METRICS_LIST, file_component_data, language_extension=language_extension
         )
 
         file_component_df["filename"] = os.path.basename(i)
