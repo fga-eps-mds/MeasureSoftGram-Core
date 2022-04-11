@@ -1,32 +1,3 @@
-""" AVAILABLE_PRE_CONFIGS = {
-    "reliability": {
-        "name": "Reliability",
-        "subcharacteristics": {
-            "testing_status": {
-                "name": "Testing Status",
-                "measures": {
-                    "passed_tests": {"name": "Passed Tests"},
-                    "test_builds": {"name": "Test Builds"},
-                    "test_coverage": {"name": "Test Coverage"},
-                },
-            }
-        },
-    },
-    "maintainability": {
-        "name": "Maintainability",
-        "subcharacteristics": {
-            "modifiability": {
-                "name": "Modifiability",
-                "measures": {
-                    "non_complex_file_density": {"name": "Non complex file density"},
-                    "commented_file_density": {"name": "Commented file density"},
-                    "duplication_absense": {"name": "Duplication abscense"},
-                },
-            }
-        },
-    },
-} """
-
 AVAILABLE_PRE_CONFIGS = {
     "characteristics": {
         "reliability": {
@@ -69,21 +40,32 @@ AVAILABLE_PRE_CONFIGS = {
             "name": "Test Coverage",
             "subcharacteristics": ["testing_status"],
             "characteristics": ["reliability"],
+            "metrics": ["coverage"]
         },
         "non_complex_file_density": {
             "name": "Non complex file density",
             "subcharacteristics": ["modifiability"],
             "characteristics": ["maintainability"],
+            "metrics": [
+                "complexity",
+                "functions"
+            ]
         },
         "commented_file_density": {
             "name": "Commented file density",
             "subcharacteristics": ["modifiability"],
             "characteristics": ["maintainability"],
+            "metrics": [
+                "comment_lines_density"
+            ]
         },
         "duplication_absense": {
             "name": "Duplication abscense",
             "subcharacteristics": ["modifiability"],
             "characteristics": ["maintainability"],
+            "metrics": [
+                "duplicated_lines_density"
+            ]
         },
-    },
+    }
 }
