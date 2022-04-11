@@ -30,42 +30,37 @@ AVAILABLE_PRE_CONFIGS = {
             "name": "Passed Tests",
             "subcharacteristics": ["testing_status"],
             "characteristics": ["reliability"],
+            "metrics": ["test_success_density"],
         },
         "test_builds": {
             "name": "Test Builds",
             "subcharacteristics": ["testing_status"],
             "characteristics": ["reliability"],
+            "metrics": ["tests", "test_execution_time"],
         },
         "test_coverage": {
             "name": "Test Coverage",
             "subcharacteristics": ["testing_status"],
             "characteristics": ["reliability"],
-            "metrics": ["coverage"]
+            "metrics": ["coverage"],
         },
         "non_complex_file_density": {
             "name": "Non complex file density",
             "subcharacteristics": ["modifiability"],
             "characteristics": ["maintainability"],
-            "metrics": [
-                "complexity",
-                "functions"
-            ]
+            "metrics": ["complexity", "functions"],
         },
         "commented_file_density": {
             "name": "Commented file density",
             "subcharacteristics": ["modifiability"],
             "characteristics": ["maintainability"],
-            "metrics": [
-                "comment_lines_density"
-            ]
+            "metrics": ["comment_lines_density"],
         },
         "duplication_absense": {
             "name": "Duplication abscense",
             "subcharacteristics": ["modifiability"],
             "characteristics": ["maintainability"],
-            "metrics": [
-                "duplicated_lines_density"
-            ]
+            "metrics": ["duplicated_lines_density"],
         },
-    }
+    },
 }
