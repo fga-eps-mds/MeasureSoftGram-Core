@@ -2,6 +2,7 @@ from src.core.interpretation_functions import (
     non_complex_files_density,
     commented_files_density,
     absence_of_duplications,
+    test_coverage,
 )
 from src.core.exceptions import (
     InvalidMetricValue,
@@ -36,6 +37,11 @@ INVALID_METRICS_TEST_DATA = [
     ),
     (
         absence_of_duplications,
+        "tests/unit/data/zero_number_of_files.json",
+        "The number of files is lesser or equal than 0",
+    ),
+    (
+        test_coverage,
         "tests/unit/data/zero_number_of_files.json",
         "The number of files is lesser or equal than 0",
     ),
@@ -88,6 +94,21 @@ SUCCESS_TEST_DATA = [
         "tests/unit/data/fga-eps-mds-2020_2-Lend.it-Raleway-user-13-04-2021.json",
         1.0,
     ),
+    (
+        test_coverage,
+        "tests/unit/data/fga-eps-mds_2021-2-SiGeD-Frontend-03-15-2022-23_57_08.json",
+        0.0,
+    ),
+    (
+        test_coverage,
+        "tests/unit/data/between_zero_and_one_coverage.json",
+        0.545454,
+    ),
+    (
+        test_coverage,
+        "tests/unit/data/zero_cyclomatic_complexity.json",
+        1.0,
+    ),
 ]
 
 
@@ -108,6 +129,12 @@ INVALID_ARGUMENTS_TEST_DATA = [
     (absence_of_duplications, False),
     (
         absence_of_duplications,
+        pd.Series(data={"a": 1, "b": 2, "c": 3}, index=["a", "b", "c"]),
+    ),
+    (test_coverage, None),
+    (test_coverage, False),
+    (
+        test_coverage,
         pd.Series(data={"a": 1, "b": 2, "c": 3}, index=["a", "b", "c"]),
     ),
 ]
@@ -149,6 +176,7 @@ def test_interpretation_functions_success(
     Test cases in which the interpretation functions should return a valid measure
     """
 
+    # assert expected_result == 1.0
     json = glob(file_path)
 
     result = interpretation_func(create_file_df(json))
