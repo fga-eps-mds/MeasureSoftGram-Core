@@ -40,6 +40,11 @@ INVALID_METRICS_TEST_DATA = [
         "tests/unit/data/zero_number_of_files.json",
         "The number of files is lesser or equal than 0",
     ),
+    (
+        test_coverage,
+        "tests/unit/data/zero_number_of_files.json",
+        "The number of files is lesser or equal than 0",
+    ),
 ]
 
 
@@ -124,6 +129,12 @@ INVALID_ARGUMENTS_TEST_DATA = [
     (absence_of_duplications, False),
     (
         absence_of_duplications,
+        pd.Series(data={"a": 1, "b": 2, "c": 3}, index=["a", "b", "c"]),
+    ),
+    (test_coverage, None),
+    (test_coverage, False),
+    (
+        test_coverage,
         pd.Series(data={"a": 1, "b": 2, "c": 3}, index=["a", "b", "c"]),
     ),
 ]
