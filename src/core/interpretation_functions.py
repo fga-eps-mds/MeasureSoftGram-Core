@@ -45,6 +45,11 @@ def create_coordinate_pair(min_threshhold, max_threshold, reverse_y=False):
     return np.array([min_threshhold, max_threshold]), y
 
 
+def get_root_test_dir(data_frame):
+
+    return data_frame.iloc[0]
+
+
 def non_complex_files_density(data_frame):
     """
     Calculates non-complex files density (em1).
@@ -197,3 +202,53 @@ def test_coverage(data_frame):
     em6i = interpolate_series(files_between_thresholds, x, y)
 
     return np.sum(em6i) / number_of_files
+
+
+def fast_test_builds(data_frame):
+    """
+    Calculates fast test builds (em5)
+
+    This function calculates the fast test builds measure (em5)
+    used to assess the testing status subcharacteristic.
+    """
+
+    TEST_EXECUTION_TIME_THRESHOLD = 300000
+
+    root_test = get_root_test_dir(data_frame)
+
+    # test_execution_time = m9 metric
+    test_execution_time = float(root_test["test_execution_time"])
+
+    x, y = create_coordinate_pair(0, 1)
+
+    em5 = 0
+
+    if test_execution_time < TEST_EXECUTION_TIME_THRESHOLD:
+        if5i = test_execution_time / TEST_EXECUTION_TIME_THRESHOLD
+        em5 = np.interp(if5i, x, y)
+
+    return em5
+
+
+def passed_tests(data_frame):
+    """
+    Calculates passed tests (em4)
+
+    This function calculates the passed tests measure (em4)
+    used to assess the testing status subcharacteristic.
+    """
+    root_test = get_root_test_dir(data_frame)
+    # tests = m6 metrics
+    tests = float(root_test["tests"])
+    # test_errors = m7 metrics
+    test_errors = float(root_test["test_errors"])
+    # test_failures = m8 metrics
+    test_failures = float(root_test["test_failures"])
+
+    x, y = create_coordinate_pair(0, 1)
+
+    if4i = (tests - (test_errors + test_failures)) / tests
+
+    em4 = np.interp(if4i, x, y)
+
+    return em4
