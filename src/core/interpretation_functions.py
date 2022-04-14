@@ -33,14 +33,16 @@ def interpolate_series(series, x, y):
     return [np.interp(item / 100, x, y) for item in series]
 
 
-def create_coordinate_pair(min_threshhold, max_threshold):
+def create_coordinate_pair(min_threshhold, max_threshold, reverse_y=False):
     """
     Creates a pair of values.
 
     This function creates a pair of coordinates (x, y).
     """
 
-    return np.array([min_threshhold, max_threshold]), np.array([1, 0])
+    y = np.array([0, 1]) if reverse_y else np.array([1, 0])
+
+    return np.array([min_threshhold, max_threshold]), y
 
 
 def non_complex_files_density(data_frame):
@@ -183,15 +185,13 @@ def test_coverage(data_frame):
     check_number_of_files(number_of_files)
 
     x, y = create_coordinate_pair(
-        MINIMUM_COVERAGE_THRESHOLD / 100, MAXIMUM_COVERAGE_THRESHOLD / 100
+        MINIMUM_COVERAGE_THRESHOLD / 100,
+        MAXIMUM_COVERAGE_THRESHOLD / 100,
+        reverse_y=True,
     )
 
     files_between_thresholds = test_coverage[
-        test_coverage.between(
-            MINIMUM_COVERAGE_THRESHOLD,
-            MAXIMUM_COVERAGE_THRESHOLD,
-            inclusive="both",
-        )
+        test_coverage >= MINIMUM_COVERAGE_THRESHOLD
     ]
 
     em6i = interpolate_series(files_between_thresholds, x, y)
