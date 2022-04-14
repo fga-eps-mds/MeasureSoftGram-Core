@@ -3,6 +3,7 @@ from src.core.interpretation_functions import (
     commented_files_density,
     absence_of_duplications,
     test_coverage as interpret_test_coverage,
+    get_test_root_dir,
 )
 from src.core.exceptions import (
     InvalidMetricValue,
@@ -163,6 +164,19 @@ INVALID_ARGUMENTS_TEST_DATA = [
     ),
 ]
 
+TEST_ROOT_DIR_TEST_DATA = [
+    (
+        "tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-CLI-04-13-2022-02-13-37-v1.1.1.json",
+        37,
+        "py",
+    ),
+    (
+        "tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-Service-04-12-2022-17-32-35-v1.1.0.json",
+        7,
+        "py",
+    ),
+]
+
 
 @pytest.mark.parametrize(
     "interpretation_func,file_path,error_msg",
@@ -236,3 +250,20 @@ def test_non_complex_files_density_error_arguments(interpretation_func, data_fra
     assert (
         str(error.value) == error_msg
     ), f"Expected: {function_call} to raise an InvalidInterpretationFunctionArguments"
+
+
+@pytest.mark.parametrize(
+    "file_path,expected_value,language_extension", TEST_ROOT_DIR_TEST_DATA
+)
+def test_get_test_root_dir(file_path, expected_value, language_extension):
+    """
+    Test cases in which the get_test_root_dir function should return the series
+    """
+
+    json = glob(file_path)
+
+    result = get_test_root_dir(create_file_df(json, language_extension))
+
+    assert (
+        int(result["tests"]) == expected_value
+    ), f"Expected: {result} == {expected_value}"
