@@ -3,6 +3,8 @@ from src.core.interpretation_functions import (
     commented_files_density,
     absence_of_duplications,
     test_coverage as interpret_test_coverage,
+    passed_tests,
+    fast_test_builds,
     get_test_root_dir,
 )
 from src.core.exceptions import (
@@ -132,6 +134,30 @@ SUCCESS_TEST_DATA = [
         interpret_test_coverage,
         "tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-Service-04-12-2022-17-32-35-v1.1.0.json",
         0.5647222222222222,
+        "py",
+    ),
+    (
+        passed_tests,
+        "tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-CLI-04-13-2022-02-13-37-v1.1.1.json",
+        1.0,
+        "py",
+    ),
+    (
+        passed_tests,
+        "tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-Service-04-12-2022-17-32-35-v1.1.0.json",
+        0.7142857142857143,
+        "py",
+    ),
+    (
+        fast_test_builds,
+        "tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-CLI-04-13-2022-02-13-37-v1.1.1.json",
+        0.00532,
+        "py",
+    ),
+    (
+        fast_test_builds,
+        "tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-Service-04-12-2022-17-32-35-v1.1.0.json",
+        0.0010166666666666666,
         "py",
     ),
 ]
