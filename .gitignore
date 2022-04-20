@@ -16,7 +16,11 @@ coverage.xml
 
 .vscode
 
+<<<<<<< HEAD
 trash
+=======
+.venv
+>>>>>>> Co-authored-by: VitorB2002 <vitorb.santos2002@gmail.com>
 
 # analytics-raw-data
 analytics-raw-data/
