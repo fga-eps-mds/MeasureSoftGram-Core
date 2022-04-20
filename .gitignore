@@ -16,5 +16,7 @@ coverage.xml
 
 .vscode
 
+.venv
+
 # analytics-raw-data
 analytics-raw-data/

@@ -1,9 +1,8 @@
 from flask_restful import Resource
 from flask import jsonify
-from flask import request
-import requests
+from src.core.constants import AVAILABLE_PRE_CONFIGS
 
 
 class Analysis(Resource):
     def post(self):
-        metrics = request.get_json(force=true)
+        return jsonify(AVAILABLE_PRE_CONFIGS)
