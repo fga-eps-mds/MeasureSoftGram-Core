@@ -16,7 +16,10 @@ coverage.xml
 
 .vscode
 
+<<<<<<< HEAD
 trash
+=======
+>>>>>>> 450cdd219e70c6d91e08ef9216ac8907e06e20bb
 .venv
 
 # analytics-raw-data

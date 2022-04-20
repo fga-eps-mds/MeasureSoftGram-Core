@@ -1,6 +1,9 @@
 from core.weighting import weighting_operation
 from core.agregation import agregation_operation
+<<<<<<< HEAD
 from core.constants import MEASURES_INTERPRETATION_MAPPING
+=======
+>>>>>>> 450cdd219e70c6d91e08ef9216ac8907e06e20bb
 
 
 def resolve_level(level_dict: dict, sublevel: dict, sublevel_key: str) -> dict:
@@ -50,6 +53,7 @@ def make_analysis(measures: dict, subcharacteristics: dict, characteristics: dic
         aggregated_characteristics,
         "characteristics",
     )
+<<<<<<< HEAD
 
 
 def calculate_measures(dataframe, measures):
@@ -60,3 +64,5 @@ def calculate_measures(dataframe, measures):
         )
     
     return aggregated_measures
+=======
+>>>>>>> 450cdd219e70c6d91e08ef9216ac8907e06e20bb
