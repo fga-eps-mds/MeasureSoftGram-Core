@@ -45,6 +45,23 @@ def create_coordinate_pair(min_threshhold, max_threshold, reverse_y=False):
     return np.array([min_threshhold, max_threshold]), y
 
 
+def get_files_data_frame(data_frame):
+    """
+    Returns a data frame with files data.
+
+    This function returns a data frame with files data.
+    """
+
+    return data_frame[data_frame["qualifier"] == "FIL"]
+
+
+def get_test_root_dir(data_frame):
+
+    dirs = data_frame[data_frame["qualifier"] == "DIR"]
+
+    return dirs.loc[dirs["tests"].astype(float).idxmax()]
+
+
 def non_complex_files_density(data_frame):
     """
     Calculates non-complex files density (em1).
@@ -55,12 +72,14 @@ def non_complex_files_density(data_frame):
 
     check_arguments(data_frame)
 
+    files_df = get_files_data_frame(data_frame)
+
     # files_complexity = m1 metric
-    files_complexity = data_frame["complexity"].astype(float)
+    files_complexity = files_df["complexity"].astype(float)
     # files_functions = m2 metric
-    files_functions = data_frame["functions"].astype(float)
+    files_functions = files_df["functions"].astype(float)
     # number_of_files = Tm3 metric
-    number_of_files = len(data_frame)
+    number_of_files = len(files_df)
 
     check_number_of_files(number_of_files)
 
@@ -98,10 +117,12 @@ def commented_files_density(data_frame):
 
     check_arguments(data_frame)
 
+    files_df = get_files_data_frame(data_frame)
+
     # number_of_files = Tm3 metric
-    number_of_files = len(data_frame)
+    number_of_files = len(files_df)
     # files_comment_lines_density = m4 metric
-    files_comment_lines_density = data_frame["comment_lines_density"].astype(float)
+    files_comment_lines_density = files_df["comment_lines_density"].astype(float)
 
     check_number_of_files(number_of_files)
 
@@ -139,12 +160,12 @@ def absence_of_duplications(data_frame):
 
     check_arguments(data_frame)
 
+    files_df = get_files_data_frame(data_frame)
+
     # files_duplicated_lines_density = m5 metric
-    files_duplicated_lines_density = data_frame["duplicated_lines_density"].astype(
-        float
-    )
+    files_duplicated_lines_density = files_df["duplicated_lines_density"].astype(float)
     # number_of_files = Tm3 metric
-    number_of_files = len(data_frame)
+    number_of_files = len(files_df)
 
     check_number_of_files(number_of_files)
 
@@ -177,10 +198,12 @@ def test_coverage(data_frame):
 
     check_arguments(data_frame)
 
+    files_df = get_files_data_frame(data_frame)
+
     # number_of_files = m3 metric
-    number_of_files = len(data_frame)
+    number_of_files = len(files_df)
     # test_coverage = m6 metric
-    test_coverage = data_frame["coverage"].astype(float)
+    test_coverage = files_df["coverage"].astype(float)
 
     check_number_of_files(number_of_files)
 
@@ -197,3 +220,53 @@ def test_coverage(data_frame):
     em6i = interpolate_series(files_between_thresholds, x, y)
 
     return np.sum(em6i) / number_of_files
+
+
+def fast_test_builds(data_frame):
+    """
+    Calculates fast test builds (em5)
+
+    This function calculates the fast test builds measure (em5)
+    used to assess the testing status subcharacteristic.
+    """
+
+    TEST_EXECUTION_TIME_THRESHOLD = 300000
+
+    root_test = get_test_root_dir(data_frame)
+
+    # test_execution_time = m9 metric
+    test_execution_time = float(root_test["test_execution_time"])
+
+    x, y = create_coordinate_pair(0, 1, reverse_y=True)
+
+    em5 = 0
+
+    if test_execution_time < TEST_EXECUTION_TIME_THRESHOLD:
+        if5i = test_execution_time / TEST_EXECUTION_TIME_THRESHOLD
+        em5 = np.interp(if5i, x, y)
+
+    return em5
+
+
+def passed_tests(data_frame):
+    """
+    Calculates passed tests (em4)
+
+    This function calculates the passed tests measure (em4)
+    used to assess the testing status subcharacteristic.
+    """
+    root_test = get_test_root_dir(data_frame)
+    # tests = m6 metrics
+    tests = float(root_test["tests"])
+    # test_errors = m7 metrics
+    test_errors = float(root_test["test_errors"])
+    # test_failures = m8 metrics
+    test_failures = float(root_test["test_failures"])
+
+    x, y = create_coordinate_pair(0, 1, reverse_y=True)
+
+    if4i = (tests - (test_errors + test_failures)) / tests
+
+    em4 = np.interp(if4i, x, y)
+
+    return em4

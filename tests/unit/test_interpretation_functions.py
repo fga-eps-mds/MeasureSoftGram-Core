@@ -3,6 +3,9 @@ from src.core.interpretation_functions import (
     commented_files_density,
     absence_of_duplications,
     test_coverage as interpret_test_coverage,
+    passed_tests,
+    fast_test_builds,
+    get_test_root_dir,
 )
 from src.core.exceptions import (
     InvalidMetricValue,
@@ -133,6 +136,30 @@ SUCCESS_TEST_DATA = [
         0.5647222222222222,
         "py",
     ),
+    (
+        passed_tests,
+        "tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-CLI-04-13-2022-02-13-37-v1.1.1.json",
+        1.0,
+        "py",
+    ),
+    (
+        passed_tests,
+        "tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-Service-04-12-2022-17-32-35-v1.1.0.json",
+        0.7142857142857143,
+        "py",
+    ),
+    (
+        fast_test_builds,
+        "tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-CLI-04-13-2022-02-13-37-v1.1.1.json",
+        0.00532,
+        "py",
+    ),
+    (
+        fast_test_builds,
+        "tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-Service-04-12-2022-17-32-35-v1.1.0.json",
+        0.0010166666666666666,
+        "py",
+    ),
 ]
 
 
@@ -160,6 +187,19 @@ INVALID_ARGUMENTS_TEST_DATA = [
     (
         interpret_test_coverage,
         pd.Series(data={"a": 1, "b": 2, "c": 3}, index=["a", "b", "c"]),
+    ),
+]
+
+TEST_ROOT_DIR_TEST_DATA = [
+    (
+        "tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-CLI-04-13-2022-02-13-37-v1.1.1.json",
+        37,
+        "py",
+    ),
+    (
+        "tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-Service-04-12-2022-17-32-35-v1.1.0.json",
+        7,
+        "py",
     ),
 ]
 
@@ -236,3 +276,20 @@ def test_non_complex_files_density_error_arguments(interpretation_func, data_fra
     assert (
         str(error.value) == error_msg
     ), f"Expected: {function_call} to raise an InvalidInterpretationFunctionArguments"
+
+
+@pytest.mark.parametrize(
+    "file_path,expected_value,language_extension", TEST_ROOT_DIR_TEST_DATA
+)
+def test_get_test_root_dir(file_path, expected_value, language_extension):
+    """
+    Test cases in which the get_test_root_dir function should return the series
+    """
+
+    json = glob(file_path)
+
+    result = get_test_root_dir(create_file_df(json, language_extension))
+
+    assert (
+        int(result["tests"]) == expected_value
+    ), f"Expected: {result} == {expected_value}"
