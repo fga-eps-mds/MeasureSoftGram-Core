@@ -1,3 +1,12 @@
+from core.interpretation_functions import (
+    non_complex_files_density,
+    test_coverage,
+    commented_files_density,
+    absence_of_duplications,
+    passed_tests,
+    fast_test_builds,
+)
+
 AVAILABLE_PRE_CONFIGS = {
     "characteristics": {
         "reliability": {
@@ -63,4 +72,14 @@ AVAILABLE_PRE_CONFIGS = {
             "metrics": ["duplicated_lines_density"],
         },
     },
+}
+
+
+MEASURES_INTERPRETATION_MAPPING = {
+    "passed_tests": passed_tests,
+    "test_builds": fast_test_builds,
+    "test_coverage": test_coverage,
+    "non_complex_file_density": non_complex_files_density,
+    "commented_file_density": commented_files_density,
+    "duplication_absense": absence_of_duplications,
 }

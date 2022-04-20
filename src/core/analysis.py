@@ -58,5 +58,5 @@ def calculate_measures(dataframe, measures):
         aggregated_measures[measure] = MEASURES_INTERPRETATION_MAPPING[measure](
             dataframe
         )
-    
+
     return aggregated_measures
