@@ -1,6 +1,6 @@
-from core.weighting import weighting_operation
-from core.agregation import agregation_operation
-from core.constants import MEASURES_INTERPRETATION_MAPPING
+from src.core.weighting import weighting_operation
+from src.core.agregation import agregation_operation
+from src.core.constants import MEASURES_INTERPRETATION_MAPPING
 
 
 def resolve_level(level_dict: dict, sublevel: dict, sublevel_key: str) -> dict:
@@ -40,23 +40,25 @@ def make_analysis(measures: dict, subcharacteristics: dict, characteristics: dic
     for key, value in characteristics.items():
         c_weights[key] = value["weight"]
 
-    return resolve_level(
-        {
-            "sqc": {
-                "weights": c_weights,
-                "characteristics": list(aggregated_characteristics.keys()),
+    return (
+        resolve_level(
+            {
+                "sqc": {
+                    "weights": c_weights,
+                    "characteristics": list(aggregated_characteristics.keys()),
+                },
             },
-        },
+            aggregated_characteristics,
+            "characteristics",
+        ),
+        aggregated_scs,
         aggregated_characteristics,
-        "characteristics",
     )
 
 
 def calculate_measures(dataframe, measures):
-    aggregated_measures = {}
+    combined_measures = {}
     for measure in measures:
-        aggregated_measures[measure] = MEASURES_INTERPRETATION_MAPPING[measure](
-            dataframe
-        )
+        combined_measures[measure] = MEASURES_INTERPRETATION_MAPPING[measure](dataframe)
 
-    return aggregated_measures
+    return combined_measures

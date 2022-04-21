@@ -1,4 +1,4 @@
-from core.interpretation_functions import (
+from src.core.interpretation_functions import (
     non_complex_files_density,
     test_coverage,
     commented_files_density,
