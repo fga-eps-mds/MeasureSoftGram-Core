@@ -27,7 +27,5 @@
 
 flask
 flask-restful
-pytest
-pytest-cov
 pandas
 tensorly
