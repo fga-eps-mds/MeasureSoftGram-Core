@@ -12,11 +12,13 @@ class Analysis(Resource):
         pre_config = data["pre_config"]
         components = data["components"]
 
-        metrics = list(pre_config["metrics"].keys())
+        measures = pre_config["measures"]
 
-        df = create_dataframe(metrics, components, pre_config["language_extension"])
+        df = create_dataframe(
+            measures, components["components"], components["language_extension"]
+        )
 
-        aggregated_measures = calculate_measures(df, metrics)
+        aggregated_measures = calculate_measures(df, measures)
 
         sqc_analysis, aggregated_scs, aggregated_characteristics = make_analysis(
             aggregated_measures,
@@ -24,4 +26,10 @@ class Analysis(Resource):
             pre_config["characteristics"],
         )
 
-        return jsonify({"sqc": sqc_analysis})
+        return jsonify(
+            {
+                "sqc": sqc_analysis,
+                "subcharacteristics": aggregated_scs,
+                "characteristics": aggregated_characteristics,
+            }
+        )

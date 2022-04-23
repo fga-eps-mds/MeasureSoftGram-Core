@@ -39,7 +39,7 @@ AVAILABLE_PRE_CONFIGS = {
             "name": "Passed Tests",
             "subcharacteristics": ["testing_status"],
             "characteristics": ["reliability"],
-            "metrics": ["test_success_density"],
+            "metrics": ["tests", "test_errors", "test_failures"],
         },
         "test_builds": {
             "name": "Test Builds",
