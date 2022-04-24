@@ -32,6 +32,12 @@ pip install tox
 ```
 
 Then you can run the tests using
+
+```
+ tox 
+```
+
+if you want to especify the file use:
 ```
  tox <PACKAGE OR FILE>
 ```
