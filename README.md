@@ -6,7 +6,7 @@
 
 The MeasureSoftGram-Core is a Software system for continuous quality of product observation and multidimensional use in continuous design engineering software and is where you have the innovative mathematical models for software analysis.
 
-## How to execute MeasureSoftGram
+## How to use MeasureSoftGram Core
 -[How to use](https://fga-eps-mds.github.io/2021-2-MeasureSoftGram-Doc/docs/artifact/how_to_use)
 
 ## How to run Core
