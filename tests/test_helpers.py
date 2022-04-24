@@ -50,19 +50,26 @@ def metric_per_file(json):
     file_json = []
 
     for component in json["components"]:
-        if component["qualifier"] == "FIL":
-            file_json.append(component)
+        file_json.append(component)
 
     return file_json
 
 
+def check_component_is_valid(component, language_extension):
+
+    return (
+        component["qualifier"] == "DIR" or component["language"] == language_extension
+    )
+
+
 def generate_file_dataframe_per_release(metric_list, json, language_extension):
 
-    df_columns = metric_list
+    df_columns = metric_list + ["qualifier"]
     df = pd.DataFrame(columns=df_columns)
 
     for file in json:
-        if file["language"] == language_extension:
+        if check_component_is_valid(file, language_extension):
+            df.at[file["path"], "qualifier"] = file["qualifier"]
             for measure in file["measures"]:
                 df.at[file["path"], measure["metric"]] = measure["value"]
 
