@@ -101,7 +101,9 @@ def non_complex_files_density(data_frame):
 
     IF1 = np.interp(list(files_in_thresholds_df[(files_functions > 0)]), x, y)
 
-    return sum(IF1) / number_of_files
+    em1 = sum(IF1) / number_of_files
+
+    return em1
 
 
 def commented_files_density(data_frame):
@@ -145,7 +147,9 @@ def commented_files_density(data_frame):
 
     em2i = interpolate_series(files_between_thresholds, x, y)
 
-    return np.sum(em2i) / number_of_files
+    em2 = np.sum(em2i) / number_of_files
+
+    return em2
 
 
 def absence_of_duplications(data_frame):
@@ -182,7 +186,9 @@ def absence_of_duplications(data_frame):
 
     em3i = interpolate_series(files_below_threshold, x, y)
 
-    return np.sum(em3i) / number_of_files
+    em3 = np.sum(em3i) / number_of_files
+
+    return em3
 
 
 def test_coverage(data_frame):
@@ -219,7 +225,9 @@ def test_coverage(data_frame):
 
     em6i = interpolate_series(files_between_thresholds, x, y)
 
-    return np.sum(em6i) / number_of_files
+    em6 = np.sum(em6i) / number_of_files
+
+    return em6
 
 
 def fast_test_builds(data_frame):
