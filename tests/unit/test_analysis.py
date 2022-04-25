@@ -2,8 +2,6 @@ from src.core.analysis import calculate_measures
 from src.core.analysis import resolve_level
 from src.core.analysis import make_analysis
 from tests.test_helpers import create_file_df
-
-
 import pytest
 
 json_list_1 = [
@@ -31,16 +29,13 @@ def test_calculate_measures():
 
     combined_measures = calculate_measures(data_frame_1, measures)
     assert (
-        pytest.approx(combined_measures["test_builds"])
-        == expected_measures["test_builds"]
+        pytest.approx(combined_measures["test_builds"]) == expected_measures["test_builds"]
     )
     assert (
-        pytest.approx(combined_measures["test_coverage"])
-        == expected_measures["test_coverage"]
+        pytest.approx(combined_measures["test_coverage"]) == expected_measures["test_coverage"]
     )
     assert (
-        pytest.approx(combined_measures["passed_tests"])
-        == expected_measures["passed_tests"]
+        pytest.approx(combined_measures["passed_tests"]) == expected_measures["passed_tests"]
     )
 
     return

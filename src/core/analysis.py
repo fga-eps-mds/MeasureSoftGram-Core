@@ -14,10 +14,8 @@ def resolve_level(level_dict: dict, sublevel: dict, sublevel_key: str) -> dict:
 
         for idx in range(len(level_items)):
             item = level_items[idx]
-            item_value = sublevel[item]
-            item_weight = level_weights[item]
-            weights_list.append(item_weight)
-            values_list.append(item_value)
+            weights_list.append(level_weights[item])
+            values_list.append(sublevel[item])
 
         weighted_items = weighting_operation(values_list, weights_list)
         aggregated_value = agregation_operation(weighted_items, weights_list)
@@ -35,16 +33,16 @@ def make_analysis(measures: dict, subcharacteristics: dict, characteristics: dic
         characteristics, aggregated_scs, "subcharacteristics"
     )
 
-    c_weights = {}
+    characteristics_weights = {}
 
     for key, value in characteristics.items():
-        c_weights[key] = value["weight"]
+        characteristics_weights[key] = value["weight"]
 
     return (
         resolve_level(
             {
                 "sqc": {
-                    "weights": c_weights,
+                    "weights": characteristics_weights,
                     "characteristics": list(aggregated_characteristics.keys()),
                 },
             },
