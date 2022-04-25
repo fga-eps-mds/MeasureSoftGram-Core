@@ -17,6 +17,7 @@ coverage.xml
 .vscode
 
 trash
+.venv
 
 # analytics-raw-data
 analytics-raw-data/
