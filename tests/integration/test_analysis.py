@@ -1,5 +1,4 @@
 from tests.test_helpers import read_json
-import json
 from src.app import app
 
 PRE_CONFIGURATION = {

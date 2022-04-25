@@ -1,6 +1,5 @@
 from flask_restful import Resource
 from flask import jsonify, request
-from src.core.constants import AVAILABLE_PRE_CONFIGS
 from src.core.dataframe import create_dataframe
 from src.core.analysis import calculate_measures, make_analysis
 
