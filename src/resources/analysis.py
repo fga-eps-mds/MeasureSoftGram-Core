@@ -1,7 +1,9 @@
+import requests
 from flask_restful import Resource
 from flask import jsonify, request
 from src.core.dataframe import create_dataframe
 from src.core.analysis import calculate_measures, make_analysis
+from src.core.exceptions import MeasureSoftGramCoreException
 
 
 class Analysis(Resource):
@@ -17,7 +19,12 @@ class Analysis(Resource):
             measures, components["components"], components["language_extension"]
         )
 
-        aggregated_measures = calculate_measures(df, measures)
+        try:
+            aggregated_measures = calculate_measures(df, measures)
+        except MeasureSoftGramCoreException as error:
+            return {
+                "error": f"Failed to calculate measures: {error}"
+            }, requests.codes.unprocessable_entity
 
         sqc_analysis, aggregated_scs, aggregated_characteristics = make_analysis(
             aggregated_measures,
