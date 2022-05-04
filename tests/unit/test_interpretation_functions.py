@@ -22,31 +22,49 @@ INVALID_METRICS_TEST_DATA = [
         non_complex_files_density,
         "tests/unit/data/zero_number_of_files.json",
         "The number of files is lesser or equal than 0",
+        "py",
     ),
     (
         non_complex_files_density,
         "tests/unit/data/zero_number_of_functions.json",
         "The number of functions of all files is lesser or equal than 0",
+        "js",
     ),
     (
         non_complex_files_density,
         "tests/unit/data/zero_cyclomatic_complexity.json",
         "The cyclomatic complexity of all files is lesser or equal than 0",
+        "js",
     ),
     (
         commented_files_density,
         "tests/unit/data/zero_number_of_files.json",
         "The number of files is lesser or equal than 0",
+        "py",
     ),
     (
         absence_of_duplications,
         "tests/unit/data/zero_number_of_files.json",
         "The number of files is lesser or equal than 0",
+        "py",
     ),
     (
         interpret_test_coverage,
         "tests/unit/data/zero_number_of_files.json",
         "The number of files is lesser or equal than 0",
+        "py",
+    ),
+    (
+        non_complex_files_density,
+        "tests/unit/data/invalid_complexity_value.json",
+        '"complexity" has an invalid metric value',
+        "py",
+    ),
+    (
+        commented_files_density,
+        "tests/unit/data/invalid_commented_lines_density.json",
+        '"comment_lines_density" has an invalid metric value',
+        "py",
     ),
 ]
 
@@ -78,9 +96,9 @@ SUCCESS_TEST_DATA = [
     ),
     (
         commented_files_density,
-        "tests/unit/data/fga-eps-mds_2021-2-SiGeD-Frontend-03-15-2022-23_57_08.json",
+        "tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-CLI-04-13-2022-02-13-37-v1.1.1.json",
         0.0050299401197604785,
-        "js",
+        "py",
     ),
     (
         commented_files_density,
@@ -205,11 +223,11 @@ TEST_ROOT_DIR_TEST_DATA = [
 
 
 @pytest.mark.parametrize(
-    "interpretation_func,file_path,error_msg",
+    "interpretation_func,file_path,error_msg,language_extension",
     INVALID_METRICS_TEST_DATA,
 )
 def test_interpretation_functions_invalid_metrics(
-    interpretation_func, file_path, error_msg
+    interpretation_func, file_path, error_msg, language_extension
 ):
     """
     Test cases in which the interpretation functions should raise an InvalidMetricValue exception
@@ -218,7 +236,7 @@ def test_interpretation_functions_invalid_metrics(
     json = glob(file_path)
 
     with pytest.raises(InvalidMetricValue) as error:
-        interpretation_func(create_file_df(json))
+        interpretation_func(create_file_df(json, language_extension))
 
     function_call = (
         f"{interpretation_func.__name__}(create_file_df('{file_path.split('/')[-1]}'))"
