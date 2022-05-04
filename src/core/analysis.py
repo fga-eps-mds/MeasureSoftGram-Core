@@ -5,6 +5,7 @@ from src.core.constants import MEASURES_INTERPRETATION_MAPPING
 
 def resolve_level(level_dict: dict, sublevel: dict, sublevel_key: str) -> dict:
     aggregated_level = {}
+    all_weighted_values = {}
     for key, value in level_dict.items():
         level_items = value[sublevel_key]
         level_weights = value["weights"]
@@ -20,16 +21,24 @@ def resolve_level(level_dict: dict, sublevel: dict, sublevel_key: str) -> dict:
         weighted_items = weighting_operation(values_list, weights_list)
         aggregated_value = agregation_operation(weighted_items, weights_list)
 
-        aggregated_level[key] = aggregated_value
+        weighted_items_dict = {}
+        for idx in range(len(level_items)):
+            item = level_items[idx]
+            weighted_items_dict[item] = weighted_items[idx]
 
-    return aggregated_level
+        aggregated_level[key] = aggregated_value
+        all_weighted_values[key] = weighted_items_dict
+
+    return aggregated_level, all_weighted_values
 
 
 def make_analysis(measures: dict, subcharacteristics: dict, characteristics: dict):
 
-    aggregated_scs = resolve_level(subcharacteristics, measures, "measures")
+    aggregated_scs, weighted_measures_per_scs = resolve_level(
+        subcharacteristics, measures, "measures"
+    )
 
-    aggregated_characteristics = resolve_level(
+    aggregated_characteristics, weighted_scs_per_c = resolve_level(
         characteristics, aggregated_scs, "subcharacteristics"
     )
 
@@ -38,19 +47,24 @@ def make_analysis(measures: dict, subcharacteristics: dict, characteristics: dic
     for key, value in characteristics.items():
         characteristics_weights[key] = value["weight"]
 
-    return (
-        resolve_level(
-            {
-                "sqc": {
-                    "weights": characteristics_weights,
-                    "characteristics": list(aggregated_characteristics.keys()),
-                },
+    aggregated_sqc, weighted_c = resolve_level(
+        {
+            "sqc": {
+                "weights": characteristics_weights,
+                "characteristics": list(aggregated_characteristics.keys()),
             },
-            aggregated_characteristics,
-            "characteristics",
-        ),
+        },
+        aggregated_characteristics,
+        "characteristics",
+    )
+
+    return (
+        aggregated_sqc,
         aggregated_scs,
         aggregated_characteristics,
+        weighted_measures_per_scs,
+        weighted_scs_per_c,
+        weighted_c,
     )
 
 
