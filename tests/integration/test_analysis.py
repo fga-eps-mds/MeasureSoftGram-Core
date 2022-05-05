@@ -53,14 +53,12 @@ def test_analysis_sucess():
         response = client.post("/analysis", json=data)
 
         assert response.status_code == 200
-        assert response.json == {
-            "characteristics": {
-                "maintainability": 0.5,
-                "reliability": 0.7142857142857143,
-            },
-            "sqc": {"sqc": 0.6165241607725739},
-            "subcharacteristics": {
-                "modifiability": 0.5,
-                "testing_status": 0.7142857142857143,
-            },
+        assert response.json["characteristics"] == {
+            "maintainability": 0.5,
+            "reliability": 0.7142857142857143,
         }
+        assert response.json["subcharacteristics"] == {
+            "modifiability": 0.5,
+            "testing_status": 0.7142857142857143,
+        }
+        assert response.json["sqc"] == {"sqc": 0.6165241607725739}
