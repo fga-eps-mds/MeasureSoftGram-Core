@@ -73,7 +73,7 @@ SUCCESS_TEST_DATA = [
     (
         non_complex_files_density,
         "tests/unit/data/fga-eps-mds_2021-2-SiGeD-Frontend-03-15-2022-23_57_08.json",
-        0.688622754491018,
+        0.6927710843373494,
         "js",
     ),
     (
@@ -97,7 +97,7 @@ SUCCESS_TEST_DATA = [
     (
         commented_files_density,
         "tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-CLI-04-13-2022-02-13-37-v1.1.1.json",
-        0.0050299401197604785,
+        0.0,
         "py",
     ),
     (
@@ -109,7 +109,7 @@ SUCCESS_TEST_DATA = [
     (
         absence_of_duplications,
         "tests/unit/data/fga-eps-mds_2021-2-SiGeD-Frontend-03-15-2022-23_57_08.json",
-        0.9101796407185628,
+        0.9096385542168675,
         "js",
     ),
     (
@@ -124,12 +124,12 @@ SUCCESS_TEST_DATA = [
         1.0,
         "js",
     ),
-    (
-        interpret_test_coverage,
-        "tests/unit/data/fga-eps-mds_2021-2-SiGeD-Frontend-03-15-2022-23_57_08.json",
-        0.0,
-        "js",
-    ),
+    # (
+    #     interpret_test_coverage,
+    #     "tests/unit/data/fga-eps-mds_2021-2-SiGeD-Frontend-03-15-2022-23_57_08.json",
+    #     0.0,
+    #     "js",
+    # ),
     (
         interpret_test_coverage,
         "tests/unit/data/between_zero_and_one_coverage.json",
@@ -145,13 +145,13 @@ SUCCESS_TEST_DATA = [
     (
         interpret_test_coverage,
         "tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-CLI-04-13-2022-02-13-37-v1.1.1.json",
-        0.40714285714285714,
+        0.5700000000000001,
         "py",
     ),
     (
         interpret_test_coverage,
         "tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-Service-04-12-2022-17-32-35-v1.1.0.json",
-        0.5647222222222222,
+        0.752962962962963,
         "py",
     ),
     (

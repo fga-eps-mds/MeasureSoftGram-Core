@@ -243,7 +243,7 @@
             "measures": [
                 {
                     "metric": "complexity",
-                    "value": null
+                    "value": "0"
                 },
                 {
                     "metric": "functions",
@@ -334,7 +334,7 @@
             "measures": [
                 {
                     "metric": "complexity",
-                    "value": "6"
+                    "value": null
                 },
                 {
                     "metric": "functions",
