@@ -23,7 +23,7 @@ def test_calculate_measures():
 
     expected_measures = {
         "test_builds": 0.0010166666666666666,
-        "test_coverage": 0.5647222222222222,
+        "test_coverage": 0.752962962962963,
         "passed_tests": 0.7142857142857143,
     }
 

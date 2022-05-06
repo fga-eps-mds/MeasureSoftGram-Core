@@ -54,11 +54,11 @@ def test_analysis_sucess():
 
         assert response.status_code == 200
         assert response.json["characteristics"] == {
-            "maintainability": 0.5,
+            "maintainability": 0.6666666666666665,
             "reliability": 0.7142857142857143,
         }
         assert response.json["subcharacteristics"] == {
-            "modifiability": 0.5,
+            "modifiability": 0.6666666666666665,
             "testing_status": 0.7142857142857143,
         }
-        assert response.json["sqc"] == {"sqc": 0.6165241607725739}
+        assert response.json["sqc"] == {"sqc": 0.6908865775498528}
