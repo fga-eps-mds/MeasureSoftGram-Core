@@ -29,13 +29,16 @@ def test_calculate_measures():
 
     combined_measures = calculate_measures(data_frame_1, measures)
     assert (
-        pytest.approx(combined_measures["test_builds"]) == expected_measures["test_builds"]
+        pytest.approx(combined_measures["test_builds"])
+        == expected_measures["test_builds"]
     )
     assert (
-        pytest.approx(combined_measures["test_coverage"]) == expected_measures["test_coverage"]
+        pytest.approx(combined_measures["test_coverage"])
+        == expected_measures["test_coverage"]
     )
     assert (
-        pytest.approx(combined_measures["passed_tests"]) == expected_measures["passed_tests"]
+        pytest.approx(combined_measures["passed_tests"])
+        == expected_measures["passed_tests"]
     )
 
     return
@@ -68,13 +71,13 @@ measures1 = {
 
 
 def test_resolve_level():
-    aggregate_level = resolve_level(subcharacteristics1, measures1, "measures")
+    aggregate_level, _ = resolve_level(subcharacteristics1, measures1, "measures")
 
     assert pytest.approx(aggregate_level["testing_status"]) == 0.525711
 
 
 def test_make_analysis():
-    sqc, agregated_sbc, aggregated_characteristics = make_analysis(
+    sqc, agregated_sbc, aggregated_characteristics, _, _, _ = make_analysis(
         measures1, subcharacteristics1, characteristics1
     )
     assert pytest.approx(agregated_sbc["testing_status"]) == 0.525711

@@ -26,7 +26,14 @@ class Analysis(Resource):
                 "error": f"Failed to calculate measures: {error}"
             }, requests.codes.unprocessable_entity
 
-        sqc_analysis, aggregated_scs, aggregated_characteristics = make_analysis(
+        (
+            sqc_analysis,
+            aggregated_scs,
+            aggregated_characteristics,
+            weighted_measures_per_scs,
+            weighted_scs_per_c,
+            weighted_c,
+        ) = make_analysis(
             aggregated_measures,
             pre_config["subcharacteristics"],
             pre_config["characteristics"],
@@ -37,5 +44,8 @@ class Analysis(Resource):
                 "sqc": sqc_analysis,
                 "subcharacteristics": aggregated_scs,
                 "characteristics": aggregated_characteristics,
+                "weighted_measures": weighted_measures_per_scs,
+                "weighted_subcharacteristics": weighted_scs_per_c,
+                "weighted_characteristics": weighted_c,
             }
         )
