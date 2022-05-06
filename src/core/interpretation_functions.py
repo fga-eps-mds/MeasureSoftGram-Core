@@ -1,6 +1,7 @@
 from .exceptions import InvalidMetricValue, InvalidInterpretationFunctionArguments
 import pandas as pd
 import numpy as np
+import math
 
 
 def check_arguments(data_frame):
@@ -21,6 +22,19 @@ def check_number_of_files(number_of_files):
 
     if number_of_files <= 0:
         raise InvalidMetricValue("The number of files is lesser or equal than 0")
+
+
+def check_metric_value(metric_value, metric):
+    try:
+        if metric_value is None or math.isnan(float(metric_value)):
+            raise InvalidMetricValue(f'"{metric}" has an invalid metric value')
+    except (ValueError, TypeError):
+        raise InvalidMetricValue(f'"{metric}" has an invalid metric value')
+
+
+def check_metric_values(metric_values, metric):
+    for value in metric_values:
+        check_metric_value(value, metric)
 
 
 def interpolate_series(series, x, y):
@@ -52,7 +66,9 @@ def get_files_data_frame(data_frame):
     This function returns a data frame with files data.
     """
 
-    return data_frame[data_frame["qualifier"] == "FIL"]
+    return data_frame[
+        (data_frame["qualifier"] == "FIL") & (data_frame["ncloc"].astype(float) > 0)
+    ]
 
 
 def get_test_root_dir(data_frame):
@@ -82,6 +98,10 @@ def non_complex_files_density(data_frame):
     number_of_files = len(files_df)
 
     check_number_of_files(number_of_files)
+
+    check_metric_values(files_complexity, "complexity")
+
+    check_metric_values(files_functions, "functions")
 
     if files_complexity.sum() <= 0:
         raise InvalidMetricValue(
@@ -128,6 +148,8 @@ def commented_files_density(data_frame):
 
     check_number_of_files(number_of_files)
 
+    check_metric_values(files_comment_lines_density, "comment_lines_density")
+
     if files_comment_lines_density.sum() < 0:
         raise InvalidMetricValue(
             "The number of files comment lines density is lesser than 0"
@@ -173,6 +195,8 @@ def absence_of_duplications(data_frame):
 
     check_number_of_files(number_of_files)
 
+    check_metric_values(files_duplicated_lines_density, "duplicated_lines_density")
+
     if files_duplicated_lines_density.sum() < 0:
         raise InvalidMetricValue(
             "The number of files duplicated lines density is lesser than 0"
@@ -213,6 +237,8 @@ def test_coverage(data_frame):
 
     check_number_of_files(number_of_files)
 
+    check_metric_values(test_coverage, "coverage")
+
     x, y = create_coordinate_pair(
         MINIMUM_COVERAGE_THRESHOLD / 100,
         MAXIMUM_COVERAGE_THRESHOLD / 100,
@@ -242,6 +268,8 @@ def fast_test_builds(data_frame):
 
     root_test = get_test_root_dir(data_frame)
 
+    check_metric_value(root_test["test_execution_time"], "test_execution_time")
+
     # test_execution_time = m9 metric
     test_execution_time = float(root_test["test_execution_time"])
 
@@ -264,6 +292,11 @@ def passed_tests(data_frame):
     used to assess the testing status subcharacteristic.
     """
     root_test = get_test_root_dir(data_frame)
+
+    check_metric_value(root_test["tests"], "tests")
+    check_metric_value(root_test["test_errors"], "test_errors")
+    check_metric_value(root_test["test_failures"], "test_failures")
+
     # tests = m6 metrics
     tests = float(root_test["tests"])
     # test_errors = m7 metrics
