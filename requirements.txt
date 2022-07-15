@@ -25,8 +25,9 @@
 # seaborn~=0.11.0
 # urllib3~=1.26.3
 
-flask
-flask-restful
-pandas
-tensorly
-requests
+Flask==2.1.*
+Flask-RESTful==0.3.*
+pandas==1.4.*
+tensorly==0.7.*
+requests==2.28.*
+gunicorn==20.1.*
