@@ -1,3 +1,6 @@
+from typing import Dict
+
+from flask import jsonify
 from .exceptions import InvalidMetricValue, InvalidInterpretationFunctionArguments
 import pandas as pd
 import numpy as np
@@ -72,6 +75,9 @@ def get_files_data_frame(data_frame):
 
 
 def get_test_root_dir(data_frame):
+    """
+    Retorna todas as métricas do diretório de teste
+    """
 
     dirs = data_frame[data_frame["qualifier"] == "DIR"]
 
@@ -304,10 +310,46 @@ def passed_tests(data_frame):
     # test_failures = m8 metrics
     test_failures = float(root_test["test_failures"])
 
+    return calculate_em4(data={
+        "tests": tests,
+        "test_errors": test_errors,
+        "test_failures": test_failures,
+    })
+
+def calculate_em4(data: Dict[str, float]):
+    """
+    Calculates passed tests (em4)
+
+    This function calculates the passed tests measure (em4)
+    used to assess the testing status subcharacteristic.
+    """
+    if 'tests' not in data:
+        raise Exception({
+            "errors": [
+                "`tests` key is missing in the request data"
+            ]
+        })
+
+    if 'test_errors' not in data:
+        raise Exception({
+            "errors": [
+                "`test_errors` key is missing in the request data"
+            ]
+        })
+
+    if 'test_failures' not in data:
+        raise Exception({
+            "errors": [
+                "`test_failures` key is missing in the request data"
+            ]
+        })
+
+    number_of_tests = data['tests']
+    number_of_test_errors = data['test_errors']
+    number_of_test_failures = data['test_failures']
+
     x, y = create_coordinate_pair(0, 1, reverse_y=True)
 
-    if4i = (tests - (test_errors + test_failures)) / tests
-
-    em4 = np.interp(if4i, x, y)
-
-    return em4
+    number_of_fail_tests = number_of_test_errors + number_of_test_failures
+    if4i = (number_of_tests - (number_of_fail_tests)) / number_of_tests
+    return np.interp(if4i, x, y)
