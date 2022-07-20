@@ -1,6 +1,6 @@
 from src.core.weighting import weighting_operation
 from src.core.agregation import agregation_operation
-from src.core.constants import MEASURES_INTERPRETATION_MAPPING
+from src.util.constants import MEASURES_INTERPRETATION_MAPPING
 
 
 def resolve_level(level_dict: dict, sublevel: dict, sublevel_key: str) -> dict:

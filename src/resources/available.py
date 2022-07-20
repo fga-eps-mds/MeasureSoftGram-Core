@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from flask import jsonify
-from src.core.constants import AVAILABLE_PRE_CONFIGS
+from src.util.constants import AVAILABLE_PRE_CONFIGS
 
 
 class AvailablePreConfigs(Resource):
