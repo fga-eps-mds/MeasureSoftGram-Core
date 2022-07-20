@@ -3,7 +3,7 @@ from flask_restful import Resource
 from flask import jsonify, request
 from src.core.dataframe import create_dataframe
 from src.core.analysis import calculate_measures, make_analysis
-from src.core.exceptions import MeasureSoftGramCoreException
+from src.util.exceptions import MeasureSoftGramCoreException
 
 
 class Analysis(Resource):

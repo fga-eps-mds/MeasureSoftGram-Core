@@ -1,40 +1,11 @@
-from .exceptions import InvalidMetricValue, InvalidInterpretationFunctionArguments
-import pandas as pd
+from src.util.check_functions import (
+    check_arguments,
+    check_metric_value,
+    check_metric_values,
+    check_number_of_files
+)
+from src.util.exceptions import InvalidMetricValue
 import numpy as np
-import math
-
-
-def check_arguments(data_frame):
-    """
-    Raises an InvalidInterpretationFunctionArguments exception if argument it's not a pandas.DataFrame.
-    """
-
-    if not isinstance(data_frame, pd.DataFrame):
-        raise InvalidInterpretationFunctionArguments(
-            "Expected data_frame to be a pandas.DataFrame"
-        )
-
-
-def check_number_of_files(number_of_files):
-    """
-    Raises an InvalidMetricValue exception if the number of files is lesser or equal than 0.
-    """
-
-    if number_of_files <= 0:
-        raise InvalidMetricValue("The number of files is lesser or equal than 0")
-
-
-def check_metric_value(metric_value, metric):
-    try:
-        if metric_value is None or math.isnan(float(metric_value)):
-            raise InvalidMetricValue(f'"{metric}" has an invalid metric value')
-    except (ValueError, TypeError):
-        raise InvalidMetricValue(f'"{metric}" has an invalid metric value')
-
-
-def check_metric_values(metric_values, metric):
-    for value in metric_values:
-        check_metric_value(value, metric)
 
 
 def interpolate_series(series, x, y):

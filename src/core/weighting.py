@@ -1,7 +1,6 @@
 import numpy as np
 
-from src.core.exceptions import ValuesAndWeightsOfDifferentSizes
-
+from src.util.exceptions import ValuesAndWeightsOfDifferentSizes
 
 def weighting_operation(values, weights):
     if len(values) != len(weights):

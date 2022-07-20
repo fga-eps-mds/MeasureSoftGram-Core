@@ -7,7 +7,7 @@ from src.core.interpretation_functions import (
     fast_test_builds,
     get_test_root_dir,
 )
-from src.core.exceptions import (
+from src.util.exceptions import (
     InvalidMetricValue,
     InvalidInterpretationFunctionArguments,
 )

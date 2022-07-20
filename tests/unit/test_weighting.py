@@ -1,7 +1,7 @@
 from src.core.weighting import weighting_operation
 import pytest
 
-from src.core.exceptions import ValuesAndWeightsOfDifferentSizes
+from src.util.exceptions import ValuesAndWeightsOfDifferentSizes
 
 
 VALID_WEIGHTING_OPERATION = [
