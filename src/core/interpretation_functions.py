@@ -115,9 +115,6 @@ def non_complex_files_density(data_frame):
             "The number of functions of all files is lesser or equal than 0"
         )
 
-    # Change to hardcoded 10
-    # m0 = np.median(files_complexity / files_functions)
-
     x, y = create_coordinate_pair(0, COMPLEX_FILES_DENSITY_THRESHOLD)
 
     files_in_thresholds_df = (files_complexity / files_functions) <= COMPLEX_FILES_DENSITY_THRESHOLD
