@@ -25,7 +25,6 @@ def interpolate_series(series, x, y):
 def non_complex_files_density(data_frame):
     """
     Calculates non-complex files density (em1).
-
     This function calculates non-complex files density measure (em1)
     used to assess the changeability quality subcharacteristic.
     """
@@ -63,7 +62,6 @@ def non_complex_files_density(data_frame):
 def commented_files_density(data_frame: pd.DataFrame):
     """
     Calculates commented files density (em2).
-
     This function calculates commented files density measure (em2)
     used to assess the changeability quality subcharacteristic.
     """
@@ -106,7 +104,6 @@ def commented_files_density(data_frame: pd.DataFrame):
 def absence_of_duplications(data_frame: pd.DataFrame):
     """
     Calculates duplicated files absence (em3).
-
     This function calculates the duplicated files absence measure (em3)
     used to assess the changeability quality subcharacteristic.
     """
@@ -141,7 +138,6 @@ def absence_of_duplications(data_frame: pd.DataFrame):
 def test_coverage(data_frame):
     """
     Calculates test coverage (em6).
-
     This function calculates the test coverage measure (em6)
     used to assess the testing status subcharacteristic.
     """
@@ -177,15 +173,16 @@ def test_coverage(data_frame):
 def fast_test_builds(data_frame):
     """
     Calculates fast test builds (em5)
-
     This function calculates the fast test builds measure (em5)
     used to assess the testing status subcharacteristic.
     """
 
     TEST_EXECUTION_TIME_THRESHOLD = 300000
     root_test = get_test_root_dir(data_frame)
+
     check_metric_value(root_test["test_execution_time"], "test_execution_time")
     test_execution_time = float(root_test["test_execution_time"])  # m9 metric
+    
     x, y = create_coordinate_pair(0, 1, reverse_y=True)
     em5 = 0
 
@@ -199,7 +196,6 @@ def fast_test_builds(data_frame):
 def passed_tests(data_frame):
     """
     Calculates passed tests (em4)
-
     This function calculates the passed tests measure (em4)
     used to assess the testing status subcharacteristic.
     """
@@ -223,7 +219,6 @@ def passed_tests(data_frame):
 def team_throughput(data_frame: pd.DataFrame):
     """
     Calculates team throughput measure.
-
     This function is used to calculate the ratio between the number
     of issues resolved and the total number of issues given a time frame,
     A.K.A. team throughput.

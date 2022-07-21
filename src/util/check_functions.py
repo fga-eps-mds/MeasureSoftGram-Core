@@ -14,7 +14,7 @@ def check_component_is_valid(component, language_extension):
     )
 
 
-def check_arguments(data_frame):
+def check_arguments(data_frame: pd.DataFrame):
     """
     Raises an InvalidInterpretationFunctionArguments exception if argument it's not a pandas.DataFrame.
     """
