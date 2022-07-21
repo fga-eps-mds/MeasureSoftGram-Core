@@ -2,9 +2,9 @@ import pandas as pd
 from src.util.check_functions import check_component_is_valid
 
 
-def create_dataframe(metrics, components, language_extension):
+def create_dataframe(measures, components, language_extension):
 
-    df_columns = metrics + ["qualifier"]
+    df_columns = measures + ["qualifier"]
 
     df = pd.DataFrame(columns=df_columns)
 
