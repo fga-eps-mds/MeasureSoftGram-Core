@@ -4,7 +4,7 @@ from marshmallow import Schema, fields
 class MeasureSchema(Schema):
     """
     {
-        "name": "passed_tests",
+        "key": "passed_tests",
         "parameters": {
             "tests": 10,
             "test_errors": 3,
@@ -12,7 +12,7 @@ class MeasureSchema(Schema):
         }
     }
     """
-    name = fields.Str(required=True)
+    key = fields.Str(required=True)
     parameters = fields.Dict(required=True)
 
 
@@ -21,7 +21,7 @@ class CalculateMeasureSchema(Schema):
     {
         "measures": [
             {
-                "name": "passed_tests",
+                "key": "passed_tests",
                 "parameters": {
                     "tests": 10,
                     "test_errors": 3,
@@ -29,7 +29,7 @@ class CalculateMeasureSchema(Schema):
                 }
             },
             {
-                "name": "test_builds",
+                "key": "test_builds",
                 "parameters": {
                     "param1": 8,
                     "param2": 19,
