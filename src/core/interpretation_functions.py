@@ -316,6 +316,7 @@ def passed_tests(data_frame):
         "test_failures": test_failures,
     })
 
+
 def calculate_em4(data: Dict[str, float]):
     """
     Calculates passed tests (em4)
@@ -323,27 +324,6 @@ def calculate_em4(data: Dict[str, float]):
     This function calculates the passed tests measure (em4)
     used to assess the testing status subcharacteristic.
     """
-    if 'tests' not in data:
-        raise Exception({
-            "errors": [
-                "`tests` key is missing in the request data"
-            ]
-        })
-
-    if 'test_errors' not in data:
-        raise Exception({
-            "errors": [
-                "`test_errors` key is missing in the request data"
-            ]
-        })
-
-    if 'test_failures' not in data:
-        raise Exception({
-            "errors": [
-                "`test_failures` key is missing in the request data"
-            ]
-        })
-
     number_of_tests = data['tests']
     number_of_test_errors = data['test_errors']
     number_of_test_failures = data['test_failures']
@@ -351,5 +331,5 @@ def calculate_em4(data: Dict[str, float]):
     x, y = create_coordinate_pair(0, 1, reverse_y=True)
 
     number_of_fail_tests = number_of_test_errors + number_of_test_failures
-    if4i = (number_of_tests - (number_of_fail_tests)) / number_of_tests
+    if4i = (number_of_tests - number_of_fail_tests) / number_of_tests
     return np.interp(if4i, x, y)

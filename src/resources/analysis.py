@@ -1,11 +1,13 @@
 import requests
+
 from flask_restful import Resource
 from flask import jsonify, request
+from marshmallow.exceptions import ValidationError
+
 from src.core.dataframe import create_dataframe
 from src.core.analysis import calculate_measures, make_analysis
 from src.core.exceptions import MeasureSoftGramCoreException
-
-from src.core.interpretation_functions import calculate_em4
+from src.core.constants import MEASURES_INTERPRETATION_MAPPING
 
 
 class Analysis(Resource):
@@ -54,25 +56,22 @@ class Analysis(Resource):
 
 
 class CalculateSpecificMeasure(Resource):
-    FUNCTION_MAP = {
-        "passed_tests": calculate_em4,
-    }
-
     # "/calculate-measure/<string:measure_name>",
     def post(self, measure_name):
-        funcs = CalculateSpecificMeasure.FUNCTION_MAP
-
-        if measure_name not in funcs:
+        if measure_name not in MEASURES_INTERPRETATION_MAPPING.keys():
             return {
                 "error": f"Measure {measure_name} not found"
             }, requests.codes.not_found
 
-        data = request.get_json(force=True)
-
         try:
-            result = funcs[measure_name](data)
-            return jsonify({measure_name: result})
-        except Exception:
+            data = MEASURES_INTERPRETATION_MAPPING[measure_name]["schema"]().load(request.get_json())
+        except ValidationError as e:
             return {
-                "error": f"Failed to calculate measure {measure_name}"
+                "error": {
+                    "message": f"Failed to calculate measure {measure_name}",
+                    "schema_errors": e.messages,
+                }
             }, requests.codes.unprocessable_entity
+
+        result = MEASURES_INTERPRETATION_MAPPING[measure_name]["calculation_function"](data)
+        return jsonify({measure_name: result})

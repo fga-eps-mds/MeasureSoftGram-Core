@@ -4,7 +4,11 @@ from src.core.interpretation_functions import (
     commented_files_density,
     absence_of_duplications,
     passed_tests,
+    calculate_em4,
     fast_test_builds,
+)
+from src.core.schemas import (
+    PassedTestsSchema,
 )
 
 AVAILABLE_PRE_CONFIGS = {
@@ -76,7 +80,11 @@ AVAILABLE_PRE_CONFIGS = {
 
 
 MEASURES_INTERPRETATION_MAPPING = {
-    "passed_tests": passed_tests,
+    "passed_tests": {
+        "interpretation_function": passed_tests,
+        "calculation_function": calculate_em4,
+        "schema": PassedTestsSchema,
+    },
     "test_builds": fast_test_builds,
     "test_coverage": test_coverage,
     "non_complex_file_density": non_complex_files_density,
