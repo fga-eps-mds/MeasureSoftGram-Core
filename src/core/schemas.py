@@ -1,6 +1,47 @@
 from marshmallow import Schema, fields
 
 
+class MeasureSchema(Schema):
+    """
+    {
+        "name": "passed_tests",
+        "parameters": {
+            "tests": 10,
+            "test_errors": 3,
+            "test_failures": 1
+        }
+    }
+    """
+    name = fields.Str(required=True)
+    parameters = fields.Dict(required=True)
+
+
+class CalculateMeasureSchema(Schema):
+    """
+    {
+        "measures": [
+            {
+                "name": "passed_tests",
+                "parameters": {
+                    "tests": 10,
+                    "test_errors": 3,
+                    "test_failures": 1
+                }
+            },
+            {
+                "name": "test_builds",
+                "parameters": {
+                    "param1": 8,
+                    "param2": 19,
+                    "parma3": 4
+                }
+            }
+        ]
+    }
+    """
+    measures = fields.List(fields.Nested(MeasureSchema), required=True)
+
+
 class PassedTestsSchema(Schema):
     tests = fields.Float(required=True)
     test_errors = fields.Float(required=True)

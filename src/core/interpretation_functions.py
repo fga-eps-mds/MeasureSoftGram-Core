@@ -1,6 +1,5 @@
 from typing import Dict
 
-from flask import jsonify
 from .exceptions import InvalidMetricValue, InvalidInterpretationFunctionArguments
 import pandas as pd
 import numpy as np

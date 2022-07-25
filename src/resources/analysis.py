@@ -8,16 +8,16 @@ from src.core.dataframe import create_dataframe
 from src.core.analysis import calculate_measures, make_analysis
 from src.core.exceptions import MeasureSoftGramCoreException
 from src.core.constants import MEASURES_INTERPRETATION_MAPPING
+from src.core.schemas import CalculateMeasureSchema
 
 
 class Analysis(Resource):
     def post(self):
         data = request.get_json(force=True)
 
-        pre_config = data["pre_config"] # Outro json com base json da pre-config
-        components = data["components"] # Outro json com base json do sonar (subcomponents)
-
-        measures = pre_config["measures"] # lista de str com as métricas
+        pre_config = data["pre_config"]
+        components = data["components"]
+        measures = pre_config["measures"]
 
         df = create_dataframe(
             measures, components["components"], components["language_extension"]
@@ -56,22 +56,48 @@ class Analysis(Resource):
 
 
 class CalculateSpecificMeasure(Resource):
-    # "/calculate-measure/<string:measure_name>",
-    def post(self, measure_name):
-        if measure_name not in MEASURES_INTERPRETATION_MAPPING.keys():
-            return {
-                "error": f"Measure {measure_name} not found"
-            }, requests.codes.not_found
-
+    def post(self):
+        # Validate if outter keys is valid
         try:
-            data = MEASURES_INTERPRETATION_MAPPING[measure_name]["schema"]().load(request.get_json())
-        except ValidationError as e:
+            data = CalculateMeasureSchema().load(request.get_json(force=True))
+        except ValidationError as error:
             return {
-                "error": {
-                    "message": f"Failed to calculate measure {measure_name}",
-                    "schema_errors": e.messages,
-                }
+                "error": "Failed to validate request",
+                "schema_errors": error.messages,
             }, requests.codes.unprocessable_entity
 
-        result = MEASURES_INTERPRETATION_MAPPING[measure_name]["calculation_function"](data)
-        return jsonify({measure_name: result})
+        # Objeto retornado em caso de sucesso
+        response_data = {"measures": []}
+
+        valid_measures = MEASURES_INTERPRETATION_MAPPING.keys()
+
+        for measure in data["measures"]:
+            measure_name: str = measure['name']
+
+            if measure_name not in valid_measures:
+                return {
+                    "error": f"Measure {measure_name} is not supported",
+                }, requests.codes.unprocessable_entity
+
+            measure_params = measure["parameters"]
+            schema = MEASURES_INTERPRETATION_MAPPING[measure_name]["schema"]
+
+            try:
+                validated_params = schema().load(measure_params)
+            except ValidationError as exc:
+                return {
+                    "error": {
+                        "message": f"Metric parameters `{measure_name}` are not valid",
+                        "schema_errors": exc.messages,
+                    }
+                }, requests.codes.unprocessable_entity
+
+            interpretation_function = MEASURES_INTERPRETATION_MAPPING[measure_name]["calculation_function"]
+            result = interpretation_function(validated_params)
+
+            response_data["measures"].append({
+                "name": measure_name,
+                "value": result,
+            })
+
+        return jsonify(response_data)
