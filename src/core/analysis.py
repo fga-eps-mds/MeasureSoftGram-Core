@@ -71,6 +71,6 @@ def make_analysis(measures: dict, subcharacteristics: dict, characteristics: dic
 def calculate_measures(dataframe, measures):
     combined_measures = {}
     for measure in measures:
-        combined_measures[measure] = MEASURES_INTERPRETATION_MAPPING[measure](dataframe)
+        combined_measures[measure] = MEASURES_INTERPRETATION_MAPPING[measure]["interpretation_function"](dataframe)
 
     return combined_measures
