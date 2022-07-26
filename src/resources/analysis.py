@@ -72,31 +72,31 @@ class CalculateSpecificMeasure(Resource):
         valid_measures = MEASURES_INTERPRETATION_MAPPING.keys()
 
         for measure in data["measures"]:
-            measure_name: str = measure['name']
+            measure_key: str = measure['key']
 
-            if measure_name not in valid_measures:
+            if measure_key not in valid_measures:
                 return {
-                    "error": f"Measure {measure_name} is not supported",
+                    "error": f"Measure {measure_key} is not supported",
                 }, requests.codes.unprocessable_entity
 
             measure_params = measure["parameters"]
-            schema = MEASURES_INTERPRETATION_MAPPING[measure_name]["schema"]
+            schema = MEASURES_INTERPRETATION_MAPPING[measure_key]["schema"]
 
             try:
                 validated_params = schema().load(measure_params)
             except ValidationError as exc:
                 return {
                     "error": {
-                        "message": f"Metric parameters `{measure_name}` are not valid",
+                        "message": f"Metric parameters `{measure_key}` are not valid",
                         "schema_errors": exc.messages,
                     }
                 }, requests.codes.unprocessable_entity
 
-            interpretation_function = MEASURES_INTERPRETATION_MAPPING[measure_name]["calculation_function"]
+            interpretation_function = MEASURES_INTERPRETATION_MAPPING[measure_key]["calculation_function"]
             result = interpretation_function(validated_params)
 
             response_data["measures"].append({
-                "name": measure_name,
+                "key": measure_key,
                 "value": result,
             })
 
