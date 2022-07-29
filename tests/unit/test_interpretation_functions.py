@@ -73,19 +73,19 @@ SUCCESS_TEST_DATA = [
     (
         non_complex_files_density,
         "tests/unit/data/fga-eps-mds_2021-2-SiGeD-Frontend-03-15-2022-23_57_08.json",
-        0.6927710843373494,
+        0.6234939759036154,
         "js",
     ),
     (
         non_complex_files_density,
         "tests/unit/data/fga-eps-mds-2020_2-Projeto-Kokama-Usuario-17-04-2021.json",
-        0.0,
+        0.9,
         "js",
     ),
     (
         non_complex_files_density,
         "tests/unit/data/fga-eps-mds-2020_2-Lend.it-Raleway-user-13-04-2021.json",
-        0.6428571428571429,
+        0.5785714285714286,
         "js",
     ),
     (

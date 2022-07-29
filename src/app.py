@@ -14,7 +14,4 @@ api.add_resource(AvailablePreConfigs, "/available-pre-configs")
 
 api.add_resource(Analysis, "/analysis")
 
-api.add_resource(
-    CalculateSpecificMeasure,
-    "/calculate-measure/<string:measure_name>",
-)
+api.add_resource(CalculateSpecificMeasure, "/calculate-measures/")

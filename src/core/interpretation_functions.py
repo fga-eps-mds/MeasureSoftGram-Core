@@ -10,6 +10,10 @@ from src.util.get_functions import (
     create_coordinate_pair
 )
 from src.util.exceptions import InvalidMetricValue
+from typing import Dict
+
+from .exceptions import InvalidMetricValue, InvalidInterpretationFunctionArguments ## Essa linha
+import pandas as pd
 import numpy as np
 import pandas as pd
 
@@ -28,6 +32,8 @@ def non_complex_files_density(data_frame):
     This function calculates non-complex files density measure (em1)
     used to assess the changeability quality subcharacteristic.
     """
+
+    COMPLEX_FILES_DENSITY_THRESHOLD = 10
 
     check_arguments(data_frame)
     files_df = get_files_data_frame(data_frame)
@@ -50,9 +56,10 @@ def non_complex_files_density(data_frame):
             "The number of functions of all files is lesser or equal than 0"
         )
 
-    m0 = np.median(files_complexity / files_functions)
-    x, y = create_coordinate_pair(0, m0)
-    files_in_thresholds_df = (files_complexity / files_functions) <= m0
+    x, y = create_coordinate_pair(0, COMPLEX_FILES_DENSITY_THRESHOLD)
+
+    files_in_thresholds_df = (files_complexity / files_functions) <= COMPLEX_FILES_DENSITY_THRESHOLD
+
     IF1 = np.interp(list(files_in_thresholds_df[(files_functions > 0)]), x, y)
     em1 = sum(IF1) / number_of_files
 
@@ -209,12 +216,29 @@ def passed_tests(data_frame):
     test_errors = float(root_test["test_errors"]) # m7 metrics
     test_failures = float(root_test["test_failures"]) # m8 metrics
 
+    return calculate_em4(data={
+        "tests": tests,
+        "test_errors": test_errors,
+        "test_failures": test_failures,
+    })
+
+
+def calculate_em4(data: Dict[str, float]):
+    """
+    Calculates passed tests (em4)
+
+    This function calculates the passed tests measure (em4)
+    used to assess the testing status subcharacteristic.
+    """
+    number_of_tests = data['tests']
+    number_of_test_errors = data['test_errors']
+    number_of_test_failures = data['test_failures']
+    number_of_fail_tests = number_of_test_errors + number_of_test_failures
+
     x, y = create_coordinate_pair(0, 1, reverse_y=True)
-    if4i = (tests - (test_errors + test_failures)) / tests
-    em4 = np.interp(if4i, x, y)
 
-    return em4
-
+    if4i = (number_of_tests - number_of_fail_tests) / number_of_tests
+    return np.interp(if4i, x, y)
 
 def team_throughput(data_frame: pd.DataFrame):
     """
@@ -224,5 +248,4 @@ def team_throughput(data_frame: pd.DataFrame):
     A.K.A. team throughput.
     """
     check_arguments(data_frame)
-
     pass
