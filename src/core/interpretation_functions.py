@@ -1,9 +1,10 @@
-from typing import Dict
-
-from .exceptions import InvalidMetricValue, InvalidInterpretationFunctionArguments
-import pandas as pd
-import numpy as np
 import math
+import pandas as pd
+
+from src.core.exceptions import InvalidMetricValue, InvalidInterpretationFunctionArguments
+from src.core.measures_functions import (
+    calculate_em1, calculate_em2, calculate_em3, calculate_em4, calculate_em5, calculate_em6
+)
 
 
 def check_arguments(data_frame):
@@ -39,28 +40,6 @@ def check_metric_values(metric_values, metric):
         check_metric_value(value, metric)
 
 
-def interpolate_series(series, x, y):
-    """
-    Interpolates a series using the given x and y values.
-
-    This function interpolates a series using the given x and y values.
-    """
-
-    return [np.interp(item / 100, x, y) for item in series]
-
-
-def create_coordinate_pair(min_threshhold, max_threshold, reverse_y=False):
-    """
-    Creates a pair of values.
-
-    This function creates a pair of coordinates (x, y).
-    """
-
-    y = np.array([0, 1]) if reverse_y else np.array([1, 0])
-
-    return np.array([min_threshhold, max_threshold]), y
-
-
 def get_files_data_frame(data_frame):
     """
     Returns a data frame with files data.
@@ -87,14 +66,10 @@ def non_complex_files_density(data_frame):
     """
     Calculates non-complex files density (em1).
 
-    This function calculates non-complex files density measure (em1)
-    used to assess the changeability quality subcharacteristic.
+    This function gets the dataframe metrics
+    and returns the non-complex files density measure (em1).
     """
-
-    COMPLEX_FILES_DENSITY_THRESHOLD = 10
-
     check_arguments(data_frame)
-
     files_df = get_files_data_frame(data_frame)
 
     # files_complexity = m1 metric
@@ -105,45 +80,24 @@ def non_complex_files_density(data_frame):
     number_of_files = len(files_df)
 
     check_number_of_files(number_of_files)
-
     check_metric_values(files_complexity, "complexity")
-
     check_metric_values(files_functions, "functions")
 
-    if files_complexity.sum() <= 0:
-        raise InvalidMetricValue(
-            "The cyclomatic complexity of all files is lesser or equal than 0"
-        )
-
-    if files_functions.sum() <= 0:
-        raise InvalidMetricValue(
-            "The number of functions of all files is lesser or equal than 0"
-        )
-
-    x, y = create_coordinate_pair(0, COMPLEX_FILES_DENSITY_THRESHOLD)
-
-    files_in_thresholds_df = (files_complexity / files_functions) <= COMPLEX_FILES_DENSITY_THRESHOLD
-
-    IF1 = np.interp(list(files_in_thresholds_df[(files_functions > 0)]), x, y)
-
-    em1 = sum(IF1) / number_of_files
-
-    return em1
+    return calculate_em1(data={
+        "complexity": files_complexity,
+        "functions": files_functions,
+        "number_of_files": number_of_files,
+    })
 
 
 def commented_files_density(data_frame):
     """
     Calculates commented files density (em2).
 
-    This function calculates commented files density measure (em2)
-    used to assess the changeability quality subcharacteristic.
+    This function gets the dataframe metrics
+    and returns the commented files density measure (em2).
     """
-
-    MINIMUM_COMMENT_DENSITY_THRESHOLD = 10
-    MAXIMUM_COMMENT_DENSITY_THRESHOLD = 30
-
     check_arguments(data_frame)
-
     files_df = get_files_data_frame(data_frame)
 
     # number_of_files = Tm3 metric
@@ -152,45 +106,22 @@ def commented_files_density(data_frame):
     files_comment_lines_density = files_df["comment_lines_density"].astype(float)
 
     check_number_of_files(number_of_files)
-
     check_metric_values(files_comment_lines_density, "comment_lines_density")
 
-    if files_comment_lines_density.sum() < 0:
-        raise InvalidMetricValue(
-            "The number of files comment lines density is lesser than 0"
-        )
-
-    x, y = create_coordinate_pair(
-        MINIMUM_COMMENT_DENSITY_THRESHOLD / 100, MAXIMUM_COMMENT_DENSITY_THRESHOLD / 100
-    )
-
-    files_between_thresholds = files_comment_lines_density[
-        files_comment_lines_density.between(
-            MINIMUM_COMMENT_DENSITY_THRESHOLD,
-            MAXIMUM_COMMENT_DENSITY_THRESHOLD,
-            inclusive="both",
-        )
-    ]
-
-    em2i = interpolate_series(files_between_thresholds, x, y)
-
-    em2 = np.sum(em2i) / number_of_files
-
-    return em2
+    return calculate_em2(data={
+        "number_of_files": number_of_files,
+        "comment_lines_density": files_comment_lines_density,
+    })
 
 
 def absence_of_duplications(data_frame):
     """
     Calculates duplicated files absence (em3).
 
-    This function calculates the duplicated files absence measure (em3)
-    used to assess the changeability quality subcharacteristic.
+    This function gets the dataframe metrics
+    and returns the duplicated files absence measure (em3).
     """
-
-    DUPLICATED_LINES_THRESHOLD = 5.0
-
     check_arguments(data_frame)
-
     files_df = get_files_data_frame(data_frame)
 
     # files_duplicated_lines_density = m5 metric
@@ -199,78 +130,45 @@ def absence_of_duplications(data_frame):
     number_of_files = len(files_df)
 
     check_number_of_files(number_of_files)
-
     check_metric_values(files_duplicated_lines_density, "duplicated_lines_density")
 
-    if files_duplicated_lines_density.sum() < 0:
-        raise InvalidMetricValue(
-            "The number of files duplicated lines density is lesser than 0"
-        )
-
-    x, y = create_coordinate_pair(0, DUPLICATED_LINES_THRESHOLD / 100)
-
-    files_below_threshold = files_duplicated_lines_density[
-        files_duplicated_lines_density <= DUPLICATED_LINES_THRESHOLD
-    ]
-
-    em3i = interpolate_series(files_below_threshold, x, y)
-
-    em3 = np.sum(em3i) / number_of_files
-
-    return em3
+    return calculate_em3(data={
+        "number_of_files": number_of_files,
+        "duplicated_lines_density": files_duplicated_lines_density,
+    })
 
 
 def test_coverage(data_frame):
     """
     Calculates test coverage (em6).
 
-    This function calculates the test coverage measure (em6)
-    used to assess the testing status subcharacteristic.
+    This function gets the dataframe metrics
+    and returns the test coverage measure (em6).
     """
-
-    MINIMUM_COVERAGE_THRESHOLD = 60
-    MAXIMUM_COVERAGE_THRESHOLD = 90
-
     check_arguments(data_frame)
-
     files_df = get_files_data_frame(data_frame)
 
     # number_of_files = m3 metric
     number_of_files = len(files_df)
     # test_coverage = m6 metric
-    test_coverage = files_df["coverage"].astype(float)
+    coverage = files_df["coverage"].astype(float)
 
     check_number_of_files(number_of_files)
+    check_metric_values(coverage, "coverage")
 
-    check_metric_values(test_coverage, "coverage")
-
-    x, y = create_coordinate_pair(
-        MINIMUM_COVERAGE_THRESHOLD / 100,
-        MAXIMUM_COVERAGE_THRESHOLD / 100,
-        reverse_y=True,
-    )
-
-    files_between_thresholds = test_coverage[
-        test_coverage >= MINIMUM_COVERAGE_THRESHOLD
-    ]
-
-    em6i = interpolate_series(files_between_thresholds, x, y)
-
-    em6 = np.sum(em6i) / number_of_files
-
-    return em6
+    return calculate_em6(data={
+        "coverage": coverage,
+        "number_of_files": number_of_files,
+    })
 
 
 def fast_test_builds(data_frame):
     """
     Calculates fast test builds (em5)
 
-    This function calculates the fast test builds measure (em5)
-    used to assess the testing status subcharacteristic.
+    This function gets the dataframe metrics
+    and returns the fast test builds measure (em5).
     """
-
-    TEST_EXECUTION_TIME_THRESHOLD = 300000
-
     root_test = get_test_root_dir(data_frame)
 
     check_metric_value(root_test["test_execution_time"], "test_execution_time")
@@ -278,23 +176,17 @@ def fast_test_builds(data_frame):
     # test_execution_time = m9 metric
     test_execution_time = float(root_test["test_execution_time"])
 
-    x, y = create_coordinate_pair(0, 1, reverse_y=True)
-
-    em5 = 0
-
-    if test_execution_time < TEST_EXECUTION_TIME_THRESHOLD:
-        if5i = test_execution_time / TEST_EXECUTION_TIME_THRESHOLD
-        em5 = np.interp(if5i, x, y)
-
-    return em5
+    return calculate_em5(data={
+        "test_execution_time": test_execution_time
+    })
 
 
 def passed_tests(data_frame):
     """
     Calculates passed tests (em4)
 
-    This function calculates the passed tests measure (em4)
-    used to assess the testing status subcharacteristic.
+    This function gets the dataframe metrics
+    and returns the passed tests measure (em4).
     """
     root_test = get_test_root_dir(data_frame)
 
@@ -314,21 +206,3 @@ def passed_tests(data_frame):
         "test_errors": test_errors,
         "test_failures": test_failures,
     })
-
-
-def calculate_em4(data: Dict[str, float]):
-    """
-    Calculates passed tests (em4)
-
-    This function calculates the passed tests measure (em4)
-    used to assess the testing status subcharacteristic.
-    """
-    number_of_tests = data['tests']
-    number_of_test_errors = data['test_errors']
-    number_of_test_failures = data['test_failures']
-
-    x, y = create_coordinate_pair(0, 1, reverse_y=True)
-
-    number_of_fail_tests = number_of_test_errors + number_of_test_failures
-    if4i = (number_of_tests - number_of_fail_tests) / number_of_tests
-    return np.interp(if4i, x, y)

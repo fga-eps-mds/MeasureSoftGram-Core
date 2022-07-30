@@ -4,8 +4,10 @@ from src.core.interpretation_functions import (
     commented_files_density,
     absence_of_duplications,
     passed_tests,
-    calculate_em4,
     fast_test_builds,
+)
+from src.core.measures_functions import (
+    calculate_em1, calculate_em2, calculate_em3, calculate_em4, calculate_em5, calculate_em6
 )
 from src.core import schemas
 
@@ -85,27 +87,27 @@ MEASURES_INTERPRETATION_MAPPING = {
     },
     "test_builds": {
         "interpretation_function": fast_test_builds,
-        "calculation_function": ...,
+        "calculation_function": calculate_em5,
         "schema": schemas.TestBuildsSchema,
     },
     "test_coverage": {
         "interpretation_function": test_coverage,
-        "calculation_function": ...,
+        "calculation_function": calculate_em6,
         "schema": schemas.TestCoverageSchema,
     },
     "non_complex_file_density": {
         "interpretation_function": non_complex_files_density,
-        "calculation_function": ...,
+        "calculation_function": calculate_em1,
         "schema": schemas.NonComplexFileDensitySchema,
     },
     "commented_file_density": {
         "interpretation_function": commented_files_density,
-        "calculation_function": ...,
+        "calculation_function": calculate_em2,
         "schema": schemas.CommentedFileDensitySchema,
     },
     "duplication_absense": {
         "interpretation_function": absence_of_duplications,
-        "calculation_function": ...,
+        "calculation_function": calculate_em3,
         "schema": schemas.DuplicationAbsenceSchema,
     },
 }
