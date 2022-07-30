@@ -12,7 +12,6 @@ from src.util.get_functions import (
 from src.util.exceptions import InvalidMetricValue
 from typing import Dict
 
-from .exceptions import InvalidMetricValue, InvalidInterpretationFunctionArguments ## Essa linha
 import pandas as pd
 import numpy as np
 import pandas as pd
@@ -36,6 +35,7 @@ def non_complex_files_density(data_frame):
     COMPLEX_FILES_DENSITY_THRESHOLD = 10
 
     check_arguments(data_frame)
+
     files_df = get_files_data_frame(data_frame)
 
     files_complexity = files_df["complexity"].astype(float) # m1 metric
@@ -57,9 +57,7 @@ def non_complex_files_density(data_frame):
         )
 
     x, y = create_coordinate_pair(0, COMPLEX_FILES_DENSITY_THRESHOLD)
-
     files_in_thresholds_df = (files_complexity / files_functions) <= COMPLEX_FILES_DENSITY_THRESHOLD
-
     IF1 = np.interp(list(files_in_thresholds_df[(files_functions > 0)]), x, y)
     em1 = sum(IF1) / number_of_files
 
