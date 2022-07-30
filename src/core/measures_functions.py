@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from typing import Dict
 
 from src.core.exceptions import InvalidMetricValue
@@ -26,6 +27,16 @@ def create_coordinate_pair(min_threshold, max_threshold, reverse_y=False):
     return np.array([min_threshold, max_threshold]), y
 
 
+def resolve_metric_list_parameter(metric):
+    """
+    Resolves the metric list parameter to calculate a measure
+
+    This functions converts the metric parameter to a pandas Series if it is a list (CalculateSpecificMeasure endpoint)
+    otherwise it just returns the metric - already a pandas Series (Analysis endpoint).
+    """
+    return pd.Series(metric, dtype=np.float64) if isinstance(metric, list) else metric
+
+
 def calculate_em1(data: Dict):
     """
     Calculates non-complex files density (em1).
@@ -33,8 +44,8 @@ def calculate_em1(data: Dict):
     This function calculates non-complex files density measure (em1)
     used to assess the changeability quality sub characteristic.
     """
-    files_complexity = data["complexity"]
-    files_functions = data["functions"]
+    files_complexity = resolve_metric_list_parameter(data["complexity"])
+    files_functions = resolve_metric_list_parameter(data["functions"])
     number_of_files = data["number_of_files"]
 
     COMPLEX_FILES_DENSITY_THRESHOLD = 10
@@ -65,7 +76,7 @@ def calculate_em2(data: Dict):
     used to assess the changeability quality sub characteristic.
     """
     number_of_files = data["number_of_files"]
-    files_comment_lines_density = data["comment_lines_density"]
+    files_comment_lines_density = resolve_metric_list_parameter(data["comment_lines_density"])
 
     MINIMUM_COMMENT_DENSITY_THRESHOLD = 10
     MAXIMUM_COMMENT_DENSITY_THRESHOLD = 30
@@ -100,7 +111,7 @@ def calculate_em3(data: Dict):
     used to assess the changeability quality sub characteristic.
     """
     number_of_files = data["number_of_files"]
-    files_duplicated_lines_density = data["duplicated_lines_density"]
+    files_duplicated_lines_density = resolve_metric_list_parameter(data["duplicated_lines_density"])
 
     DUPLICATED_LINES_THRESHOLD = 5.0
 
@@ -165,7 +176,7 @@ def calculate_em6(data: Dict):
     This function calculates the test coverage measure (em6)
     used to assess the testing status sub characteristic.
     """
-    coverage = data["coverage"]
+    coverage = resolve_metric_list_parameter(data["coverage"])
     number_of_files = data["number_of_files"]
 
     MINIMUM_COVERAGE_THRESHOLD = 60
