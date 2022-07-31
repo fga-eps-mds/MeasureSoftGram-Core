@@ -71,3 +71,7 @@ class CommentedFileDensitySchema(Schema):
 class DuplicationAbsenceSchema(Schema):
     number_of_files = fields.Integer(required=True)
     duplicated_lines_density = fields.List(fields.Float(required=True))
+
+class CIFeedbackTimeSchema(Schema):
+    number_of_builds = fields.Integer(required=True)
+    total_builds_duration = fields.Float(required=True)

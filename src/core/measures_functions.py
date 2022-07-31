@@ -192,3 +192,16 @@ def calculate_em6(data: Dict):
     em6i = interpolate_series(files_between_thresholds, x, y)
     em6 = np.sum(em6i) / number_of_files
     return em6
+
+def calculate_em7(data: Dict[str, float]):
+    """
+    Calculates CI feedback time measure (em7)
+
+    This function calculates average feedback time from CI system.
+    The calculation will be the feedback time for every build
+    divided by total builds
+    """
+    number_of_builds = data['number_of_builds']
+    total_builds_duration = data['total_builds_duration']
+
+    return total_builds_duration / number_of_builds

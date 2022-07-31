@@ -3,7 +3,7 @@ import pandas as pd
 
 from src.core.exceptions import InvalidMetricValue, InvalidInterpretationFunctionArguments
 from src.core.measures_functions import (
-    calculate_em1, calculate_em2, calculate_em3, calculate_em4, calculate_em5, calculate_em6
+    calculate_em1, calculate_em2, calculate_em3, calculate_em4, calculate_em5, calculate_em6, calculate_em7
 )
 
 
@@ -178,6 +178,24 @@ def fast_test_builds(data_frame):
 
     return calculate_em5(data={
         "test_execution_time": test_execution_time
+    })
+
+
+def ci_feedback_time(data_frame):
+    """
+    Calculates CI feedback time measure (em7)
+
+    This function calculates average feedback time from CI system.
+    """
+
+    root_test = get_test_root_dir(data_frame)
+
+    number_of_builds = root_test["number_of_builds"]
+    total_builds_duration = root_test["total_builds_duration"]
+
+    return calculate_em7(data = {
+        "number_of_builds": number_of_builds,
+        "total_builds_duration": total_builds_duration
     })
 
 
