@@ -181,24 +181,6 @@ def fast_test_builds(data_frame):
     })
 
 
-def ci_feedback_time(data_frame):
-    """
-    Calculates CI feedback time measure (em7)
-
-    This function calculates average feedback time from CI system.
-    """
-
-    root_test = get_test_root_dir(data_frame)
-
-    number_of_builds = root_test["number_of_builds"]
-    total_builds_duration = root_test["total_builds_duration"]
-
-    return calculate_em7(data = {
-        "number_of_builds": number_of_builds,
-        "total_builds_duration": total_builds_duration
-    })
-
-
 def passed_tests(data_frame):
     """
     Calculates passed tests (em4)
@@ -223,4 +205,25 @@ def passed_tests(data_frame):
         "tests": tests,
         "test_errors": test_errors,
         "test_failures": test_failures,
+    })
+
+
+def ci_feedback_time(data_frame):
+    """
+    Calculates CI feedback time measure (em7)
+
+    This function calculates average feedback time from CI system.
+    """
+
+    root_test = get_test_root_dir(data_frame)
+
+    check_metric_value(root_test["number_of_builds"], "number_of_builds")
+    check_metric_value(root_test["total_builds_duration"], "total_builds_duration")
+
+    number_of_builds = root_test["number_of_builds"]
+    total_builds_duration = root_test["total_builds_duration"]
+
+    return calculate_em7(data = {
+        "number_of_builds": number_of_builds,
+        "total_builds_duration": total_builds_duration
     })
