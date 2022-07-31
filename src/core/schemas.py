@@ -53,17 +53,21 @@ class TestBuildsSchema(Schema):
 
 
 class TestCoverageSchema(Schema):
-    coverage = fields.Float(required=True)
+    number_of_files = fields.Integer(required=True)
+    coverage = fields.List(fields.Float(required=True))
 
 
 class NonComplexFileDensitySchema(Schema):
-    complexity = fields.Float(required=True)
-    functions = fields.Float(required=True)
+    complexity = fields.List(fields.Float(required=True))
+    functions = fields.List(fields.Float(required=True))
+    number_of_files = fields.Integer(required=True)
 
 
 class CommentedFileDensitySchema(Schema):
-    comment_lines_density = fields.Float(required=True)
+    number_of_files = fields.Integer(required=True)
+    comment_lines_density = fields.List(fields.Float(required=True))
 
 
 class DuplicationAbsenceSchema(Schema):
-    duplicated_lines_density = fields.Float(required=True)
+    number_of_files = fields.Integer(required=True)
+    duplicated_lines_density = fields.List(fields.Float(required=True))
