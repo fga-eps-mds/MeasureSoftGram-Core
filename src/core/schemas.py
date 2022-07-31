@@ -71,3 +71,7 @@ class CommentedFileDensitySchema(Schema):
 class DuplicationAbsenceSchema(Schema):
     number_of_files = fields.Integer(required=True)
     duplicated_lines_density = fields.List(fields.Float(required=True))
+
+class TeamThroughputSchema(Schema): ## AQUI
+    number_of_resolved_issues = fields.Integer(required=True)
+    total_number_of_issues = fields.Integer(required=True)

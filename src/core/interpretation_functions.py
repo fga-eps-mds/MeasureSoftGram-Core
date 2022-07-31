@@ -8,7 +8,6 @@ from src.util.get_functions import (
     get_files_data_frame,
     get_test_root_dir,
 )
-from src.util.exceptions import InvalidMetricValue
 from src.core.measures_functions import (
     calculate_em1, 
     calculate_em2, 
@@ -16,6 +15,7 @@ from src.core.measures_functions import (
     calculate_em4, 
     calculate_em5, 
     calculate_em6,
+    calculate_em7,
 )
 
 import pandas as pd
@@ -162,4 +162,24 @@ def passed_tests(data_frame):
         "tests": tests,
         "test_errors": test_errors,
         "test_failures": test_failures,
+    })
+
+def team_throughput(data_frame):
+    """
+    Calculates team throughput (em7)
+
+    This function gets the dataframe metrics
+    and returns the team throughput measure.
+    """
+    check_arguments(data_frame)
+    
+    number_of_resolved_issues = int(data_frame["number_of_resolved_issues_in_the_last_7_days"])
+    total_number_of_issues = int(data_frame["total_number_of_issues_in_the_last_7_days"])
+
+    check_metric_value(number_of_resolved_issues)
+    check_metric_value(total_number_of_issues)
+
+    return calculate_em7(data={
+        "resolved_issues": number_of_resolved_issues,
+        "total_issues": total_number_of_issues,
     })

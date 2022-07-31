@@ -7,8 +7,7 @@ from src.core.dataframe import create_dataframe
 from src.core.analysis import calculate_measures, make_analysis
 from src.util.exceptions import MeasureSoftGramCoreException
 
-from src.core.interpretation_functions import calculate_em4
-from src.core.exceptions import MeasureSoftGramCoreException
+from src.util.exceptions import MeasureSoftGramCoreException
 from src.core.constants import MEASURES_INTERPRETATION_MAPPING
 from src.core.schemas import CalculateMeasureSchema
 

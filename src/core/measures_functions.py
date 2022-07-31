@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from typing import Dict
 
-from src.core.exceptions import InvalidMetricValue
+from src.util.exceptions import InvalidMetricValue
 
 
 def interpolate_series(series, x, y):
@@ -192,3 +192,27 @@ def calculate_em6(data: Dict):
     em6i = interpolate_series(files_between_thresholds, x, y)
     em6 = np.sum(em6i) / number_of_files
     return em6
+
+
+def calculate_em7(data: Dict):
+    """
+    Calculates test coverage (em6).
+
+    This function calculates team throughput measure.
+    """
+    number_of_resolved_issues = data["resolved_issues"]
+    number_of_issues = data["total_issues"]
+
+    MIN_THRESHOLD = 0
+    MAX_THRESHOLD = 1
+
+    x, y = create_coordinate_pair(
+        MIN_THRESHOLD,
+        MAX_THRESHOLD,
+        reverse_y=True
+    )
+
+    if7 = np.divide(number_of_resolved_issues, number_of_issues)
+    em7 = np.interp(if7, x, y)
+
+    return em7

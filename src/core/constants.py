@@ -21,11 +21,19 @@ AVAILABLE_PRE_CONFIGS = {
             "name": "Maintainability",
             "subcharacteristics": ["modifiability"],
         },
+        "productivity": { ##AQUI
+            "name": "Productivity",
+            "subcharacteristics": ["issues_velocity"],
+        },
     },
     "subcharacteristics": {
         "testing_status": {
             "name": "Testing Status",
-            "measures": ["passed_tests", "test_builds", "test_coverage"],
+            "measures": [
+                "passed_tests",
+                "test_builds",
+                "test_coverage",
+            ],
             "characteristics": ["reliability"],
         },
         "modifiability": {
@@ -36,6 +44,11 @@ AVAILABLE_PRE_CONFIGS = {
                 "duplication_absense",
             ],
             "characteristics": ["maintainability"],
+        },
+        "issues_velocity": { ##AQUI
+            "name": "Issues Velocity",
+            "measures": ["team_throughput"],
+            "characteristics": ["productivity"],
         },
     },
     "measures": {
@@ -75,6 +88,12 @@ AVAILABLE_PRE_CONFIGS = {
             "characteristics": ["maintainability"],
             "metrics": ["duplicated_lines_density"],
         },
+        "team_throughput": {  ##AQUI
+            "name": "Team Throughput",
+            "subcharacteristics": ["issues_velocity"],
+            "characteristics": ["productivity"],
+            "metrics": ["number_of_resolved_issues", "total_number_of_issues"],
+        },
     },
 }
 
@@ -110,4 +129,9 @@ MEASURES_INTERPRETATION_MAPPING = {
         "calculation_function": calculate_em3,
         "schema": schemas.DuplicationAbsenceSchema,
     },
+    "team_throughput": { ##AQUI AINDA TEM QUE MEXER
+        "interpretation_function": ...,
+        "calculation_function": ...,
+        "schema": ...,
+    }
 }
