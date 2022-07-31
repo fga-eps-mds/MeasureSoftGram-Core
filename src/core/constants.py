@@ -5,9 +5,10 @@ from src.core.interpretation_functions import (
     absence_of_duplications,
     passed_tests,
     fast_test_builds,
+    team_throughput
 )
 from src.core.measures_functions import (
-    calculate_em1, calculate_em2, calculate_em3, calculate_em4, calculate_em5, calculate_em6
+    calculate_em1, calculate_em2, calculate_em3, calculate_em4, calculate_em5, calculate_em6, calculate_em7
 )
 from src.core import schemas
 
@@ -21,7 +22,7 @@ AVAILABLE_PRE_CONFIGS = {
             "name": "Maintainability",
             "subcharacteristics": ["modifiability"],
         },
-        "productivity": { ##AQUI
+        "productivity": {
             "name": "Productivity",
             "subcharacteristics": ["issues_velocity"],
         },
@@ -45,7 +46,7 @@ AVAILABLE_PRE_CONFIGS = {
             ],
             "characteristics": ["maintainability"],
         },
-        "issues_velocity": { ##AQUI
+        "issues_velocity": {
             "name": "Issues Velocity",
             "measures": ["team_throughput"],
             "characteristics": ["productivity"],
@@ -88,7 +89,7 @@ AVAILABLE_PRE_CONFIGS = {
             "characteristics": ["maintainability"],
             "metrics": ["duplicated_lines_density"],
         },
-        "team_throughput": {  ##AQUI
+        "team_throughput": {
             "name": "Team Throughput",
             "subcharacteristics": ["issues_velocity"],
             "characteristics": ["productivity"],
@@ -129,9 +130,9 @@ MEASURES_INTERPRETATION_MAPPING = {
         "calculation_function": calculate_em3,
         "schema": schemas.DuplicationAbsenceSchema,
     },
-    "team_throughput": { ##AQUI AINDA TEM QUE MEXER
-        "interpretation_function": ...,
-        "calculation_function": ...,
-        "schema": ...,
+    "team_throughput": {
+        "interpretation_function": team_throughput,
+        "calculation_function": calculate_em7,
+        "schema": schemas.TeamThroughputSchema,
     }
 }
