@@ -3,6 +3,7 @@ import pandas as pd
 from typing import Dict
 
 from src.util.exceptions import InvalidMetricValue
+from src.util.get_functions import create_coordinate_pair
 
 
 def interpolate_series(series, x, y):
@@ -13,18 +14,6 @@ def interpolate_series(series, x, y):
     """
 
     return [np.interp(item / 100, x, y) for item in series]
-
-
-def create_coordinate_pair(min_threshold, max_threshold, reverse_y=False):
-    """
-    Creates a pair of values.
-
-    This function creates a pair of coordinates (x, y).
-    """
-
-    y = np.array([0, 1]) if reverse_y else np.array([1, 0])
-
-    return np.array([min_threshold, max_threshold]), y
 
 
 def resolve_metric_list_parameter(metric):
