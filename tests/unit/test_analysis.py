@@ -9,13 +9,14 @@ from tests.utils.analysis_data import (
 )
 import pytest
 
+
 @pytest.mark.parametrize(
     "measure,expected_value",
     CALCULATE_MEASURES_DATA,
 )
 def test_calculate_measures(measure, expected_value):
     calculation_result = calculate_measures(FILES_DF, [measure])
-    assert(
+    assert (
         pytest.approx(calculation_result[measure]) == expected_value
     )
 
@@ -31,14 +32,15 @@ def test_resolve_level(subs, measures, type, expected):
 
 @pytest.mark.parametrize(
     "measures,subs,characteristics,expected,key_value",
-   MAKE_ANALYSIS_DATA,
+    MAKE_ANALYSIS_DATA,
 )
 def test_make_analysis(
-    measures, 
-    subs, 
-    characteristics, 
+    measures,
+    subs,
+    characteristics,
     expected,
-    key_value):
+    key_value
+):
     sqc, agregated_sbc, aggregated_characteristics, _, _, _ = make_analysis(
         measures, subs, characteristics
     )

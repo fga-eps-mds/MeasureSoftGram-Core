@@ -6,6 +6,7 @@ from tests.utils.integration_data import (
 )
 from src.app import app
 
+
 @pytest.mark.parametrize(
     "status_code,level,expected_output",
     TEST_PARAMETERS

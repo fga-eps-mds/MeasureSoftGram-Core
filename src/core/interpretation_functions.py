@@ -9,18 +9,17 @@ from src.util.get_functions import (
     get_test_root_dir,
 )
 from src.core.measures_functions import (
-    calculate_em1, 
-    calculate_em2, 
-    calculate_em3, 
-    calculate_em4, 
-    calculate_em5, 
+    calculate_em1,
+    calculate_em2,
+    calculate_em3,
+    calculate_em4,
+    calculate_em5,
     calculate_em6,
     calculate_em7,
 )
 
 import pandas as pd
 import numpy as np
-import pandas as pd
 
 
 def interpolate_series(series, x, y):
@@ -43,9 +42,9 @@ def non_complex_files_density(data_frame):
     check_arguments(data_frame)
     files_df = get_files_data_frame(data_frame)
 
-    files_complexity = files_df["complexity"].astype(float) # m1 metric
-    files_functions = files_df["functions"].astype(float) # m2 metric
-    number_of_files = len(files_df) # Tm3 metric
+    files_complexity = files_df["complexity"].astype(float)  # m1 metric
+    files_functions = files_df["functions"].astype(float)  # m2 metric
+    number_of_files = len(files_df)  # Tm3 metric
 
     check_number_of_files(number_of_files)
     check_metric_values(files_complexity, "complexity")
@@ -68,8 +67,8 @@ def commented_files_density(data_frame: pd.DataFrame):
     check_arguments(data_frame)
     files_df = get_files_data_frame(data_frame)
 
-    number_of_files = len(files_df) # Tm3 metric
-    files_comment_lines_density = files_df["comment_lines_density"].astype(float) # m4 metric
+    number_of_files = len(files_df)  # Tm3 metric
+    files_comment_lines_density = files_df["comment_lines_density"].astype(float)  # m4 metric
 
     check_number_of_files(number_of_files)
     check_metric_values(files_comment_lines_density, "comment_lines_density")
@@ -90,8 +89,8 @@ def absence_of_duplications(data_frame: pd.DataFrame):
     check_arguments(data_frame)
     files_df = get_files_data_frame(data_frame)
 
-    files_duplicated_lines_density = files_df["duplicated_lines_density"].astype(float) # m5 metric
-    number_of_files = len(files_df) # Tm3 metric
+    files_duplicated_lines_density = files_df["duplicated_lines_density"].astype(float)  # m5 metric
+    number_of_files = len(files_df)  # Tm3 metric
 
     check_number_of_files(number_of_files)
     check_metric_values(files_duplicated_lines_density, "duplicated_lines_density")
@@ -112,8 +111,8 @@ def test_coverage(data_frame):
     check_arguments(data_frame)
     files_df = get_files_data_frame(data_frame)
 
-    number_of_files = len(files_df) # m3 metric
-    coverage = files_df["coverage"].astype(float) # m6 metric
+    number_of_files = len(files_df)  # m3 metric
+    coverage = files_df["coverage"].astype(float)  # m6 metric
 
     check_number_of_files(number_of_files)
     check_metric_values(coverage, "coverage")
@@ -134,7 +133,7 @@ def fast_test_builds(data_frame):
 
     check_metric_value(root_test["test_execution_time"], "test_execution_time")
 
-    test_execution_time = float(root_test["test_execution_time"]) # m9 metric
+    test_execution_time = float(root_test["test_execution_time"])  # m9 metric
 
     return calculate_em5(data={
         "test_execution_time": test_execution_time
@@ -154,15 +153,16 @@ def passed_tests(data_frame):
     check_metric_value(root_test["test_errors"], "test_errors")
     check_metric_value(root_test["test_failures"], "test_failures")
 
-    tests = float(root_test["tests"]) # m6 metrics
-    test_errors = float(root_test["test_errors"]) # m7 metrics
-    test_failures = float(root_test["test_failures"]) # m8 metrics
+    tests = float(root_test["tests"])  # m6 metrics
+    test_errors = float(root_test["test_errors"])  # m7 metrics
+    test_failures = float(root_test["test_failures"])  # m8 metrics
 
     return calculate_em4(data={
         "tests": tests,
         "test_errors": test_errors,
         "test_failures": test_failures,
     })
+
 
 def team_throughput(data_frame):
     """
@@ -172,9 +172,9 @@ def team_throughput(data_frame):
     and returns the team throughput measure.
     """
     check_arguments(data_frame)
-    
-    number_of_resolved_issues = int(data_frame["number_of_resolved_issues_in_the_last_7_days"])
-    total_number_of_issues = int(data_frame["total_number_of_issues_in_the_last_7_days"])
+
+    number_of_resolved_issues = int(data_frame["number_of_resolved_issues_in_the_last_7_days"])  # m10 metrics
+    total_number_of_issues = int(data_frame["total_number_of_issues_in_the_last_7_days"])  # m11 metrics
 
     check_metric_value(number_of_resolved_issues)
     check_metric_value(total_number_of_issues)

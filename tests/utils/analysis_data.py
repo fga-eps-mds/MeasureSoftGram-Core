@@ -30,9 +30,9 @@ CHARACTERISTICS = {
 }
 
 FILES_DF = create_file_df(
-        JSON_LIST,
-        "py",
-    )
+    JSON_LIST,
+    "py",
+)
 
 CALCULATE_MEASURES_DATA = [
     (
