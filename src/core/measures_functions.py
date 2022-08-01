@@ -189,8 +189,8 @@ def calculate_em7(data: Dict):
 
     This function calculates team throughput measure.
     """
-    number_of_resolved_issues = data["resolved_issues"]
-    number_of_issues = data["total_issues"]
+    number_of_resolved_issues = data["number_of_resolved_issues"]
+    number_of_issues = data["total_number_of_issues"]
 
     MIN_THRESHOLD = 0
     MAX_THRESHOLD = 1

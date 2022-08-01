@@ -6,7 +6,7 @@ from flask import jsonify, request
 from src.core.dataframe import create_dataframe
 from src.core.analysis import calculate_measures, make_analysis
 from src.util.exceptions import MeasureSoftGramCoreException
-from src.core.constants import MEASURES_INTERPRETATION_MAPPING
+from src.util.constants import MEASURES_INTERPRETATION_MAPPING
 from src.core.schemas import CalculateMeasureSchema
 
 from marshmallow.exceptions import ValidationError

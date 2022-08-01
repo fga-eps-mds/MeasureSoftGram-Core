@@ -19,15 +19,6 @@ from src.core.measures_functions import (
 )
 
 import pandas as pd
-import numpy as np
-
-
-def interpolate_series(series, x, y):
-    """
-    Interpolates a series using the given x and y values.
-    """
-
-    return [np.interp(item / 100, x, y) for item in series]
 
 
 def non_complex_files_density(data_frame):
@@ -176,10 +167,10 @@ def team_throughput(data_frame):
     number_of_resolved_issues = int(data_frame["number_of_resolved_issues_in_the_last_7_days"])  # m10 metrics
     total_number_of_issues = int(data_frame["total_number_of_issues_in_the_last_7_days"])  # m11 metrics
 
-    check_metric_value(number_of_resolved_issues)
-    check_metric_value(total_number_of_issues)
+    check_metric_value(number_of_resolved_issues, "number_of_resolved_issues")
+    check_metric_value(total_number_of_issues, "number_of_resolved_issues")
 
     return calculate_em7(data={
-        "resolved_issues": number_of_resolved_issues,
-        "total_issues": total_number_of_issues,
+        "number_of_resolved_issues": number_of_resolved_issues,
+        "total_number_of_issues": total_number_of_issues,
     })
