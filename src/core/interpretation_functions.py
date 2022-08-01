@@ -168,7 +168,7 @@ def team_throughput(data_frame):
     total_number_of_issues = int(data_frame["total_number_of_issues_in_the_last_7_days"])  # m11 metrics
 
     check_metric_value(number_of_resolved_issues, "number_of_resolved_issues")
-    check_metric_value(total_number_of_issues, "number_of_resolved_issues")
+    check_metric_value(total_number_of_issues, "total_number_of_issues")
 
     return calculate_em7(data={
         "number_of_resolved_issues": number_of_resolved_issues,
