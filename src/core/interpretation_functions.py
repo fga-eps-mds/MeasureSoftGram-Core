@@ -186,16 +186,35 @@ def ci_feedback_time(data_frame):
 
     root_test = get_test_root_dir(data_frame)
 
-    number_of_build_pipelines_key = next(val for key, val in root_test.iteritems() if key.startswith('number_of_build_pipelines'))
-    runtime_sum_of_build_pipelines_key = next(val for key, val in root_test.iteritems() if key.startswith('runtime_sum_of_build_pipelines'))
+    metric1_name = next(
+        val for key, val in root_test.iteritems()
+        if key.startswith('number_of_build_pipelines')
+    )
 
-    check_metric_value(root_test[number_of_build_pipelines_key], "number_of_build_pipelines_in_the_last_x_days")
-    check_metric_value(root_test[runtime_sum_of_build_pipelines_key], "runtime_sum_of_build_pipelines_in_the_last_x_days")
+    metric2_name = next(
+        val for key, val in root_test.iteritems()
+        if key.startswith('runtime_sum_of_build_pipelines')
+    )
 
-    number_of_build_pipelines_in_the_last_x_days = root_test[number_of_build_pipelines_key]
-    runtime_sum_of_build_pipelines_in_the_last_x_days = root_test[runtime_sum_of_build_pipelines_key]
+    check_metric_value(
+        root_test[metric1_name],
+        "number_of_build_pipelines_in_the_last_x_days",
+    )
 
-    return calculate_em8(data = {
-        "number_of_build_pipelines_in_the_last_x_days": number_of_build_pipelines_in_the_last_x_days,
-        "runtime_sum_of_build_pipelines_in_the_last_x_days": runtime_sum_of_build_pipelines_in_the_last_x_days
-    })
+    check_metric_value(
+        root_test[metric2_name],
+        "runtime_sum_of_build_pipelines_in_the_last_x_days",
+    )
+
+    number_of_build_pipelines_in_the_last_x_days = root_test[metric1_name]
+    runtime_sum_of_build_pipelines_in_the_last_x_days = root_test[metric2_name]
+
+    data = {
+        "number_of_build_pipelines_in_the_last_x_days":
+            number_of_build_pipelines_in_the_last_x_days,
+
+        "runtime_sum_of_build_pipelines_in_the_last_x_days":
+            runtime_sum_of_build_pipelines_in_the_last_x_days
+    }
+
+    return calculate_em8(data)
