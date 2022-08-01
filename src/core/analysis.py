@@ -1,6 +1,9 @@
+from typing import Dict, List
+
+import pandas as pd
 from src.core.weighting import weighting_operation
 from src.core.agregation import agregation_operation
-from src.core.constants import MEASURES_INTERPRETATION_MAPPING
+from src.util.constants import MEASURES_INTERPRETATION_MAPPING
 
 
 def resolve_level(level_dict: dict, sublevel: dict, sublevel_key: str) -> dict:
@@ -68,7 +71,7 @@ def make_analysis(measures: dict, subcharacteristics: dict, characteristics: dic
     )
 
 
-def calculate_measures(dataframe, measures):
+def calculate_measures(dataframe: pd.DataFrame, measures: List[str]) -> Dict[str, float]:
     combined_measures = {}
     for measure in measures:
         combined_measures[measure] = MEASURES_INTERPRETATION_MAPPING[measure]["interpretation_function"](dataframe)

@@ -75,3 +75,7 @@ class DuplicationAbsenceSchema(Schema):
 class CIFeedbackTimeSchema(Schema):
     number_of_build_pipelines_in_the_last_x_days = fields.Integer(required=True)
     runtime_sum_of_build_pipelines_in_the_last_x_days = fields.Float(required=True)
+
+class TeamThroughputSchema(Schema):
+    number_of_resolved_issues = fields.Integer(required=True)
+    total_number_of_issues = fields.Integer(required=True)
