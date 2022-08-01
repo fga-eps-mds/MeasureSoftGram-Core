@@ -2,7 +2,8 @@ import numpy as np
 import pandas as pd
 from typing import Dict
 
-from src.core.exceptions import InvalidMetricValue
+from src.util.exceptions import InvalidMetricValue
+from src.util.get_functions import create_coordinate_pair
 
 
 def interpolate_series(series, x, y):
@@ -13,18 +14,6 @@ def interpolate_series(series, x, y):
     """
 
     return [np.interp(item / 100, x, y) for item in series]
-
-
-def create_coordinate_pair(min_threshold, max_threshold, reverse_y=False):
-    """
-    Creates a pair of values.
-
-    This function creates a pair of coordinates (x, y).
-    """
-
-    y = np.array([0, 1]) if reverse_y else np.array([1, 0])
-
-    return np.array([min_threshold, max_threshold]), y
 
 
 def resolve_metric_list_parameter(metric):
@@ -192,3 +181,27 @@ def calculate_em6(data: Dict):
     em6i = interpolate_series(files_between_thresholds, x, y)
     em6 = np.sum(em6i) / number_of_files
     return em6
+
+
+def calculate_em7(data: Dict):
+    """
+    Calculates test coverage (em6).
+
+    This function calculates team throughput measure.
+    """
+    number_of_resolved_issues = data["number_of_resolved_issues"]
+    number_of_issues = data["total_number_of_issues"]
+
+    MIN_THRESHOLD = 0
+    MAX_THRESHOLD = 1
+
+    x, y = create_coordinate_pair(
+        MIN_THRESHOLD,
+        MAX_THRESHOLD,
+        reverse_y=True
+    )
+
+    if7 = np.divide(number_of_resolved_issues, number_of_issues)
+    em7 = np.interp(if7, x, y)
+
+    return em7

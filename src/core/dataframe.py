@@ -1,11 +1,5 @@
 import pandas as pd
-
-
-def check_component_is_valid(component, language_extension):
-
-    return (
-        component["qualifier"] == "DIR" or component["language"] == language_extension
-    )
+from src.util.check_functions import check_component_is_valid
 
 
 def create_dataframe(measures, components, language_extension):

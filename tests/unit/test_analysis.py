@@ -1,85 +1,49 @@
 from src.core.analysis import calculate_measures
 from src.core.analysis import resolve_level
 from src.core.analysis import make_analysis
-from tests.test_helpers import create_file_df
+from tests.utils.analysis_data import (
+    FILES_DF,
+    CALCULATE_MEASURES_DATA,
+    RESOLVE_LEVEL_DATA,
+    MAKE_ANALYSIS_DATA,
+)
 import pytest
 
-json_list_1 = [
-    "tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-Service-04-12-2022-17-32-35-v1.1.0.json"
-]
 
-
-def test_calculate_measures():
-    data_frame_1 = create_file_df(
-        json_list_1,
-        "py",
-    )
-
-    measures = [
-        "test_builds",
-        "test_coverage",
-        "passed_tests",
-    ]
-
-    expected_measures = {
-        "test_builds": 0.0010166666666666666,
-        "test_coverage": 0.752962962962963,
-        "passed_tests": 0.7142857142857143,
-    }
-
-    combined_measures = calculate_measures(data_frame_1, measures)
+@pytest.mark.parametrize(
+    "measure,expected_value",
+    CALCULATE_MEASURES_DATA,
+)
+def test_calculate_measures(measure, expected_value):
+    calculation_result = calculate_measures(FILES_DF, [measure])
     assert (
-        pytest.approx(combined_measures["test_builds"])
-        == expected_measures["test_builds"]
-    )
-    assert (
-        pytest.approx(combined_measures["test_coverage"])
-        == expected_measures["test_coverage"]
-    )
-    assert (
-        pytest.approx(combined_measures["passed_tests"])
-        == expected_measures["passed_tests"]
+        pytest.approx(calculation_result[measure]) == expected_value
     )
 
-    return
+
+@pytest.mark.parametrize(
+    "subs,measures,type,expected",
+    RESOLVE_LEVEL_DATA,
+)
+def test_resolve_level(subs, measures, type, expected):
+    aggregate_level, _ = resolve_level(subs, measures, type)
+    assert pytest.approx(aggregate_level["testing_status"]) == expected
 
 
-characteristics1 = {
-    "reliability": {
-        "weight": 1.0,
-        "subcharacteristics": ["testing_status"],
-        "weights": {"testing_status": 1.0},
-    },
-}
-
-subcharacteristics1 = {
-    "testing_status": {
-        "measures": ["test_builds", "test_coverage", "passed_tests"],
-        "weights": {
-            "test_builds": 0.3333,
-            "test_coverage": 0.3333,
-            "passed_tests": 0.3333,
-        },
-    }
-}
-
-measures1 = {
-    "test_builds": 0.0010166666666666666,
-    "test_coverage": 0.5647222222222222,
-    "passed_tests": 0.7142857142857143,
-}
-
-
-def test_resolve_level():
-    aggregate_level, _ = resolve_level(subcharacteristics1, measures1, "measures")
-
-    assert pytest.approx(aggregate_level["testing_status"]) == 0.525711
-
-
-def test_make_analysis():
+@pytest.mark.parametrize(
+    "measures,subs,characteristics,expected,key_value",
+    MAKE_ANALYSIS_DATA,
+)
+def test_make_analysis(
+    measures,
+    subs,
+    characteristics,
+    expected,
+    key_value
+):
     sqc, agregated_sbc, aggregated_characteristics, _, _, _ = make_analysis(
-        measures1, subcharacteristics1, characteristics1
+        measures, subs, characteristics
     )
-    assert pytest.approx(agregated_sbc["testing_status"]) == 0.525711
-    assert pytest.approx(aggregated_characteristics["reliability"]) == 0.525711
-    assert pytest.approx(sqc["sqc"]) == 0.525711
+    assert pytest.approx(agregated_sbc[key_value[0]]) == expected[0]
+    assert pytest.approx(aggregated_characteristics[key_value[1]]) == expected[1]
+    assert pytest.approx(sqc[key_value[2]]) == expected[2]

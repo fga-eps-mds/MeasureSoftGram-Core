@@ -83,9 +83,9 @@ def create_file_df(json_list, language_extension="js"):
 
     df = pd.DataFrame()
 
-    for i in json_list:
+    for json_file in json_list:
 
-        file_component = read_json(i)
+        file_component = read_json(json_file)
 
         file_component_data = metric_per_file(file_component)
 
@@ -93,7 +93,7 @@ def create_file_df(json_list, language_extension="js"):
             METRICS_LIST, file_component_data, language_extension=language_extension
         )
 
-        file_component_df["filename"] = os.path.basename(i)
+        file_component_df["filename"] = os.path.basename(json_file)
 
         df = pd.concat([df, file_component_df], ignore_index=True)
 
