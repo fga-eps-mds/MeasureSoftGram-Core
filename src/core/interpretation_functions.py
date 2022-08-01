@@ -16,6 +16,7 @@ from src.core.measures_functions import (
     calculate_em5,
     calculate_em6,
     calculate_em7,
+    calculate_em8
 )
 
 import pandas as pd
@@ -174,3 +175,46 @@ def team_throughput(data_frame):
         "number_of_resolved_issues": number_of_resolved_issues,
         "total_number_of_issues": total_number_of_issues,
     })
+
+
+def ci_feedback_time(data_frame):
+    """
+    Calculates CI feedback time measure (em8)
+
+    This function calculates average feedback time from CI system.
+    """
+
+    root_test = get_test_root_dir(data_frame)
+
+    metric1_name = next(
+        val for key, val in root_test.iteritems()
+        if key.startswith('number_of_build_pipelines')
+    )
+
+    metric2_name = next(
+        val for key, val in root_test.iteritems()
+        if key.startswith('runtime_sum_of_build_pipelines')
+    )
+
+    check_metric_value(
+        root_test[metric1_name],
+        "number_of_build_pipelines_in_the_last_x_days",
+    )
+
+    check_metric_value(
+        root_test[metric2_name],
+        "runtime_sum_of_build_pipelines_in_the_last_x_days",
+    )
+
+    number_of_build_pipelines_in_the_last_x_days = root_test[metric1_name]
+    runtime_sum_of_build_pipelines_in_the_last_x_days = root_test[metric2_name]
+
+    data = {
+        "number_of_build_pipelines_in_the_last_x_days":
+            number_of_build_pipelines_in_the_last_x_days,
+
+        "runtime_sum_of_build_pipelines_in_the_last_x_days":
+            runtime_sum_of_build_pipelines_in_the_last_x_days
+    }
+
+    return calculate_em8(data)

@@ -205,3 +205,20 @@ def calculate_em7(data: Dict):
     em7 = np.interp(if7, x, y)
 
     return em7
+
+
+def calculate_em8(data: Dict[str, float]):
+    """
+    Calculates CI feedback time measure (em8)
+
+    This function calculates average feedback time from CI system.
+    The calculation will be the feedback time for every build
+    divided by total builds
+    """
+    denominator = data['number_of_build_pipelines_in_the_last_x_days']
+    numerator = data['runtime_sum_of_build_pipelines_in_the_last_x_days']
+
+    if not denominator:
+        raise InvalidMetricValue("The number of build pipelines cannot be 0")
+
+    return numerator / denominator

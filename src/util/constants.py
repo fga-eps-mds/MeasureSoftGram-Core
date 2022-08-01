@@ -1,4 +1,5 @@
 from src.core.interpretation_functions import (
+    ci_feedback_time,
     non_complex_files_density,
     test_coverage,
     commented_files_density,
@@ -129,6 +130,11 @@ MEASURES_INTERPRETATION_MAPPING = {
         "interpretation_function": absence_of_duplications,
         "calculation_function": calculate_em3,
         "schema": schemas.DuplicationAbsenceSchema,
+    },
+    "ci_feedback_time": {
+        "interpretation_function": ci_feedback_time,
+        "calculation_function": calculate_em7,
+        "schema": schemas.CIFeedbackTimeSchema,
     },
     "team_throughput": {
         "interpretation_function": team_throughput,
