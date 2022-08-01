@@ -201,7 +201,10 @@ def calculate_em7(data: Dict[str, float]):
     The calculation will be the feedback time for every build
     divided by total builds
     """
-    number_of_builds = data['number_of_builds']
-    total_builds_duration = data['total_builds_duration']
+    number_of_build_pipelines_in_the_last_x_days = data['number_of_build_pipelines_in_the_last_x_days']
+    runtime_sum_of_build_pipelines_in_the_last_x_days = data['runtime_sum_of_build_pipelines_in_the_last_x_days']
 
-    return total_builds_duration / number_of_builds
+    if (not number_of_build_pipelines_in_the_last_x_days):
+        return 0
+
+    return runtime_sum_of_build_pipelines_in_the_last_x_days / number_of_build_pipelines_in_the_last_x_days

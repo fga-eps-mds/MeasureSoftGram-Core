@@ -73,5 +73,5 @@ class DuplicationAbsenceSchema(Schema):
     duplicated_lines_density = fields.List(fields.Float(required=True))
 
 class CIFeedbackTimeSchema(Schema):
-    number_of_builds = fields.Integer(required=True)
-    total_builds_duration = fields.Float(required=True)
+    number_of_build_pipelines_in_the_last_x_days = fields.Integer(required=True)
+    runtime_sum_of_build_pipelines_in_the_last_x_days = fields.Float(required=True)

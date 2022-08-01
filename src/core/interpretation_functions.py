@@ -217,13 +217,16 @@ def ci_feedback_time(data_frame):
 
     root_test = get_test_root_dir(data_frame)
 
-    check_metric_value(root_test["number_of_builds"], "number_of_builds")
-    check_metric_value(root_test["total_builds_duration"], "total_builds_duration")
+    number_of_build_pipelines_key = next(val for key, val in root_test.iteritems() if key.startswith('number_of_build_pipelines'))
+    runtime_sum_of_build_pipelines_key = next(val for key, val in root_test.iteritems() if key.startswith('runtime_sum_of_build_pipelines'))
 
-    number_of_builds = root_test["number_of_builds"]
-    total_builds_duration = root_test["total_builds_duration"]
+    check_metric_value(root_test[number_of_build_pipelines_key], "number_of_build_pipelines_in_the_last_x_days")
+    check_metric_value(root_test[runtime_sum_of_build_pipelines_key], "runtime_sum_of_build_pipelines_in_the_last_x_days")
+
+    number_of_build_pipelines_in_the_last_x_days = root_test[number_of_build_pipelines_key]
+    runtime_sum_of_build_pipelines_in_the_last_x_days = root_test[runtime_sum_of_build_pipelines_key]
 
     return calculate_em7(data = {
-        "number_of_builds": number_of_builds,
-        "total_builds_duration": total_builds_duration
+        "number_of_build_pipelines_in_the_last_x_days": number_of_build_pipelines_in_the_last_x_days,
+        "runtime_sum_of_build_pipelines_in_the_last_x_days": runtime_sum_of_build_pipelines_in_the_last_x_days
     })
