@@ -2,8 +2,11 @@
 
 name: Run Tests
 
-# Controls when the workflow will run
-on: [push, pull_request]
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
