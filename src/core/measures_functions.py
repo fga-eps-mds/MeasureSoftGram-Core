@@ -189,9 +189,15 @@ def calculate_em7(data: Dict):
 
     This function calculates team throughput measure.
     """
-    number_of_resolved_issues = data["number_of_resolved_issues"]
-    number_of_issues = data["total_number_of_issues"]
+    number_of_resolved_issues_in_the_last_x_days = data[
+        "number_of_resolved_issues_in_the_last_x_days"
+    ]
 
+    total_number_of_issues_in_the_last_x_days = data[
+        "total_number_of_issues_in_the_last_x_days"
+    ]
+
+    # TODO: Esses thresholds estão certos?
     MIN_THRESHOLD = 0
     MAX_THRESHOLD = 1
 
@@ -201,10 +207,12 @@ def calculate_em7(data: Dict):
         reverse_y=True
     )
 
-    if7 = np.divide(number_of_resolved_issues, number_of_issues)
-    em7 = np.interp(if7, x, y)
+    if7 = np.divide(
+        number_of_resolved_issues_in_the_last_x_days,
+        total_number_of_issues_in_the_last_x_days,
+    )
 
-    return em7
+    return np.interp(if7, x, y)
 
 
 def calculate_em8(data: Dict[str, float]):
@@ -215,6 +223,9 @@ def calculate_em8(data: Dict[str, float]):
     The calculation will be the feedback time for every build
     divided by total builds
     """
+
+    # TODO: PQ aqui não temos thresholds?
+
     denominator = data['number_of_build_pipelines_in_the_last_x_days']
     numerator = data['runtime_sum_of_build_pipelines_in_the_last_x_days']
 

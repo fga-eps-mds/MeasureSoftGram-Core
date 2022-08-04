@@ -8,9 +8,9 @@ from src.core.interpretation_functions import (
     fast_test_builds,
     team_throughput
 )
-from src.core.measures_functions import (
-    calculate_em1, calculate_em2, calculate_em3, calculate_em4, calculate_em5, calculate_em6, calculate_em7
-)
+import src.core.measures_functions as ems_functions
+
+
 from src.core import schemas
 
 AVAILABLE_PRE_CONFIGS = {
@@ -103,42 +103,42 @@ AVAILABLE_PRE_CONFIGS = {
 MEASURES_INTERPRETATION_MAPPING = {
     "passed_tests": {
         "interpretation_function": passed_tests,
-        "calculation_function": calculate_em4,
+        "calculation_function": ems_functions.calculate_em4,
         "schema": schemas.PassedTestsSchema,
     },
     "test_builds": {
         "interpretation_function": fast_test_builds,
-        "calculation_function": calculate_em5,
+        "calculation_function": ems_functions.calculate_em5,
         "schema": schemas.TestBuildsSchema,
     },
     "test_coverage": {
         "interpretation_function": test_coverage,
-        "calculation_function": calculate_em6,
+        "calculation_function": ems_functions.calculate_em6,
         "schema": schemas.TestCoverageSchema,
     },
     "non_complex_file_density": {
         "interpretation_function": non_complex_files_density,
-        "calculation_function": calculate_em1,
+        "calculation_function": ems_functions.calculate_em1,
         "schema": schemas.NonComplexFileDensitySchema,
     },
     "commented_file_density": {
         "interpretation_function": commented_files_density,
-        "calculation_function": calculate_em2,
+        "calculation_function": ems_functions.calculate_em2,
         "schema": schemas.CommentedFileDensitySchema,
     },
     "duplication_absense": {
         "interpretation_function": absence_of_duplications,
-        "calculation_function": calculate_em3,
+        "calculation_function": ems_functions.calculate_em3,
         "schema": schemas.DuplicationAbsenceSchema,
     },
     "ci_feedback_time": {
         "interpretation_function": ci_feedback_time,
-        "calculation_function": calculate_em7,
+        "calculation_function": ems_functions.calculate_em8,
         "schema": schemas.CIFeedbackTimeSchema,
     },
     "team_throughput": {
         "interpretation_function": team_throughput,
-        "calculation_function": calculate_em7,
+        "calculation_function": ems_functions.calculate_em7,
         "schema": schemas.TeamThroughputSchema,
     }
 }
