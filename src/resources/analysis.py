@@ -102,3 +102,23 @@ class CalculateSpecificMeasure(Resource):
             })
 
         return jsonify(response_data)
+
+
+class CalculateSpecifiSubcharacteristics(Resource):
+    """
+    Recurso mockado
+    TODO: Implementar
+    """
+    def post(self):
+        return jsonify({
+            "subcharacteristics": [
+                {
+                    "key": "testing_status",
+                    "value": 0.84
+                },
+                {
+                    "key": "modifiability",
+                    "value": 0.41
+                }
+            ]
+        })
