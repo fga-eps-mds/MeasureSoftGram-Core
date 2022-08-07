@@ -64,7 +64,6 @@ class DuplicationAbsenceSchema(Schema):
     "key": "duplication_absense",
     "function": calculate_em3
     """
-    number_of_files = fields.Integer(required=True)
     duplicated_lines_density = fields.List(fields.Float(required=True))
 
 
@@ -91,7 +90,6 @@ class TestCoverageSchema(Schema):
     "key": "test_coverage",
     "function": calculate_em6
     """
-    number_of_files = fields.Integer(required=True)
     coverage = fields.List(fields.Float(required=True))
 
 

@@ -193,7 +193,7 @@ def calculate_em6(data: Dict):
     if "number_of_files" in data:
         number_of_files = data["number_of_files"]
     else:
-        number_of_files = len(number_of_files)
+        number_of_files = len(coverage)
 
     MINIMUM_COVERAGE_THRESHOLD = 60
     MAXIMUM_COVERAGE_THRESHOLD = 90
