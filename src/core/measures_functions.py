@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from typing import Dict
 
-from src.util.exceptions import InvalidMetricValue
+from src.util.exceptions import InvalidMetricValue, ImplicitMetricValueError
 from src.util.get_functions import create_coordinate_pair
 
 
@@ -35,7 +35,18 @@ def calculate_em1(data: Dict):
     """
     files_complexity = resolve_metric_list_parameter(data["complexity"])
     files_functions = resolve_metric_list_parameter(data["functions"])
-    number_of_files = data["number_of_files"]
+
+    if "number_of_files" in data:
+        number_of_files = data["number_of_files"]
+
+    elif len(files_complexity) != len(files_functions):
+        raise ImplicitMetricValueError((
+            "Unable to get the implicit value of metric `number_of_file` "
+            "because the size of the lists of values of metrics `complexity` "
+            "and `functions` are not equal."
+        ))
+    else:
+        number_of_files = len(files_complexity)
 
     COMPLEX_FILES_DENSITY_THRESHOLD = 10
 
@@ -64,8 +75,14 @@ def calculate_em2(data: Dict):
     This function calculates commented files density measure (em2)
     used to assess the changeability quality sub characteristic.
     """
-    number_of_files = data["number_of_files"]
-    files_comment_lines_density = resolve_metric_list_parameter(data["comment_lines_density"])
+    files_comment_lines_density = resolve_metric_list_parameter(
+        data["comment_lines_density"]
+    )
+
+    if "number_of_files" in data:
+        number_of_files = data["number_of_files"]
+    else:
+        number_of_files = len(files_comment_lines_density)
 
     MINIMUM_COMMENT_DENSITY_THRESHOLD = 10
     MAXIMUM_COMMENT_DENSITY_THRESHOLD = 30
@@ -99,8 +116,14 @@ def calculate_em3(data: Dict):
     This function calculates the duplicated files absence measure (em3)
     used to assess the changeability quality sub characteristic.
     """
-    number_of_files = data["number_of_files"]
-    files_duplicated_lines_density = resolve_metric_list_parameter(data["duplicated_lines_density"])
+    files_duplicated_lines_density = resolve_metric_list_parameter(
+        data["duplicated_lines_density"]
+    )
+
+    if "number_of_files" in data:
+        number_of_files = data["number_of_files"]
+    else:
+        number_of_files = len(files_duplicated_lines_density)
 
     DUPLICATED_LINES_THRESHOLD = 5.0
 
@@ -166,7 +189,11 @@ def calculate_em6(data: Dict):
     used to assess the testing status sub characteristic.
     """
     coverage = resolve_metric_list_parameter(data["coverage"])
-    number_of_files = data["number_of_files"]
+
+    if "number_of_files" in data:
+        number_of_files = data["number_of_files"]
+    else:
+        number_of_files = len(number_of_files)
 
     MINIMUM_COVERAGE_THRESHOLD = 60
     MAXIMUM_COVERAGE_THRESHOLD = 90

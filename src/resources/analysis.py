@@ -21,7 +21,9 @@ class Analysis(Resource):
         measures = pre_config["measures"]
 
         df = create_dataframe(
-            measures, components["components"], components["language_extension"]
+            measures,
+            components["components"],
+            components["language_extension"],
         )
 
         try:

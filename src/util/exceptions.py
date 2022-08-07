@@ -17,6 +17,7 @@ class ValuesAndWeightsOfDifferentSizes(MeasureSoftGramCoreException):
     """Raised when the length of the weight and values are not equal"""
     pass
 
+
 class ImplicitMetricValueError(MeasureSoftGramCoreException):
     """
     Exception levantanda quando uma métrica não é passada e não é possível
