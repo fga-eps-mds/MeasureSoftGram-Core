@@ -101,21 +101,6 @@ AVAILABLE_PRE_CONFIGS = {
 
 
 MEASURES_INTERPRETATION_MAPPING = {
-    "passed_tests": {
-        "interpretation_function": passed_tests,
-        "calculation_function": ems_functions.calculate_em4,
-        "schema": schemas.PassedTestsSchema,
-    },
-    "test_builds": {
-        "interpretation_function": fast_test_builds,
-        "calculation_function": ems_functions.calculate_em5,
-        "schema": schemas.TestBuildsSchema,
-    },
-    "test_coverage": {
-        "interpretation_function": test_coverage,
-        "calculation_function": ems_functions.calculate_em6,
-        "schema": schemas.TestCoverageSchema,
-    },
     "non_complex_file_density": {
         "interpretation_function": non_complex_files_density,
         "calculation_function": ems_functions.calculate_em1,
@@ -131,14 +116,29 @@ MEASURES_INTERPRETATION_MAPPING = {
         "calculation_function": ems_functions.calculate_em3,
         "schema": schemas.DuplicationAbsenceSchema,
     },
-    "ci_feedback_time": {
-        "interpretation_function": ci_feedback_time,
-        "calculation_function": ems_functions.calculate_em8,
-        "schema": schemas.CIFeedbackTimeSchema,
+    "passed_tests": {
+        "interpretation_function": passed_tests,
+        "calculation_function": ems_functions.calculate_em4,
+        "schema": schemas.PassedTestsSchema,
+    },
+    "test_builds": {
+        "interpretation_function": fast_test_builds,
+        "calculation_function": ems_functions.calculate_em5,
+        "schema": schemas.TestBuildsSchema,
+    },
+    "test_coverage": {
+        "interpretation_function": test_coverage,
+        "calculation_function": ems_functions.calculate_em6,
+        "schema": schemas.TestCoverageSchema,
     },
     "team_throughput": {
         "interpretation_function": team_throughput,
         "calculation_function": ems_functions.calculate_em7,
         "schema": schemas.TeamThroughputSchema,
-    }
+    },
+    "ci_feedback_time": {
+        "interpretation_function": ci_feedback_time,
+        "calculation_function": ems_functions.calculate_em8,
+        "schema": schemas.CIFeedbackTimeSchema,
+    },
 }
