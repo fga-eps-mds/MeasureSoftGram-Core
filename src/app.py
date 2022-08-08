@@ -3,8 +3,9 @@ from flask_restful import Api
 from src.resources.available import AvailablePreConfigs
 from src.resources.analysis import (
     Analysis,
-    CalculateSpecificMeasure,
-    CalculateSpecifiSubcharacteristics,
+    CalculateMeasures,
+    CalculateSubcharacteristics,
+    CalculateCharacteristics,
 )
 
 
@@ -16,11 +17,16 @@ api.add_resource(AvailablePreConfigs, "/available-pre-configs")
 api.add_resource(Analysis, "/analysis")
 
 api.add_resource(
-    CalculateSpecificMeasure,
+    CalculateMeasures,
     "/calculate-measures/",
 )
 
 api.add_resource(
-    CalculateSpecifiSubcharacteristics,
-    "/calculate-subcharacteristics/"
+    CalculateSubcharacteristics,
+    "/calculate-subcharacteristics/",
+)
+
+api.add_resource(
+    CalculateCharacteristics,
+    "/calculate-characteristics/",
 )

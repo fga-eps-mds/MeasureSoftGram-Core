@@ -1,3 +1,4 @@
+import random
 import requests
 
 from flask_restful import Resource
@@ -56,7 +57,7 @@ class Analysis(Resource):
         )
 
 
-class CalculateSpecificMeasure(Resource):
+class CalculateMeasures(Resource):
     def post(self):
         # Validate if outter keys is valid
         try:
@@ -104,7 +105,7 @@ class CalculateSpecificMeasure(Resource):
         return jsonify(response_data)
 
 
-class CalculateSpecifiSubcharacteristics(Resource):
+class CalculateSubcharacteristics(Resource):
     """
     Recurso mockado
     TODO: Implementar
@@ -114,11 +115,31 @@ class CalculateSpecifiSubcharacteristics(Resource):
             "subcharacteristics": [
                 {
                     "key": "testing_status",
-                    "value": 0.84
+                    "value": random.random()
                 },
                 {
                     "key": "modifiability",
-                    "value": 0.41
+                    "value": random.random()
+                }
+            ]
+        })
+
+
+class CalculateCharacteristics(Resource):
+    """
+    Recurso mockado
+    TODO: Implementar
+    """
+    def post(self):
+        return jsonify({
+            "characteristics": [
+                {
+                    "key": "maintainability",
+                    "value": random.random(),
+                },
+                {
+                    "key": "reliability",
+                    "value": random.random(),
                 }
             ]
         })

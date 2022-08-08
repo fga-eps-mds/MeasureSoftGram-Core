@@ -20,7 +20,7 @@ def resolve_metric_list_parameter(metric):
     """
     Resolves the metric list parameter to calculate a measure
 
-    This functions converts the metric parameter to a pandas Series if it is a list (CalculateSpecificMeasure endpoint)
+    This functions converts the metric parameter to a pandas Series if it is a list (CalculateMeasures endpoint)
     otherwise it just returns the metric - already a pandas Series (Analysis endpoint).
     """
     return pd.Series(metric, dtype=np.float64) if isinstance(metric, list) else metric
