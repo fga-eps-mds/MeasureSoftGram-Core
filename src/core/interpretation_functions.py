@@ -8,16 +8,8 @@ from src.util.get_functions import (
     get_files_data_frame,
     get_test_root_dir,
 )
-from src.core.measures_functions import (
-    calculate_em1,
-    calculate_em2,
-    calculate_em3,
-    calculate_em4,
-    calculate_em5,
-    calculate_em6,
-    calculate_em7,
-    calculate_em8
-)
+
+import src.core.measures_functions as ems_functions
 
 import pandas as pd
 
@@ -42,7 +34,7 @@ def non_complex_files_density(data_frame):
     check_metric_values(files_complexity, "complexity")
     check_metric_values(files_functions, "functions")
 
-    return calculate_em1(data={
+    return ems_functions.calculate_em1(data={
         "complexity": files_complexity,
         "functions": files_functions,
         "number_of_files": number_of_files,
@@ -65,7 +57,7 @@ def commented_files_density(data_frame: pd.DataFrame):
     check_number_of_files(number_of_files)
     check_metric_values(files_comment_lines_density, "comment_lines_density")
 
-    return calculate_em2(data={
+    return ems_functions.calculate_em2(data={
         "number_of_files": number_of_files,
         "comment_lines_density": files_comment_lines_density,
     })
@@ -87,7 +79,7 @@ def absence_of_duplications(data_frame: pd.DataFrame):
     check_number_of_files(number_of_files)
     check_metric_values(files_duplicated_lines_density, "duplicated_lines_density")
 
-    return calculate_em3(data={
+    return ems_functions.calculate_em3(data={
         "number_of_files": number_of_files,
         "duplicated_lines_density": files_duplicated_lines_density,
     })
@@ -109,7 +101,7 @@ def test_coverage(data_frame):
     check_number_of_files(number_of_files)
     check_metric_values(coverage, "coverage")
 
-    return calculate_em6(data={
+    return ems_functions.calculate_em6(data={
         "coverage": coverage,
         "number_of_files": number_of_files,
     })
@@ -127,7 +119,7 @@ def fast_test_builds(data_frame):
 
     test_execution_time = float(root_test["test_execution_time"])  # m9 metric
 
-    return calculate_em5(data={
+    return ems_functions.calculate_em5(data={
         "test_execution_time": test_execution_time
     })
 
@@ -149,7 +141,7 @@ def passed_tests(data_frame):
     test_errors = float(root_test["test_errors"])  # m7 metrics
     test_failures = float(root_test["test_failures"])  # m8 metrics
 
-    return calculate_em4(data={
+    return ems_functions.calculate_em4(data={
         "tests": tests,
         "test_errors": test_errors,
         "test_failures": test_failures,
@@ -171,7 +163,7 @@ def team_throughput(data_frame):
     check_metric_value(number_of_resolved_issues, "number_of_resolved_issues")
     check_metric_value(total_number_of_issues, "total_number_of_issues")
 
-    return calculate_em7(data={
+    return ems_functions.calculate_em7(data={
         "number_of_resolved_issues": number_of_resolved_issues,
         "total_number_of_issues": total_number_of_issues,
     })
@@ -217,4 +209,4 @@ def ci_feedback_time(data_frame):
             runtime_sum_of_build_pipelines_in_the_last_x_days
     }
 
-    return calculate_em8(data)
+    return ems_functions.calculate_em8(data)
