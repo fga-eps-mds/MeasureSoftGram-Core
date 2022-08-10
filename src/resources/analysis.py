@@ -145,3 +145,14 @@ class CalculateCharacteristics(Resource):
                 }
             ]
         })
+
+
+class CalculateSQC(Resource):
+    """
+    Recurso mockado
+    TODO: Implementar
+    """
+    def post(self):
+        return jsonify({
+            "value": random.random(),
+        })

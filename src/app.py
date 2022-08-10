@@ -6,6 +6,7 @@ from src.resources.analysis import (
     CalculateMeasures,
     CalculateSubcharacteristics,
     CalculateCharacteristics,
+    CalculateSQC,
 )
 
 
@@ -29,4 +30,9 @@ api.add_resource(
 api.add_resource(
     CalculateCharacteristics,
     "/calculate-characteristics/",
+)
+
+api.add_resource(
+    CalculateSQC,
+    "/calculate-sqc/",
 )
