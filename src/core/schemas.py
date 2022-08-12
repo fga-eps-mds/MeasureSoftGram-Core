@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields
+from marshmallow import Schema, fields, validate
 
 
 class MeasureSchema(Schema):
@@ -40,6 +40,39 @@ class CalculateMeasureSchema(Schema):
     }
     """
     measures = fields.List(fields.Nested(MeasureSchema), required=True)
+
+
+class CalculatedSubEntitySchema(Schema):
+    key = fields.Str(required=True)
+    value = fields.Float(validate=validate.Range(min=0, max=1), required=True)
+    weight = fields.Float(validate=validate.Range(min=0, max=100), required=True)
+
+
+class SubCharacteristicSchema(Schema):
+    key = fields.Str(required=True)
+    measures = fields.List(fields.Nested(CalculatedSubEntitySchema), required=True)
+
+
+class CalculateSubCharacteristicSchema(Schema):
+    """
+    {
+        "subcharacteristics": [
+            {
+                "key": "testing_status",
+                "measures": [
+                    {
+                        "key": "passed_tests",
+                        "value": 1.0,
+                        "weight": 33,
+                    },
+                    ...
+                ]
+            },
+            ...
+        ]
+    }
+    """
+    subcharacteristics = fields.List(fields.Nested(SubCharacteristicSchema), required=True)
 
 
 class NonComplexFileDensitySchema(Schema):
