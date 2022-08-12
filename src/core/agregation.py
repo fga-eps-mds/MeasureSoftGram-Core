@@ -1,9 +1,9 @@
 import numpy as np
 
 
-def agregation_operation(weighted_value, weigths):
+def aggregation_operation(weighted_value, weights):
     weighted_value = np.array(weighted_value)
-    weigths = np.array(weigths)
+    weights = np.array(weights)
     normalized_value = np.linalg.norm(weighted_value)
-    max_value = np.linalg.norm(weigths)
+    max_value = np.linalg.norm(weights)
     return normalized_value / max_value
