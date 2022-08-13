@@ -1,8 +1,9 @@
 from typing import Dict, List, Tuple
 
 import pandas as pd
-from src.core.weighting import weighting_operation
+
 from src.core.agregation import aggregation_operation
+from src.core.weighting import weighting_operation
 from src.util.constants import MEASURES_INTERPRETATION_MAPPING
 
 
