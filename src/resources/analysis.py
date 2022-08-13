@@ -1,16 +1,19 @@
 import random
+
 import requests
-
-from flask_restful import Resource
 from flask import jsonify, request
-
-from src.core.dataframe import create_dataframe
-from src.core.analysis import calculate_measures, make_analysis
-from src.util.exceptions import MeasureSoftGramCoreException
-from src.util.constants import MEASURES_INTERPRETATION_MAPPING
-from src.core.schemas import CalculateMeasureSchema
-
+from flask_restful import Resource
 from marshmallow.exceptions import ValidationError
+
+from src.core.analysis import (
+    calculate_aggregated_value,
+    calculate_measures,
+    make_analysis,
+)
+from src.core.dataframe import create_dataframe
+from src.core.schemas import CalculateMeasureSchema, CalculateSubCharacteristicSchema
+from src.util.constants import MEASURES_INTERPRETATION_MAPPING
+from src.util.exceptions import MeasureSoftGramCoreException
 
 
 class Analysis(Resource):
@@ -108,23 +111,34 @@ class CalculateMeasures(Resource):
 
 
 class CalculateSubcharacteristics(Resource):
-    """
-    Recurso mockado
-    TODO: Implementar
-    """
     def post(self):
-        return jsonify({
-            "subcharacteristics": [
-                {
-                    "key": "testing_status",
-                    "value": random.random()
-                },
-                {
-                    "key": "modifiability",
-                    "value": random.random()
-                }
-            ]
-        })
+        # Validates if the request data is valid
+        try:
+            data = CalculateSubCharacteristicSchema().load(request.get_json(force=True))
+        except ValidationError as error:
+            return {
+                "error": "Failed to validate request",
+                "schema_errors": error.messages,
+            }, requests.codes.unprocessable_entity
+
+        response_data = {"subcharacteristics": []}
+
+        for subcharacteristic in data["subcharacteristics"]:
+            subcharacteristic_key: str = subcharacteristic["key"]
+
+            values_list, weights_list = [], []
+            for measure in subcharacteristic["measures"]:
+                values_list.append(measure["value"])
+                weights_list.append(measure["weight"])
+
+            aggregated_value = calculate_aggregated_value(values_list, weights_list)
+
+            response_data["subcharacteristics"].append({
+                "key": subcharacteristic_key,
+                "value": aggregated_value,
+            })
+
+        return jsonify(response_data)
 
 
 class CalculateCharacteristics(Resource):

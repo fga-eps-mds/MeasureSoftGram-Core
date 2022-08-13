@@ -1,8 +1,9 @@
-import numpy as np
-import pandas as pd
 from typing import Dict
 
-from src.util.exceptions import InvalidMetricValue, ImplicitMetricValueError
+import numpy as np
+import pandas as pd
+
+from src.util.exceptions import ImplicitMetricValueError, InvalidMetricValue
 from src.util.get_functions import create_coordinate_pair
 
 

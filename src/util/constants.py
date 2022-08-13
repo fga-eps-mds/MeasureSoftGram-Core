@@ -1,17 +1,15 @@
-from src.core.interpretation_functions import (
-    ci_feedback_time,
-    non_complex_files_density,
-    test_coverage,
-    commented_files_density,
-    absence_of_duplications,
-    passed_tests,
-    fast_test_builds,
-    team_throughput
-)
 import src.core.measures_functions as ems_functions
-
-
 from src.core import schemas
+from src.core.interpretation_functions import (
+    absence_of_duplications,
+    ci_feedback_time,
+    commented_files_density,
+    fast_test_builds,
+    non_complex_files_density,
+    passed_tests,
+    team_throughput,
+    test_coverage,
+)
 
 AVAILABLE_PRE_CONFIGS = {
     "characteristics": {

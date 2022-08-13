@@ -11,6 +11,9 @@ services:
     restart: on-failure
     networks:
       - measuresoftgram
+    environment:
+      - DEBUG=True
+
 
 networks:
   measuresoftgram:

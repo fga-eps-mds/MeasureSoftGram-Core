@@ -63,3 +63,115 @@ TEST_PARAMETERS = [
         {"sqc": 0.6596226503208683},
     ),
 ]
+
+
+CALCULATE_SUBCHARACTERISTICS_DATA = [
+    (
+        # Calculate one subcharacteristic
+        {
+            "subcharacteristics": [
+                {
+                    "key": "testing_status",
+                    "measures": [
+                        {
+                            "key": "passed_tests",
+                            "value": 1.0,
+                            "weight": 33
+                        },
+                        {
+                            "key": "test_builds",
+                            "value": 0.00178,
+                            "weight": 33
+                        },
+                        {
+                            "key": "test_coverage",
+                            "value": 0.25,
+                            "weight": 34
+                        }
+                    ]
+                }
+            ]
+        },
+        200,
+        {
+            "subcharacteristics": [
+                {
+                    "key": "testing_status",
+                    "value": 0.5901748671720202
+                }
+            ]
+        }
+    ),
+    (
+        # Calculate multiples subcharacteristics
+        {
+            "subcharacteristics": [
+                {
+                    "key": "modifiability",
+                    "measures": [
+                        {
+                            "key": "non_complex_file_density",
+                            "value": 0.675,
+                            "weight": 70
+                        },
+                        {
+                            "key": "commented_file_density",
+                            "value": 0.2275,
+                            "weight": 30
+                        }
+                    ]
+                },
+                {
+                    "key": "testing_status",
+                    "measures": [
+                        {
+                            "key": "test_builds",
+                            "value": 0.00178,
+                            "weight": 100
+                        }
+                    ]
+                }
+            ]
+        },
+        200,
+        {
+            "subcharacteristics": [
+                {
+                    "key": "modifiability",
+                    "value": 0.6268617959382247
+                },
+                {
+                    "key": "testing_status",
+                    "value": 0.00178
+                }
+            ]
+        }
+    ),
+    (
+        # Invalid request data
+        {
+            "subcharacteristics": [
+                {
+                    "key": "testing_status",
+                    "value": 0.5
+                }
+            ]
+        },
+        422,
+        {
+            "error": "Failed to validate request",
+            "schema_errors": {
+                "subcharacteristics": {
+                    "0": {
+                        "measures": [
+                            "Missing data for required field."
+                        ],
+                        "value": [
+                            "Unknown field."
+                        ]
+                    }
+                }
+            }
+        }
+    ),
+]

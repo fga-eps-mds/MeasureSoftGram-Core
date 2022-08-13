@@ -3,6 +3,7 @@ from tests.utils.integration_data import (
     PRE_CONFIGURATION,
     COMPONENT,
     TEST_PARAMETERS,
+    CALCULATE_SUBCHARACTERISTICS_DATA,
 )
 from src.app import app
 
@@ -22,3 +23,15 @@ def test_analysis_sucess(status_code, level, expected_output):
 
         assert response.status_code == status_code
         assert response.json[level] == expected_output
+
+
+@pytest.mark.parametrize(
+    "data,status_code,expected_output",
+    CALCULATE_SUBCHARACTERISTICS_DATA
+)
+def test_calculate_subcharacteristics(data, status_code, expected_output):
+    with app.test_client() as client:
+        response = client.post("/calculate-subcharacteristics/", json=data)
+
+        assert response.status_code == status_code
+        assert response.json == expected_output
