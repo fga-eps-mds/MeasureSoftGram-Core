@@ -2,8 +2,10 @@ import math
 
 import pandas as pd
 
-from src.util.exceptions import (InvalidInterpretationFunctionArguments,
-                                 InvalidMetricValue)
+from src.util.exceptions import (
+    InvalidInterpretationFunctionArguments,
+    InvalidMetricValue,
+)
 
 
 def check_component_is_valid(component, language_extension):

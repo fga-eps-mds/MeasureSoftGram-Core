@@ -73,7 +73,9 @@ def calculate_measures(dataframe: pd.DataFrame, measures: List[str]) -> Dict[str
     return combined_measures
 
 
-def calculate_aggregated_value(values_list: List[float], weights_list: List[float]) -> float:
+def calculate_aggregated_value(
+    values_list: List[float],
+    weights_list: List[float],
+) -> float:
     weighted_items = weighting_operation(values_list, weights_list)
-    aggregated_value = aggregation_operation(weighted_items, weights_list)
-    return aggregated_value
+    return aggregation_operation(weighted_items, weights_list)

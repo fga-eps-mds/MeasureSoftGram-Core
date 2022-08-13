@@ -1,9 +1,13 @@
 from flask import Flask
 from flask_restful import Api
 
-from src.resources.analysis import (Analysis, CalculateCharacteristics,
-                                    CalculateMeasures, CalculateSQC,
-                                    CalculateSubcharacteristics)
+from src.resources.analysis import (
+    Analysis,
+    CalculateCharacteristics,
+    CalculateMeasures,
+    CalculateSQC,
+    CalculateSubcharacteristics,
+)
 from src.resources.available import AvailablePreConfigs
 
 app = Flask(__name__)

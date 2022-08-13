@@ -5,11 +5,13 @@ from flask import jsonify, request
 from flask_restful import Resource
 from marshmallow.exceptions import ValidationError
 
-from src.core.analysis import (calculate_aggregated_value, calculate_measures,
-                               make_analysis)
+from src.core.analysis import (
+    calculate_aggregated_value,
+    calculate_measures,
+    make_analysis,
+)
 from src.core.dataframe import create_dataframe
-from src.core.schemas import (CalculateMeasureSchema,
-                              CalculateSubCharacteristicSchema)
+from src.core.schemas import CalculateMeasureSchema, CalculateSubCharacteristicSchema
 from src.util.constants import MEASURES_INTERPRETATION_MAPPING
 from src.util.exceptions import MeasureSoftGramCoreException
 
