@@ -60,3 +60,4 @@ def test_calculate_with_invalid_data(entity, data):
         response = client.post(f"/calculate-{entity}/", json=data)
 
         assert response.status_code == 422
+        assert response.json["error"] == "Failed to validate request"
