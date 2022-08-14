@@ -75,6 +75,33 @@ class CalculateSubCharacteristicSchema(Schema):
     subcharacteristics = fields.List(fields.Nested(SubCharacteristicSchema), required=True)
 
 
+class CharacteristicSchema(Schema):
+    key = fields.Str(required=True)
+    subcharacteristics = fields.List(fields.Nested(CalculatedSubEntitySchema), required=True)
+
+
+class CalculateCharacteristicSchema(Schema):
+    """
+    {
+        "characteristics": [
+            {
+                "key": "reliability",
+                "subcharacteristics": [
+                    {
+                        "key": "testing_status",
+                        "value": 1.0,
+                        "weight": 50,
+                    },
+                    ...
+                ]
+            },
+            ...
+        ]
+    }
+    """
+    characteristics = fields.List(fields.Nested(CharacteristicSchema), required=True)
+
+
 class NonComplexFileDensitySchema(Schema):
     """
     "key": "non_complex_file_density",
