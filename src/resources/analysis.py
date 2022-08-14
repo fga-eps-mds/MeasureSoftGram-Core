@@ -11,7 +11,11 @@ from src.core.analysis import (
     make_analysis,
 )
 from src.core.dataframe import create_dataframe
-from src.core.schemas import CalculateMeasureSchema, CalculateSubCharacteristicSchema
+from src.core.schemas import (
+    CalculateMeasureSchema,
+    CalculateSubCharacteristicSchema,
+    CalculateCharacteristicSchema
+)
 from src.util.constants import MEASURES_INTERPRETATION_MAPPING
 from src.util.exceptions import MeasureSoftGramCoreException
 
@@ -142,23 +146,34 @@ class CalculateSubcharacteristics(Resource):
 
 
 class CalculateCharacteristics(Resource):
-    """
-    Recurso mockado
-    TODO: Implementar
-    """
     def post(self):
-        return jsonify({
-            "characteristics": [
-                {
-                    "key": "maintainability",
-                    "value": random.random(),
-                },
-                {
-                    "key": "reliability",
-                    "value": random.random(),
-                }
-            ]
-        })
+        # Validate if the request data is valid
+        try:
+            data = CalculateCharacteristicSchema().load(request.get_json(force=True))
+        except ValidationError as error:
+            return {
+                "error": "Failed to validate request",
+                "schema_errors": error.messages,
+            }, requests.codes.unprocessable_entity
+
+        response_data = {"characteristics": []}
+
+        for characteristic in data["characteristics"]:
+            characteristic_key: str = characteristic["key"]
+
+            values_list, weights_list = [], []
+            for measure in characteristic["subcharacteristics"]:
+                values_list.append(measure["value"])
+                weights_list.append(measure["weight"])
+
+            aggregated_value = calculate_aggregated_value(values_list, weights_list)
+
+            response_data["characteristics"].append({
+                "key": characteristic_key,
+                "value": aggregated_value,
+            })
+
+        return jsonify(response_data)
 
 
 class CalculateSQC(Resource):
