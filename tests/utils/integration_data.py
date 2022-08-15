@@ -65,7 +65,7 @@ TEST_PARAMETERS = [
 ]
 
 
-CALCULATE_SUBCHARACTERISTICS_DATA = [
+CALCULATE_SUBCHARACTERISTICS_SUCCESS_DATA = [
     (
         # Calculate one subcharacteristic
         {
@@ -92,7 +92,6 @@ CALCULATE_SUBCHARACTERISTICS_DATA = [
                 }
             ]
         },
-        200,
         {
             "subcharacteristics": [
                 {
@@ -133,7 +132,6 @@ CALCULATE_SUBCHARACTERISTICS_DATA = [
                 }
             ]
         },
-        200,
         {
             "subcharacteristics": [
                 {
@@ -146,9 +144,81 @@ CALCULATE_SUBCHARACTERISTICS_DATA = [
                 }
             ]
         }
+    )
+]
+
+
+CALCULATE_CHARACTERISTICS_SUCCESS_DATA = [
+    (
+        # Calculate one characteristic
+        {
+            "characteristics": [
+                {
+                    "key": "reliability",
+                    "subcharacteristics": [
+                        {
+                            "key": "testing_status",
+                            "value": 0.90,
+                            "weight": 100
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "characteristics": [
+                {
+                    "key": "reliability",
+                    "value": 0.90
+                }
+            ]
+        }
     ),
     (
-        # Invalid request data
+        # Calculate multiples characteristics
+        {
+            "characteristics": [
+                {
+                    "key": "reliability",
+                    "subcharacteristics": [
+                        {
+                            "key": "testing_status",
+                            "value": 1.0,
+                            "weight": 100
+                        }
+                    ]
+                },
+                {
+                    "key": "maintainability",
+                    "subcharacteristics": [
+                        {
+                            "key": "modifiability",
+                            "value": 0.675,
+                            "weight": 100
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "characteristics": [
+                {
+                    "key": "reliability",
+                    "value": 1.0
+                },
+                {
+                    "key": "maintainability",
+                    "value": 0.675
+                }
+            ]
+        }
+    )
+]
+
+
+CALCULATE_ENTITY_INVALID_DATA = [
+    (
+        "subcharacteristics",
         {
             "subcharacteristics": [
                 {
@@ -156,22 +226,56 @@ CALCULATE_SUBCHARACTERISTICS_DATA = [
                     "value": 0.5
                 }
             ]
-        },
-        422,
+        }
+    ),
+    (
+        "subcharacteristics",
         {
-            "error": "Failed to validate request",
-            "schema_errors": {
-                "subcharacteristics": {
-                    "0": {
-                        "measures": [
-                            "Missing data for required field."
-                        ],
-                        "value": [
-                            "Unknown field."
-                        ]
-                    }
+            "subcharacteristics": [
+                {
+                    "key": "testing_status",
+                    "measures": [
+                        {
+                            "key": "passed_tests",
+                            "value": 0.00178
+                        }
+                    ]
                 }
-            }
+            ]
+        }
+    ),
+    (
+        "characteristics",
+        {
+            "characteristics": [
+                {
+                    "name": "reliability",
+                    "subcharacteristics": [
+                        {
+                            "key": "testing_status",
+                            "value": 2.5,
+                            "weight": 100
+                        }
+                    ]
+                }
+            ]
+        }
+    ),
+    (
+        "characteristics",
+        {
+            "characteristics": [
+                {
+                    "key": "reliability",
+                    "measures": [
+                        {
+                            "key": "test_builds",
+                            "value": 0.475,
+                            "weight": 100
+                        }
+                    ]
+                }
+            ]
         }
     ),
 ]
