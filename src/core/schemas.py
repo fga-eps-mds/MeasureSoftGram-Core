@@ -158,8 +158,8 @@ class TeamThroughputSchema(Schema):
     "key": "team_throughput",
     "function": calculate_em7
     """
-    number_of_resolved_issues_in_the_last_x_days = fields.Integer(required=True)
-    total_number_of_issues_in_the_last_x_days = fields.Integer(required=True)
+    number_of_resolved_issues_with_US_label_in_the_last_x_days = fields.Integer(required=True)
+    total_number_of_issues_with_US_label_in_the_last_x_days = fields.Integer(required=True)
 
 
 class CIFeedbackTimeSchema(Schema):

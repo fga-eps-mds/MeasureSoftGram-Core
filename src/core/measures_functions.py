@@ -213,32 +213,22 @@ def calculate_em6(data: Dict):
 
 def calculate_em7(data: Dict):
     """
-    Calculates test coverage (em6).
+    Calculates team throughput (em7).
 
-    This function calculates team throughput measure.
+    This function calculates the team throughput measure (em7)
+    used to assess the functional completeness subcharacteristic.
     """
-    number_of_resolved_issues_in_the_last_x_days = data[
-        "number_of_resolved_issues_in_the_last_x_days"
+    resolved_issues_with_us_label = data[
+        "number_of_resolved_issues_with_US_label_in_the_last_x_days"
     ]
 
-    total_number_of_issues_in_the_last_x_days = data[
-        "total_number_of_issues_in_the_last_x_days"
+    total_issues_with_us_label = data[
+        "total_number_of_issues_with_US_label_in_the_last_x_days"
     ]
 
-    # TODO: Esses thresholds estão certos?
-    MIN_THRESHOLD = 0
-    MAX_THRESHOLD = 1
+    x, y = create_coordinate_pair(0, 1, reverse_y=True)
 
-    x, y = create_coordinate_pair(
-        MIN_THRESHOLD,
-        MAX_THRESHOLD,
-        reverse_y=True
-    )
-
-    if7 = np.divide(
-        number_of_resolved_issues_in_the_last_x_days,
-        total_number_of_issues_in_the_last_x_days,
-    )
+    if7 = np.divide(resolved_issues_with_us_label, total_issues_with_us_label)
 
     return np.interp(if7, x, y)
 

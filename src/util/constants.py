@@ -90,9 +90,12 @@ AVAILABLE_PRE_CONFIGS = {
         },
         "team_throughput": {
             "name": "Team Throughput",
-            "subcharacteristics": ["issues_velocity"],
-            "characteristics": ["productivity"],
-            "metrics": ["number_of_resolved_issues", "total_number_of_issues"],
+            "subcharacteristics": ["functional_completeness"],
+            "characteristics": ["functional_suitability"],
+            "metrics": [
+                "number_of_resolved_issues_with_US_label_in_the_last_x_days",
+                "total_number_of_issues_with_US_label_in_the_last_x_days"
+            ],
         },
     },
 }
