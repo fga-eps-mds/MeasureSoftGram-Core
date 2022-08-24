@@ -160,4 +160,3 @@ class TeamThroughputSchema(Schema):
     """
     number_of_resolved_issues_with_US_label_in_the_last_x_days = fields.Integer(required=True)
     total_number_of_issues_with_US_label_in_the_last_x_days = fields.Integer(required=True)
-
