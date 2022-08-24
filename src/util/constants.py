@@ -2,12 +2,10 @@ import src.core.measures_functions as ems_functions
 from src.core import schemas
 from src.core.interpretation_functions import (
     absence_of_duplications,
-    ci_feedback_time,
     commented_files_density,
     fast_test_builds,
     non_complex_files_density,
     passed_tests,
-    team_throughput,
     test_coverage,
 )
 
@@ -133,13 +131,8 @@ MEASURES_INTERPRETATION_MAPPING = {
         "schema": schemas.TestCoverageSchema,
     },
     "team_throughput": {
-        "interpretation_function": team_throughput,
+        "interpretation_function": ...,
         "calculation_function": ems_functions.calculate_em7,
         "schema": schemas.TeamThroughputSchema,
-    },
-    "ci_feedback_time": {
-        "interpretation_function": ci_feedback_time,
-        "calculation_function": ems_functions.calculate_em8,
-        "schema": schemas.CIFeedbackTimeSchema,
     },
 }
