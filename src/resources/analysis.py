@@ -1,5 +1,3 @@
-import random
-
 import requests
 from flask import jsonify, request
 from flask_restful import Resource
@@ -9,12 +7,14 @@ from src.core.analysis import (
     calculate_aggregated_value,
     calculate_measures,
     make_analysis,
+    calculate_sqc,
 )
 from src.core.dataframe import create_dataframe
 from src.core.schemas import (
     CalculateMeasureSchema,
     CalculateSubCharacteristicSchema,
-    CalculateCharacteristicSchema
+    CalculateCharacteristicSchema,
+    CalculateSQCSchema,
 )
 from src.util.constants import MEASURES_INTERPRETATION_MAPPING
 from src.util.exceptions import MeasureSoftGramCoreException
@@ -177,11 +177,18 @@ class CalculateCharacteristics(Resource):
 
 
 class CalculateSQC(Resource):
-    """
-    Recurso mockado
-    TODO: Implementar
-    """
     def post(self):
+        # Validate if the request data is valid
+        try:
+            data = CalculateSQCSchema().load(request.get_json(force=True))
+        except ValidationError as error:
+            return {
+                "error": "Failed to validate request",
+                "schema_errors": error.messages,
+            }, requests.codes.unprocessable_entity
+
+        sqc = calculate_sqc(data["pre_config"], data["metrics"])
+
         return jsonify({
-            "value": random.random(),
+            "value": sqc,
         })
