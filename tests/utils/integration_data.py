@@ -216,8 +216,198 @@ CALCULATE_CHARACTERISTICS_SUCCESS_DATA = [
 ]
 
 
+METRICS_LIST = [
+    {
+        "key": "test_errors",
+        "value": 0.0,
+        "measure_key": "passed_tests"
+    },
+    {
+        "key": "test_failures",
+        "value": 0.0,
+        "measure_key": "passed_tests"
+    },
+    {
+        "key": "tests",
+        "value": 1.0,
+        "measure_key": "passed_tests"
+    },
+    {
+        "key": "test_execution_time",
+        "value": 6.0,
+        "measure_key": "test_builds"
+    },
+    {
+        "key": "coverage",
+        "value": [64.3, 100.0, 100.0, 85.7, 100.0],
+        "measure_key": "test_coverage"
+    },
+    {
+        "key": "complexity",
+        "value": [3.0, 0.0, 0.0, 1.0, 0.0],
+        "measure_key": "non_complex_file_density"
+    },
+    {
+        "key": "functions",
+        "value": [3.0, 0.0, 0.0, 1.0, 0.0],
+        "measure_key": "non_complex_file_density"
+    },
+    {
+        "key": "comment_lines_density",
+        "value": [0.0, 0.0, 0.0, 0.0, 0.0],
+        "measure_key": "commented_file_density"
+    },
+    {
+        "key": "duplicated_lines_density",
+        "value": [0.0, 0.0, 0.0, 0.0, 0.0],
+        "measure_key": "duplication_absense"
+    },
+    {
+        "key": "number_of_resolved_issues_with_US_label_in_the_last_x_days",
+        "value": 1.0,
+        "measure_key": "team_throughput"
+    },
+    {
+        "key": "total_number_of_issues_with_US_label_in_the_last_x_days",
+        "value": 29.0,
+        "measure_key": "team_throughput"
+    }
+]
+
+
+CALCULATE_SQC_SUCCESS_DATA = [
+    (
+        {
+            "pre_config":
+                {
+                    "characteristics": [
+                        {
+                            "key": "reliability",
+                            "weight": 51.0,
+                            "subcharacteristics": [
+                                {
+                                    "key": "testing_status",
+                                    "weight": 100.0,
+                                    "measures": [
+                                        {
+                                            "key": "passed_tests",
+                                            "weight": 40
+                                        },
+                                        {
+                                            "key": "test_builds",
+                                            "weight": 60
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "key": "maintainability",
+                            "weight": 49.0,
+                            "subcharacteristics": [
+                                {
+                                    "key": "modifiability",
+                                    "weight": 100.0,
+                                    "measures": [
+                                        {
+                                            "key": "non_complex_file_density",
+                                            "weight": 100
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+            "metrics": METRICS_LIST,
+        },
+        {
+            "value": 0.4713879251478593,
+        }
+    ),
+    (
+        {
+            "pre_config":
+                {
+                    "characteristics": [
+                        {
+                            "key": "reliability",
+                            "weight": 50.0,
+                            "subcharacteristics": [
+                                {
+                                    "key": "testing_status",
+                                    "weight": 100.0,
+                                    "measures": [
+                                        {
+                                            "key": "passed_tests",
+                                            "weight": 33.34
+                                        },
+                                        {
+                                            "key": "test_builds",
+                                            "weight": 33.33
+                                        },
+                                        {
+                                            "key": "test_coverage",
+                                            "weight": 33.33
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "key": "maintainability",
+                            "weight": 30.0,
+                            "subcharacteristics": [
+                                {
+                                    "key": "modifiability",
+                                    "weight": 100.0,
+                                    "measures": [
+                                        {
+                                            "key": "non_complex_file_density",
+                                            "weight": 50.0
+                                        },
+                                        {
+                                            "key": "commented_file_density",
+                                            "weight": 30.0
+                                        },
+                                        {
+                                            "key": "duplication_absense",
+                                            "weight": 20.0
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "key": "functional_suitability",
+                            "weight": 20.0,
+                            "subcharacteristics": [
+                                {
+                                    "key": "functional_completeness",
+                                    "weight": 100.0,
+                                    "measures": [
+                                        {
+                                            "key": "team_throughput",
+                                            "weight": 100.0
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+            "metrics": METRICS_LIST,
+        },
+        {
+            "value": 0.6363635698376492,
+        }
+    ),
+]
+
+
 CALCULATE_ENTITY_INVALID_DATA = [
     (
+        # Missing field `measures`
         "subcharacteristics",
         {
             "subcharacteristics": [
@@ -229,6 +419,7 @@ CALCULATE_ENTITY_INVALID_DATA = [
         }
     ),
     (
+        # Missing field `weight` of the measure
         "subcharacteristics",
         {
             "subcharacteristics": [
@@ -245,6 +436,7 @@ CALCULATE_ENTITY_INVALID_DATA = [
         }
     ),
     (
+        # The subcharacteristic value must be between 0 and 1
         "characteristics",
         {
             "characteristics": [
@@ -262,6 +454,7 @@ CALCULATE_ENTITY_INVALID_DATA = [
         }
     ),
     (
+        # Invalid field `measures` (must be `subcharacteristics`)
         "characteristics",
         {
             "characteristics": [
@@ -276,6 +469,41 @@ CALCULATE_ENTITY_INVALID_DATA = [
                     ]
                 }
             ]
+        }
+    ),
+    (
+        # Missing field `pre_config`
+        "sqc",
+        {
+            "metrics": METRICS_LIST,
+        }
+    ),
+    (
+        # Typo in field `pre-config` (must be `pre_config`)
+        "sqc",
+        {
+            "pre-config":
+                {
+                    "characteristics": [
+                        {
+                            "key": "reliability",
+                            "weight": 100.0,
+                            "subcharacteristics": [
+                                {
+                                    "key": "testing_status",
+                                    "weight": 100.0,
+                                    "measures": [
+                                        {
+                                            "key": "passed_tests",
+                                            "weight": 100.0
+                                        },
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+            "metrics": METRICS_LIST,
         }
     ),
 ]

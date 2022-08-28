@@ -5,6 +5,7 @@ from tests.utils.integration_data import (
     TEST_PARAMETERS,
     CALCULATE_SUBCHARACTERISTICS_SUCCESS_DATA,
     CALCULATE_CHARACTERISTICS_SUCCESS_DATA,
+    CALCULATE_SQC_SUCCESS_DATA,
     CALCULATE_ENTITY_INVALID_DATA,
 )
 from src.app import app
@@ -46,6 +47,18 @@ def test_calculate_subcharacteristics_success(data, expected_output):
 def test_calculate_characteristics_success(data, expected_output):
     with app.test_client() as client:
         response = client.post("/calculate-characteristics/", json=data)
+
+        assert response.status_code == 200
+        assert response.json == expected_output
+
+
+@pytest.mark.parametrize(
+    "data,expected_output",
+    CALCULATE_SQC_SUCCESS_DATA,
+)
+def test_calculate_sqc_success(data, expected_output):
+    with app.test_client() as client:
+        response = client.post("/calculate-sqc/", json=data)
 
         assert response.status_code == 200
         assert response.json == expected_output
