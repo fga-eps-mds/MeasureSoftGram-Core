@@ -102,6 +102,11 @@ class CalculateCharacteristicSchema(Schema):
     characteristics = fields.List(fields.Nested(CharacteristicSchema), required=True)
 
 
+class CalculateSQCSchema(Schema):
+    pre_config = fields.Dict(required=True)
+    metrics = fields.List(fields.Dict(required=True), required=True)
+
+
 class NonComplexFileDensitySchema(Schema):
     """
     "key": "non_complex_file_density",
