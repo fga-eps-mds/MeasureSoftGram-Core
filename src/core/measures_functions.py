@@ -179,7 +179,7 @@ def calculate_em4(data: Dict[str, float]):
         number_of_fail_tests = number_of_test_errors + number_of_test_failures
         if4i = (number_of_tests - number_of_fail_tests) / number_of_tests
         return np.interp(if4i, x, y)
-    except:
+    except ZeroDivisionError:
         return 0
 
 
