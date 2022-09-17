@@ -50,7 +50,7 @@ def calculate_em1(data: Dict):
         number_of_files = len(files_complexity)
 
     has_none = files_complexity is None or files_functions is None
-    has_zero = files_complexity.empty() or files_functions.empty()
+    has_zero = len(files_complexity) == 0 or len(files_functions) == 0
 
     if has_none or has_zero:
         return 0
@@ -92,7 +92,7 @@ def calculate_em2(data: Dict):
         number_of_files = len(files_comment_lines_density)
 
     has_none = files_comment_lines_density is None
-    has_zero = files_comment_lines_density.empty()
+    has_zero = len(files_comment_lines_density) == 0
 
     if has_none or has_zero:
         return 0
@@ -139,7 +139,7 @@ def calculate_em3(data: Dict):
         number_of_files = len(files_duplicated_lines_density)
 
     has_none = files_duplicated_lines_density is None
-    has_zero = files_duplicated_lines_density.empty()
+    has_zero = len(files_duplicated_lines_density) == 0
 
     if has_none or has_zero:
         return 0
@@ -221,7 +221,7 @@ def calculate_em6(data: Dict):
         number_of_files = len(coverage)
 
     has_none = coverage is None
-    has_zero = coverage.empty()
+    has_zero = len(coverage) == 0
 
     if has_none or has_zero:
         return 0
