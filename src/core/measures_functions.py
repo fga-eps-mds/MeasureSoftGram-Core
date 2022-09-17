@@ -49,6 +49,12 @@ def calculate_em1(data: Dict):
     else:
         number_of_files = len(files_complexity)
 
+    has_none = files_complexity is None or files_functions is None
+    has_zero = files_complexity.empty() or files_functions.empty()
+
+    if has_none or has_zero:
+        return 0
+
     COMPLEX_FILES_DENSITY_THRESHOLD = 10
 
     if files_complexity.sum() <= 0:
@@ -84,6 +90,12 @@ def calculate_em2(data: Dict):
         number_of_files = data["number_of_files"]
     else:
         number_of_files = len(files_comment_lines_density)
+
+    has_none = files_comment_lines_density is None
+    has_zero = files_comment_lines_density.empty()
+
+    if has_none or has_zero:
+        return 0
 
     MINIMUM_COMMENT_DENSITY_THRESHOLD = 10
     MAXIMUM_COMMENT_DENSITY_THRESHOLD = 30
@@ -126,6 +138,12 @@ def calculate_em3(data: Dict):
     else:
         number_of_files = len(files_duplicated_lines_density)
 
+    has_none = files_duplicated_lines_density is None
+    has_zero = files_duplicated_lines_density.empty()
+
+    if has_none or has_zero:
+        return 0
+
     DUPLICATED_LINES_THRESHOLD = 5.0
 
     if files_duplicated_lines_density.sum() < 0:
@@ -151,15 +169,18 @@ def calculate_em4(data: Dict[str, float]):
     This function calculates the passed tests measure (em4)
     used to assess the testing status sub characteristic.
     """
-    number_of_tests = data["tests"]
-    number_of_test_errors = data["test_errors"]
-    number_of_test_failures = data["test_failures"]
+    try:
+        number_of_tests = data["tests"]
+        number_of_test_errors = data["test_errors"]
+        number_of_test_failures = data["test_failures"]
 
-    x, y = create_coordinate_pair(0, 1, reverse_y=True)
+        x, y = create_coordinate_pair(0, 1, reverse_y=True)
 
-    number_of_fail_tests = number_of_test_errors + number_of_test_failures
-    if4i = (number_of_tests - number_of_fail_tests) / number_of_tests
-    return np.interp(if4i, x, y)
+        number_of_fail_tests = number_of_test_errors + number_of_test_failures
+        if4i = (number_of_tests - number_of_fail_tests) / number_of_tests
+        return np.interp(if4i, x, y)
+    except:
+        return 0
 
 
 def calculate_em5(data: Dict[str, float]):
@@ -170,6 +191,9 @@ def calculate_em5(data: Dict[str, float]):
     used to assess the testing status sub characteristic.
     """
     test_execution_time = data["test_execution_time"]
+
+    if not test_execution_time or test_execution_time == 0:
+        return 0
 
     TEST_EXECUTION_TIME_THRESHOLD = 300000
 
@@ -195,6 +219,12 @@ def calculate_em6(data: Dict):
         number_of_files = data["number_of_files"]
     else:
         number_of_files = len(coverage)
+
+    has_none = coverage is None
+    has_zero = coverage.empty()
+
+    if has_none or has_zero:
+        return 0
 
     MINIMUM_COVERAGE_THRESHOLD = 60
     MAXIMUM_COVERAGE_THRESHOLD = 90
