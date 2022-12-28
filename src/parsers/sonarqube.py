@@ -7,10 +7,12 @@ from staticfiles import SONARQUBE_AVAILABLE_METRICS, SONARQUBE_SUPPORTED_MEASURE
 
 class Sonarqube:
 
-    def __init__(self):
+    def __init__(self, metrics, dir_path):
         self.endpoint = os.getenv("SONAR_URL", "https://sonarcloud.io/api/metrics/search")
+        self.metrics = metrics
+        self.dir_path = dir_path
 
-    def import_sonarqube_supported_metrics(self, metrics):
+    def import_sonarqube_supported_metrics(self):
         try:
             request = requests.get(self.endpoint)
 
@@ -21,20 +23,14 @@ class Sonarqube:
         except Exception:
             data = SONARQUBE_AVAILABLE_METRICS
 
-        return self.__extract_supported_metrics(data, metrics)
+        with open(dir_path, "w"):
+            f.write(self.__extract_supported_metrics(data))
 
-    def __extract_supported_metrics(
-        sonar_metrics,
-        metrics,
-    ):
-        # TODO: refatorar dicionário SONARQUBE_SUPPORTED_MEASURES
-        supported_metrics = {
-            supported_metric.key: supported_metric
-            for supported_metric in SONARQUBE_SUPPORTED_MEASURES
-        }
-
+    def __extract_supported_metrics(sonar_metrics):
+        supported_metrics = SONARQUBE_SUPPORTED_MEASURES
         collected_metrics = {}
-        for component in data['components']:
+
+        for component in self.metrics['components']:
             for obj in component['measures']:
                 metric_key = obj['metric']
 
