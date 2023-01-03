@@ -24,4 +24,4 @@ env
 analytics-raw-data/
 
 dist/
-**/core.egg-info/
+**/*.egg-info/
