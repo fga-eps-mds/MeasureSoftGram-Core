@@ -2,7 +2,7 @@ import os
 
 import requests
 
-from src.staticfiles import SONARQUBE_AVAILABLE_METRICS, SONARQUBE_SUPPORTED_MEASURES 
+from staticfiles import SONARQUBE_AVAILABLE_METRICS, SONARQUBE_SUPPORTED_MEASURES 
 
 
 class Sonarqube:
@@ -33,12 +33,20 @@ class Sonarqube:
         ]
 
         for component in metrics:
+            path = component['path']
+            collected_metrics[path] = {
+                'qualifier': component['qualifier'],
+                'measures': []
+            }
+
             for obj in component['measures']:
                 metric_key = obj['metric']
-
                 if metric_key not in supported_metrics:
                     continue
 
-                collected_metrics[metric_key] = float(obj['value'])
+                collected_metrics[path]['measures'].append({
+                    'metric': metric_key,
+                    'value': float(obj['value'])
+                })
 
         return collected_metrics

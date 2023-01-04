@@ -1,2 +1,27 @@
-[tool.isort]
-profile = "black"
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "msgram_core"
+version = "0.1.0"
+description = "The MeasureSoftGram-Core is a Software system for continuous quality of product observation and multidimensional use in continuous design engineering software and is where you have the innovative mathematical models for software analysis."
+readme = "README.md"
+authors = [
+    { name = "MeasureSoftGram", email = "measuresoftgram@gmail.com" }
+]
+license = { file = "LICENSE" }
+classifiers = [
+    "Environment :: Console",
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+    "Natural Language :: Portuguese (Brazilian)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.8",
+    "Topic :: Utilities",
+]
+keywords = ["core", "measures", "quality", "algebraic model"]
+requires-python = ">=3.8"
+dependencies = ["Flask==2.1.*", "Flask-RESTful==0.3.*", "pandas==1.4.*", "tensorly==0.7.*", "requests==2.28.*" ,"gunicorn==20.1.*", "flask-marshmallow==0.14.*"]
+
+[tool.mypy]
+strict = true
