@@ -3,8 +3,8 @@ from typing import Dict
 import numpy as np
 import pandas as pd
 
-from src.util.exceptions import ImplicitMetricValueError, InvalidMetricValue
-from src.util.get_functions import create_coordinate_pair
+from util.exceptions import ImplicitMetricValueError, InvalidMetricValue
+from util.get_functions import create_coordinate_pair
 
 
 def interpolate_series(series, x, y):

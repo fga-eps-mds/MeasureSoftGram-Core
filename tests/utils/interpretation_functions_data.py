@@ -1,4 +1,4 @@
-from src.core.interpretation_functions import (
+from core.interpretation_functions import (
     non_complex_files_density,
     commented_files_density,
     absence_of_duplications,

@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.util.check_functions import check_component_is_valid
+from util.check_functions import check_component_is_valid
 
 
 def create_dataframe(measures, components, language_extension):

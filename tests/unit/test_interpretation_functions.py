@@ -1,5 +1,5 @@
-from src.util.get_functions import get_test_root_dir
-from src.util.exceptions import (
+from util.get_functions import get_test_root_dir
+from util.exceptions import (
     InvalidMetricValue,
     InvalidInterpretationFunctionArguments,
 )

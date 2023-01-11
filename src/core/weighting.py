@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.util.exceptions import ValuesAndWeightsOfDifferentSizes
+from util.exceptions import ValuesAndWeightsOfDifferentSizes
 
 
 def weighting_operation(values, weights):

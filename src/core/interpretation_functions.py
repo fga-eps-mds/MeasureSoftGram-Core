@@ -1,13 +1,13 @@
 import pandas as pd
 
-import src.core.measures_functions as ems_functions
-from src.util.check_functions import (
+import core.measures_functions as ems_functions
+from util.check_functions import (
     check_arguments,
     check_metric_value,
     check_metric_values,
     check_number_of_files,
 )
-from src.util.get_functions import get_files_data_frame, get_test_root_dir
+from util.get_functions import get_files_data_frame, get_test_root_dir
 
 
 def non_complex_files_density(data_frame):

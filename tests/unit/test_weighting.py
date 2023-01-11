@@ -1,5 +1,5 @@
-from src.core.weighting import weighting_operation
-from src.util.exceptions import ValuesAndWeightsOfDifferentSizes
+from core.weighting import weighting_operation
+from util.exceptions import ValuesAndWeightsOfDifferentSizes
 from tests.utils.weighting_data import (
     VALID_WEIGHTING_OPERATION,
     INVALID_SIZES,

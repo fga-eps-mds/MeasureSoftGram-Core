@@ -8,7 +8,7 @@ from tests.utils.integration_data import (
     CALCULATE_SQC_SUCCESS_DATA,
     CALCULATE_ENTITY_INVALID_DATA,
 )
-from src.app import app
+from app import app
 
 
 @pytest.mark.parametrize(

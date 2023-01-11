@@ -1,10 +1,10 @@
 import requests
 from marshmallow.exceptions import ValidationError
 
-from src.core.schemas import (
+from core.schemas import (
     CalculateMeasureSchema
 )
-from src.util.constants import MEASURES_INTERPRETATION_MAPPING
+from util.constants import MEASURES_INTERPRETATION_MAPPING
 
 
 def calculate_measures(extracted_measures):

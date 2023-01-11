@@ -2,9 +2,9 @@ from typing import Dict, List, Tuple
 
 import pandas as pd
 
-from src.core.agregation import aggregation_operation
-from src.core.weighting import weighting_operation
-from src.util.constants import MEASURES_INTERPRETATION_MAPPING
+from core.agregation import aggregation_operation
+from core.weighting import weighting_operation
+from util.constants import MEASURES_INTERPRETATION_MAPPING
 
 
 def resolve_level(level_dict: dict, sublevel: dict, sublevel_key: str) -> Tuple[dict, dict]:

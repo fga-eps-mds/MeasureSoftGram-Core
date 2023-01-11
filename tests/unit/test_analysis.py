@@ -1,6 +1,6 @@
-from src.core.analysis import calculate_measures
-from src.core.analysis import resolve_level
-from src.core.analysis import make_analysis
+from core.analysis import calculate_measures
+from core.analysis import resolve_level
+from core.analysis import make_analysis
 from tests.utils.analysis_data import (
     FILES_DF,
     CALCULATE_MEASURES_DATA,

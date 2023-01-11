@@ -1,14 +1,14 @@
 from flask import Flask
 from flask_restful import Api
 
-from src.resources.analysis import (
+from resources.analysis import (
     Analysis,
     CalculateCharacteristics,
     CalculateMeasures,
     CalculateSQC,
     CalculateSubcharacteristics,
 )
-from src.resources.available import AvailablePreConfigs
+from resources.available import AvailablePreConfigs
 
 app = Flask(__name__)
 api = Api(app)

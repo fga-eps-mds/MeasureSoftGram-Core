@@ -1,6 +1,6 @@
-import src.core.measures_functions as ems_functions
-from src.core import schemas
-from src.core.interpretation_functions import (
+import core.measures_functions as ems_functions
+from core import schemas
+from core.interpretation_functions import (
     absence_of_duplications,
     commented_files_density,
     fast_test_builds,

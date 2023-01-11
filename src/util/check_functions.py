@@ -2,7 +2,7 @@ import math
 
 import pandas as pd
 
-from src.util.exceptions import (
+from util.exceptions import (
     InvalidInterpretationFunctionArguments,
     InvalidMetricValue,
 )
