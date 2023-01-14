@@ -3,7 +3,8 @@ from marshmallow.exceptions import ValidationError
 
 from core.schemas import (
     CalculateMeasureSchema,
-    CalculateSubCharacteristicSchema
+    CalculateSubCharacteristicSchema,
+    CalculateCharacteristicSchema
 )
 from core.analysis import (
     calculate_aggregated_value,
@@ -85,6 +86,35 @@ def calculate_subcharacteristics(extracted_subcharacteristics):
 
         response_data["subcharacteristics"].append({
             "key": subcharacteristic_key,
+            "value": aggregated_value,
+        })
+
+    return response_data
+
+def calculate_characteristics(extracted_characteristics):
+    try:
+        data = CalculateCharacteristicSchema().load(extracted_characteristics)
+    except ValidationError as error:
+        return {
+            "error": "Failed to validate request",
+            "schema_errors": error.messages,
+            "code": requests.codes.unprocessable_entity
+        }
+
+    response_data = {"characteristics": []}
+
+    for characteristic in data["characteristics"]:
+        characteristic_key: str = characteristic["key"]
+
+        values_list, weights_list = [], []
+        for measure in characteristic["subcharacteristics"]:
+            values_list.append(measure["value"])
+            weights_list.append(measure["weight"])
+
+        aggregated_value = calculate_aggregated_value(values_list, weights_list)
+
+        response_data["characteristics"].append({
+            "key": characteristic_key,
             "value": aggregated_value,
         })
 
