@@ -102,9 +102,28 @@ class CalculateCharacteristicSchema(Schema):
     characteristics = fields.List(fields.Nested(CharacteristicSchema), required=True)
 
 
+class SQCSchema(Schema):
+    key = fields.Str(required=True)
+    characteristics = fields.List(fields.Nested(CalculatedSubEntitySchema), required=True)
+
+
 class CalculateSQCSchema(Schema):
-    pre_config = fields.Dict(required=True)
-    metrics = fields.List(fields.Dict(required=True), required=True)
+    """
+    {
+        "sqc": {
+            "key": "sqc",
+            "characteristics": [
+                {
+                    "key": "reliability",
+                    "value": 1.0,
+                    "weight": 50,
+                },
+                ...
+            ]
+        }
+    }
+    """
+    sqc = fields.Nested(SQCSchema, required=True)
 
 
 class NonComplexFileDensitySchema(Schema):
