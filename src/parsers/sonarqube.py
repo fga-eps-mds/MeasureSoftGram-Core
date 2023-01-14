@@ -33,9 +33,10 @@ class Sonarqube:
         ]
 
         for component in metrics:
-            path = component['path']
+            qualifier = component['qualifier']
+            path = component['path' if qualifier != 'TRK' else 'name']
             collected_metrics[path] = {
-                'qualifier': component['qualifier'],
+                'qualifier': qualifier,
                 'measures': []
             }
 
