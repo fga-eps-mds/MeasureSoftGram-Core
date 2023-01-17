@@ -170,7 +170,7 @@ def calculate_em4(data: Dict[str, float]):
     used to assess the testing status sub characteristic.
     """
     try:
-        number_of_tests = data["tests"]
+        number_of_tests = resolve_metric_list_parameter(data["tests"]).sum()
         number_of_test_errors = data["test_errors"]
         number_of_test_failures = data["test_failures"]
 
@@ -183,26 +183,35 @@ def calculate_em4(data: Dict[str, float]):
         return 0
 
 
-def calculate_em5(data: Dict[str, float]):
+def calculate_em5(data: Dict[str, list]):
     """
     Calculates fast test builds (em5)
 
     This function calculates the fast test builds measure (em5)
     used to assess the testing status sub characteristic.
     """
-    test_execution_time = data["test_execution_time"]
+    execution_time = resolve_metric_list_parameter(data["test_execution_time"])
+    number_of_tests = resolve_metric_list_parameter(data["tests"])
+    number_of_files = len(execution_time)
 
-    if not test_execution_time or test_execution_time == 0:
+    has_none = execution_time is None or number_of_tests is None
+    has_zero = len(execution_time) == 0 or len(number_of_tests) == 0
+
+    if has_none or has_zero:
         return 0
 
-    TEST_EXECUTION_TIME_THRESHOLD = 300000
+    MAXIMUM_COVERAGE_THRESHOLD = 300000
 
-    x, y = create_coordinate_pair(0, 1, reverse_y=True)
+    x, y = create_coordinate_pair(
+        0,
+        MAXIMUM_COVERAGE_THRESHOLD
+    )
 
-    em5 = 0
-    if test_execution_time < TEST_EXECUTION_TIME_THRESHOLD:
-        if5i = test_execution_time / TEST_EXECUTION_TIME_THRESHOLD
-        em5 = np.interp(if5i, x, y)
+    execution_between_thresholds = execution_time[execution_time <= MAXIMUM_COVERAGE_THRESHOLD]
+    fast_tests_between_thresholds = execution_between_thresholds / number_of_tests
+
+    em5i = interpolate_series(fast_tests_between_thresholds, x, y)
+    em5 = np.sum(em5i) / number_of_files
     return em5
 
 
