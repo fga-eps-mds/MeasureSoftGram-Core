@@ -52,7 +52,7 @@ def calculate_measures(extracted_measures):
                 }
             }
 
-        interpretation_function = MEASURES_INTERPRETATION_MAPPING[measure_key]["calculation_function"]
+        interpretation_function = MEASURES_INTERPRETATION_MAPPING[measure_key]["interpretation_function"]
         result = interpretation_function(validated_params)
 
         response_data["measures"].append({
