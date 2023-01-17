@@ -12,6 +12,7 @@ SONARQUBE_SUPPORTED_MEASURES = [
         "test_builds": {
             "metrics": [
                 "test_execution_time",
+                "tests",
             ],
         }
     },

@@ -156,7 +156,7 @@ class PassedTestsSchema(Schema):
     "key": "passed_tests",
     "function": calculate_em4
     """
-    tests = fields.Float(required=True)
+    tests = fields.List(fields.Float(required=True))
     test_errors = fields.Float(required=True)
     test_failures = fields.Float(required=True)
 
@@ -166,7 +166,8 @@ class TestBuildsSchema(Schema):
     "key": "test_builds",
     "function": calculate_em5
     """
-    test_execution_time = fields.Float(required=True)
+    test_execution_time = fields.List(fields.Float(required=True))
+    tests = fields.List(fields.Float(required=True))
 
 
 class TestCoverageSchema(Schema):
