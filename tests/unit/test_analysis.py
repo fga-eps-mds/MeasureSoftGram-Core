@@ -1,21 +1,22 @@
 from core.analysis import calculate_measures
 from core.analysis import resolve_level
 from core.analysis import make_analysis
+
 from tests.utils.analysis_data import (
-    FILES_DF,
     CALCULATE_MEASURES_DATA,
     RESOLVE_LEVEL_DATA,
     MAKE_ANALYSIS_DATA,
 )
+
 import pytest
 
 
 @pytest.mark.parametrize(
-    "measure,expected_value",
+    "measure,data_frame,expected_value",
     CALCULATE_MEASURES_DATA,
 )
-def test_calculate_measures(measure, expected_value):
-    calculation_result = calculate_measures(FILES_DF, [measure])
+def test_calculate_measures(measure, data_frame, expected_value):
+    calculation_result = calculate_measures(data_frame, [measure])
     assert (
         pytest.approx(calculation_result[measure]) == expected_value
     )
