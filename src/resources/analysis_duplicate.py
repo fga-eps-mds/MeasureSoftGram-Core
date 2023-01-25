@@ -45,11 +45,9 @@ def calculate_measures(extracted_measures):
             validated_params = schema().load(measure_params)
         except ValidationError as exc:
             return {
-                "error": {
-                    "message": f"Metric parameters `{measure_key}` are not valid",
-                    "schema_errors": exc.messages,
-                    "code": requests.codes.unprocessable_entity
-                }
+                "error": f"Metric parameters {measure_key} are not valid",
+                "schema_errors": exc.messages,
+                "code": requests.codes.unprocessable_entity
             }
 
         interpretation_function = MEASURES_INTERPRETATION_MAPPING[measure_key]["interpretation_function"]
