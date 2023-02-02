@@ -1,3 +1,7 @@
+# NOTE: Esse dataframe era utilizado nas funções de interpretação, 
+#       porém foi retirado devido ao empacotamento.
+#       Assim, está comentado caso venha a ser utilizado novamente.
+
 import pandas as pd
 
 from util.check_functions import check_component_is_valid

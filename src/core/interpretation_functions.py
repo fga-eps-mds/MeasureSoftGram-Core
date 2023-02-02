@@ -1,5 +1,3 @@
-import pandas as pd
-
 import core.measures_functions as ems_functions
 from util.check_functions import (
     check_metric_value,
@@ -44,7 +42,7 @@ def commented_files_density(data_frame):
     })
 
 
-def absence_of_duplications(data_frame: pd.DataFrame):
+def absence_of_duplications(data_frame):
     """
     Calculates duplicated files absence (em3).
 
