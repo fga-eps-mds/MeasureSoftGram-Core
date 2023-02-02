@@ -24,5 +24,7 @@ def test_different_sizes(values, weights):
     Test cases in which the size of the weight and values are not the same
     """
 
-    with pytest.raises(ValuesAndWeightsOfDifferentSizes):
+    with pytest.raises(ValuesAndWeightsOfDifferentSizes) as error:
         weighting_operation(values, weights)
+
+    assert str(error.value) == 'The length of weight and values are not equal'
