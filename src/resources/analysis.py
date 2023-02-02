@@ -11,6 +11,7 @@ from core.agregation import aggregation_operation
 from core.weighting import weighting_operation
 from util.constants import MEASURES_INTERPRETATION_MAPPING
 
+
 def calculate_aggregated_value(values_list, weights_list):
     weighted_items = weighting_operation(values_list, weights_list)
     return aggregation_operation(weighted_items, weights_list)
