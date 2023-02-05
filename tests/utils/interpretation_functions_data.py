@@ -59,6 +59,16 @@ INVALID_METRICS_TEST_DATA = [
         "\"test_execution_time\" has an invalid metric value"
     ),
     (
+        fast_test_builds,
+        {"test_execution_time": ['nan'], "tests": [0.58]},
+        "\"test_execution_time\" has an invalid metric value"
+    ),
+    (
+        fast_test_builds,
+        {"test_execution_time": {}, "tests": [0.58]},
+        "\"test_execution_time\" is not a list"
+    ),
+    (
         passed_tests,
         {"tests": [None], "test_errors": 0.0, "test_failures": 0.0},
         "\"tests\" has an invalid metric value"
@@ -70,8 +80,13 @@ INVALID_METRICS_TEST_DATA = [
     ),
     (
         passed_tests,
-        {"tests": [0.45], "test_errors": 0.0, "test_failures": None},
+        {"tests": [0.45], "test_errors": 0.0, "test_failures": 'nan'},
         "\"test_failures\" has an invalid metric value"
+    ),
+    (
+        passed_tests,
+        {"tests": [], "test_errors": 0.0, "test_failures": None},
+        "\"tests\" is empty"
     ),
 ]
 
