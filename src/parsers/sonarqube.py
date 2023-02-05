@@ -27,6 +27,8 @@ class Sonarqube:
         collected_metrics = {}
         supported_metrics = []
 
+        # NOTE: list comprehension que preenche o supported_metrics apenas
+        #       com os valores das "metrics" do dicionário de SUPPORTEDs
         [
             supported_metrics.extend(list(x.values())[0]['metrics'])
             for x in SONARQUBE_SUPPORTED_MEASURES

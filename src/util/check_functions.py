@@ -1,14 +1,14 @@
 import math
 
-import pandas as pd
+# import pandas as pd
 
 from util.exceptions import (
-    InvalidInterpretationFunctionArguments,
+    # InvalidInterpretationFunctionArguments,
     InvalidMetricValue,
 )
 
 
-# NOTE: Esses métodos eram utilizados na função do dataframe 
+# NOTE: Esses métodos eram utilizados na função do dataframe
 #       que era utilizado nas funções de interpretação,
 #       porém foi retirado devido ao empacotamento.
 #       Assim, estão comentadas caso venham a ser utilizadas novamente.
