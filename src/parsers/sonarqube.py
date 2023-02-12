@@ -10,7 +10,7 @@ class Sonarqube:
     def __init__(self):
         self.endpoint = os.getenv("SONAR_URL", "https://sonarcloud.io/api/metrics/search")
 
-    def extract_supported_metrics(self, metrics, first_request = False):
+    def extract_supported_metrics(self, metrics, first_request=False):
         data = SONARQUBE_AVAILABLE_METRICS
 
         if not first_request:
@@ -24,7 +24,7 @@ class Sonarqube:
             data = SONARQUBE_AVAILABLE_METRICS
 
         finally:
-            return self.__extract_sonarqube_supported_metrics(metrics, data) 
+            return self.__extract_sonarqube_supported_metrics(metrics, data)
 
     def __extract_sonarqube_supported_metrics(self, metrics, sonar_metrics):
         collected_metrics = {}
