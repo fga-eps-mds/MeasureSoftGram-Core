@@ -41,11 +41,13 @@ def calculate_em1(data: Dict):
         number_of_files = data["number_of_files"]
 
     elif len(files_complexity) != len(files_functions):
-        raise ImplicitMetricValueError((
-            "Unable to get the implicit value of metric `number_of_file` "
-            "because the size of the lists of values of metrics `complexity` "
-            "and `functions` are not equal."
-        ))
+        raise ImplicitMetricValueError(
+            (
+                "Unable to get the implicit value of metric `number_of_file` "
+                "because the size of the lists of values of metrics `complexity` "
+                "and `functions` are not equal."
+            )
+        )
     else:
         number_of_files = len(files_complexity)
 
@@ -58,20 +60,19 @@ def calculate_em1(data: Dict):
     COMPLEX_FILES_DENSITY_THRESHOLD = 10
 
     if files_complexity.sum() <= 0:
-        raise InvalidMetricValue(
-            "The cyclomatic complexity of all files is lesser or equal than 0"
-        )
+        raise InvalidMetricValue("The cyclomatic complexity of all files is lesser or equal than 0")
 
     if files_functions.sum() <= 0:
-        raise InvalidMetricValue(
-            "The number of functions of all files is lesser or equal than 0"
-        )
+        raise InvalidMetricValue("The number of functions of all files is lesser or equal than 0")
 
     x, y = create_coordinate_pair(0, COMPLEX_FILES_DENSITY_THRESHOLD)
 
     files_in_thresholds_df = (files_complexity / files_functions) <= COMPLEX_FILES_DENSITY_THRESHOLD
     IF1 = np.interp(list(files_in_thresholds_df[(files_functions > 0)]), x, y)
-    em1 = sum(IF1) / number_of_files
+    em1 = np.divide(sum(IF1), number_of_files)
+
+    if np.isnan(em1) or np.isinf(em1):
+        return 0
     return em1
 
 
@@ -82,9 +83,7 @@ def calculate_em2(data: Dict):
     This function calculates commented files density measure (em2)
     used to assess the changeability quality sub characteristic.
     """
-    files_comment_lines_density = resolve_metric_list_parameter(
-        data["comment_lines_density"]
-    )
+    files_comment_lines_density = resolve_metric_list_parameter(data["comment_lines_density"])
 
     if "number_of_files" in data:
         number_of_files = data["number_of_files"]
@@ -101,9 +100,7 @@ def calculate_em2(data: Dict):
     MAXIMUM_COMMENT_DENSITY_THRESHOLD = 30
 
     if files_comment_lines_density.sum() < 0:
-        raise InvalidMetricValue(
-            "The number of files comment lines density is lesser than 0"
-        )
+        raise InvalidMetricValue("The number of files comment lines density is lesser than 0")
 
     x, y = create_coordinate_pair(
         MINIMUM_COMMENT_DENSITY_THRESHOLD / 100, MAXIMUM_COMMENT_DENSITY_THRESHOLD / 100
@@ -118,7 +115,10 @@ def calculate_em2(data: Dict):
     ]
 
     em2i = interpolate_series(files_between_thresholds, x, y)
-    em2 = np.sum(em2i) / number_of_files
+    em2 = np.divide(np.sum(em2i), number_of_files)
+
+    if np.isnan(em2) or np.isinf(em2):
+        return 0
     return em2
 
 
@@ -129,9 +129,7 @@ def calculate_em3(data: Dict):
     This function calculates the duplicated files absence measure (em3)
     used to assess the changeability quality sub characteristic.
     """
-    files_duplicated_lines_density = resolve_metric_list_parameter(
-        data["duplicated_lines_density"]
-    )
+    files_duplicated_lines_density = resolve_metric_list_parameter(data["duplicated_lines_density"])
 
     if "number_of_files" in data:
         number_of_files = data["number_of_files"]
@@ -147,9 +145,7 @@ def calculate_em3(data: Dict):
     DUPLICATED_LINES_THRESHOLD = 5.0
 
     if files_duplicated_lines_density.sum() < 0:
-        raise InvalidMetricValue(
-            "The number of files duplicated lines density is lesser than 0"
-        )
+        raise InvalidMetricValue("The number of files duplicated lines density is lesser than 0")
 
     x, y = create_coordinate_pair(0, DUPLICATED_LINES_THRESHOLD / 100)
 
@@ -158,7 +154,10 @@ def calculate_em3(data: Dict):
     ]
 
     em3i = interpolate_series(files_below_threshold, x, y)
-    em3 = np.sum(em3i) / number_of_files
+    em3 = np.divide(np.sum(em3i), number_of_files)
+
+    if np.isnan(em3) or np.isinf(em3):
+        return 0
     return em3
 
 
@@ -170,6 +169,7 @@ def calculate_em4(data: Dict[str, float]):
     used to assess the testing status sub characteristic.
     """
     try:
+        # number_of_tests está retornando valores incorretos
         number_of_tests = resolve_metric_list_parameter(data["tests"]).sum()
         number_of_test_errors = data["test_errors"]
         number_of_test_failures = data["test_failures"]
@@ -177,10 +177,15 @@ def calculate_em4(data: Dict[str, float]):
         x, y = create_coordinate_pair(0, 1, reverse_y=True)
 
         number_of_fail_tests = number_of_test_errors + number_of_test_failures
-        if4i = (number_of_tests - number_of_fail_tests) / number_of_tests
-        return np.interp(if4i, x, y)
+        if4i = np.divide((number_of_tests - number_of_fail_tests), number_of_tests)
+
     except ZeroDivisionError:
         return 0
+
+    else:
+        if np.isnan(if4i) or np.isinf(if4i):
+            return 0
+        return np.interp(if4i, x, y)
 
 
 def calculate_em5(data: Dict[str, list]):
@@ -202,16 +207,17 @@ def calculate_em5(data: Dict[str, list]):
 
     MAXIMUM_COVERAGE_THRESHOLD = 300000
 
-    x, y = create_coordinate_pair(
-        0,
-        MAXIMUM_COVERAGE_THRESHOLD
-    )
+    x, y = create_coordinate_pair(0, MAXIMUM_COVERAGE_THRESHOLD)
 
     execution_between_thresholds = execution_time[execution_time <= MAXIMUM_COVERAGE_THRESHOLD]
-    fast_tests_between_thresholds = execution_between_thresholds / number_of_tests
+    fast_tests_between_thresholds = np.divide(execution_between_thresholds, number_of_tests)
 
     em5i = interpolate_series(fast_tests_between_thresholds, x, y)
-    em5 = np.sum(em5i) / number_of_files
+    em5 = np.divide(np.sum(em5i), number_of_files)
+
+    if np.isnan(em5) or np.isinf(em5):
+        return 0
+
     return em5
 
 
@@ -246,7 +252,10 @@ def calculate_em6(data: Dict):
 
     files_between_thresholds = coverage[coverage >= MINIMUM_COVERAGE_THRESHOLD]
     em6i = interpolate_series(files_between_thresholds, x, y)
-    em6 = np.sum(em6i) / number_of_files
+    em6 = np.divide(np.sum(em6i), number_of_files)
+
+    if np.isnan(em6) or np.isinf(em6):
+        return 0
     return em6
 
 
@@ -261,12 +270,12 @@ def calculate_em7(data: Dict):
         "number_of_resolved_issues_with_US_label_in_the_last_x_days"
     ]
 
-    total_issues_with_us_label = data[
-        "total_number_of_issues_with_US_label_in_the_last_x_days"
-    ]
+    total_issues_with_us_label = data["total_number_of_issues_with_US_label_in_the_last_x_days"]
 
     x, y = create_coordinate_pair(0, 1, reverse_y=True)
 
     if7 = np.divide(resolved_issues_with_us_label, total_issues_with_us_label)
 
+    if np.isnan(if7) or np.isinf(if7):
+        return 0
     return np.interp(if7, x, y)
