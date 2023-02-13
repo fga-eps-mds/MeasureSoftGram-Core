@@ -17,7 +17,7 @@ def test_get_request_in_sonarqube(status_code):
     response._content = json.dumps({}).encode('utf-8')
 
     with patch("requests.get", return_value=response) as mock_data:
-        Sonarqube().extract_supported_metrics([])
+        Sonarqube().extract_supported_metrics([], first_request=True)
 
     mock_data.assert_called()
 
