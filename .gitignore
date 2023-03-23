@@ -18,6 +18,10 @@ coverage.xml
 
 trash
 .venv
+env
 
 # analytics-raw-data
 analytics-raw-data/
+
+dist/
+**/*.egg-info/

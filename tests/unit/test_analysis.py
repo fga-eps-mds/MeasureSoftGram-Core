@@ -1,85 +1,76 @@
-from src.core.analysis import calculate_measures
-from src.core.analysis import resolve_level
-from src.core.analysis import make_analysis
-from tests.test_helpers import create_file_df
+from resources.analysis import (
+    calculate_measures,
+    calculate_subcharacteristics,
+    calculate_characteristics,
+    calculate_sqc
+)
+from tests.utils.analysis_data import (
+    EXTRACTED_MEASURES_DATA, CALCULATE_MEASURES_RESPONSE_DATA,
+    CALCULATE_MEASURES_ERROR_INFOS, EXTRACTED_SUBCHARACTERISTICS_DATA,
+    CALCULATE_SUBCHARACTERISTICS_RESPONSE_DATA, CALCULATE_SUBCHARACTERISTICS_ERROR_INFOS,
+    EXTRACTED_CHARACTERISTICS_DATA, CALCULATE_CHARACTERISTICS_RESPONSE_DATA,
+    CALCULATE_CHARACTERISTICS_ERROR_INFOS, EXTRACTED_SQC_DATA,
+    CALCULATE_SQC_RESPONSE_DATA, CALCULATE_SQC_ERROR_INFOS,
+)
+
 import pytest
 
-json_list_1 = [
-    "tests/unit/data/fga-eps-mds-2021-2-MeasureSoftGram-Service-04-12-2022-17-32-35-v1.1.0.json"
-]
+
+def test_calculate_measures_success():
+    calculation_result = calculate_measures(extracted_measures=EXTRACTED_MEASURES_DATA)
+    assert calculation_result == CALCULATE_MEASURES_RESPONSE_DATA
 
 
-def test_calculate_measures():
-    data_frame_1 = create_file_df(
-        json_list_1,
-        "py",
-    )
-
-    measures = [
-        "test_builds",
-        "test_coverage",
-        "passed_tests",
-    ]
-
-    expected_measures = {
-        "test_builds": 0.0010166666666666666,
-        "test_coverage": 0.752962962962963,
-        "passed_tests": 0.7142857142857143,
-    }
-
-    combined_measures = calculate_measures(data_frame_1, measures)
-    assert (
-        pytest.approx(combined_measures["test_builds"])
-        == expected_measures["test_builds"]
-    )
-    assert (
-        pytest.approx(combined_measures["test_coverage"])
-        == expected_measures["test_coverage"]
-    )
-    assert (
-        pytest.approx(combined_measures["passed_tests"])
-        == expected_measures["passed_tests"]
-    )
-
-    return
+@pytest.mark.parametrize(
+    "extracted_measure_data,error_msg",
+    CALCULATE_MEASURES_ERROR_INFOS,
+)
+def test_calcula_measures_errors(extracted_measure_data, error_msg):
+    error_response = calculate_measures(extracted_measures=extracted_measure_data)
+    assert error_response['error'] == error_msg
+    assert error_response['code'] == 422
 
 
-characteristics1 = {
-    "reliability": {
-        "weight": 1.0,
-        "subcharacteristics": ["testing_status"],
-        "weights": {"testing_status": 1.0},
-    },
-}
-
-subcharacteristics1 = {
-    "testing_status": {
-        "measures": ["test_builds", "test_coverage", "passed_tests"],
-        "weights": {
-            "test_builds": 0.3333,
-            "test_coverage": 0.3333,
-            "passed_tests": 0.3333,
-        },
-    }
-}
-
-measures1 = {
-    "test_builds": 0.0010166666666666666,
-    "test_coverage": 0.5647222222222222,
-    "passed_tests": 0.7142857142857143,
-}
+def test_calculate_subcharacteristics_sucess():
+    calculation_result = calculate_subcharacteristics(extracted_subcharacteristics=EXTRACTED_SUBCHARACTERISTICS_DATA)
+    assert calculation_result == CALCULATE_SUBCHARACTERISTICS_RESPONSE_DATA
 
 
-def test_resolve_level():
-    aggregate_level, _ = resolve_level(subcharacteristics1, measures1, "measures")
+@pytest.mark.parametrize(
+    "extracted_subcharacteristcs_data,error_msg",
+    CALCULATE_SUBCHARACTERISTICS_ERROR_INFOS,
+)
+def test_calcula_subcharacteristics_errors(extracted_subcharacteristcs_data, error_msg):
+    error_response = calculate_subcharacteristics(extracted_subcharacteristics=extracted_subcharacteristcs_data)
+    assert error_response['error'] == error_msg
+    assert error_response['code'] == 422
 
-    assert pytest.approx(aggregate_level["testing_status"]) == 0.525711
+
+def test_calculate_characteristics_success():
+    calculation_result = calculate_characteristics(extracted_characteristics=EXTRACTED_CHARACTERISTICS_DATA)
+    assert calculation_result == CALCULATE_CHARACTERISTICS_RESPONSE_DATA
 
 
-def test_make_analysis():
-    sqc, agregated_sbc, aggregated_characteristics, _, _, _ = make_analysis(
-        measures1, subcharacteristics1, characteristics1
-    )
-    assert pytest.approx(agregated_sbc["testing_status"]) == 0.525711
-    assert pytest.approx(aggregated_characteristics["reliability"]) == 0.525711
-    assert pytest.approx(sqc["sqc"]) == 0.525711
+@pytest.mark.parametrize(
+    "extracted_characteristics_data,error_msg",
+    CALCULATE_CHARACTERISTICS_ERROR_INFOS,
+)
+def test_calcula_characteristics_errors(extracted_characteristics_data, error_msg):
+    error_response = calculate_characteristics(extracted_characteristics=extracted_characteristics_data)
+    assert error_response['error'] == error_msg
+    assert error_response['code'] == 422
+
+
+def test_calculate_sqc_success():
+    calculation_result = calculate_sqc(extracted_sqc=EXTRACTED_SQC_DATA)
+    assert calculation_result == CALCULATE_SQC_RESPONSE_DATA
+
+
+@pytest.mark.parametrize(
+    "extracted_sqc_data,error_msg",
+    CALCULATE_SQC_ERROR_INFOS,
+)
+def test_calcula_sqc_errors(extracted_sqc_data, error_msg):
+    error_response = calculate_sqc(extracted_sqc=extracted_sqc_data)
+    assert error_response['error'] == error_msg
+    assert error_response['code'] == 422

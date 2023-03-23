@@ -10,8 +10,11 @@ services:
       - ./server.py:/code/server.py
     restart: on-failure
     networks:
-      - measuresoftgram
+      - msg-service-network
+    environment:
+      - DEBUG=True
+
 
 networks:
-  measuresoftgram:
+  msg-service-network:
     external: true
