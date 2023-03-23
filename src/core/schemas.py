@@ -102,9 +102,28 @@ class CalculateCharacteristicSchema(Schema):
     characteristics = fields.List(fields.Nested(CharacteristicSchema), required=True)
 
 
+class SQCSchema(Schema):
+    key = fields.Str(required=True)
+    characteristics = fields.List(fields.Nested(CalculatedSubEntitySchema), required=True)
+
+
 class CalculateSQCSchema(Schema):
-    pre_config = fields.Dict(required=True)
-    metrics = fields.List(fields.Dict(required=True), required=True)
+    """
+    {
+        "sqc": {
+            "key": "sqc",
+            "characteristics": [
+                {
+                    "key": "reliability",
+                    "value": 1.0,
+                    "weight": 50,
+                },
+                ...
+            ]
+        }
+    }
+    """
+    sqc = fields.Nested(SQCSchema, required=True)
 
 
 class NonComplexFileDensitySchema(Schema):
@@ -137,7 +156,7 @@ class PassedTestsSchema(Schema):
     "key": "passed_tests",
     "function": calculate_em4
     """
-    tests = fields.Float(required=True)
+    tests = fields.List(fields.Float(required=True))
     test_errors = fields.Float(required=True)
     test_failures = fields.Float(required=True)
 
@@ -147,7 +166,8 @@ class TestBuildsSchema(Schema):
     "key": "test_builds",
     "function": calculate_em5
     """
-    test_execution_time = fields.Float(required=True)
+    test_execution_time = fields.List(fields.Float(required=True))
+    tests = fields.List(fields.Float(required=True))
 
 
 class TestCoverageSchema(Schema):

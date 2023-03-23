@@ -1,5 +1,5 @@
-from src.core.agregation import aggregation_operation
-from src.core.weighting import weighting_operation
+from core.agregation import aggregation_operation
+from core.weighting import weighting_operation
 from tests.utils.aggregation_data import (
     WEIGHTS_1,
     WEIGHTS_2,
