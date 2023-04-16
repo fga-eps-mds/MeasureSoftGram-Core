@@ -32,7 +32,7 @@ jobs:
 
       - name: Corrige reports path
         run: |
-          sed -i 's/<source>\/home\/runner\/work\/2022-2-MeasureSoftGram-Core\/2022-2-MeasureSoftGram-Core<\/source>/<source>\/github\/workspace<\/source>/g' coverage.xml
+          sed -i 's/<source>\/home\/runner\/work\/2023-1-MeasureSoftGram-Core\/2023-1-MeasureSoftGram-Core<\/source>/<source>\/github\/workspace<\/source>/g' coverage.xml
 
       - name: Scanner do SonarCloud
         uses: SonarSource/sonarcloud-github-action@v1.8
@@ -49,5 +49,5 @@ jobs:
           fail_ci_if_error: true
           files: ./coverage.xml
           flags: unittests
-          name: 2022-2-MeasureSoftGram-Core
+          name: 2023-1-MeasureSoftGram-Core
           verbose: true
