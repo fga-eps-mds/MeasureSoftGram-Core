@@ -5,7 +5,7 @@ from util.check_functions import (
 )
 
 
-def non_complex_files_density(data_frame):
+def non_complex_files_density(data_frame, COMPLEX_FILES_DENSITY_THRESHOLD: float = 10):
     """
     Calculates non-complex files density (em1).
     This function calculates non-complex files density measure (em1)
@@ -23,10 +23,11 @@ def non_complex_files_density(data_frame):
     return ems_functions.calculate_em1(data={
         "complexity": files_complexity,
         "functions": files_functions,
-    })
+    }, 
+    COMPLEX_FILES_DENSITY_THRESHOLD = COMPLEX_FILES_DENSITY_THRESHOLD)
 
 
-def commented_files_density(data_frame):
+def commented_files_density(data_frame, MINIMUM_COMMENT_DENSITY_THRESHOLD: float = 10, MAXIMUM_COMMENT_DENSITY_THRESHOLD: float = 30):
     """
     Calculates commented files density (em2).
 
@@ -39,10 +40,12 @@ def commented_files_density(data_frame):
 
     return ems_functions.calculate_em2(data={
         "comment_lines_density": files_comment_lines_density,
-    })
+    }, 
+    MINIMUM_COMMENT_DENSITY_THRESHOLD = MINIMUM_COMMENT_DENSITY_THRESHOLD,
+    MAXIMUM_COMMENT_DENSITY_THRESHOLD = MAXIMUM_COMMENT_DENSITY_THRESHOLD)
 
 
-def absence_of_duplications(data_frame):
+def absence_of_duplications(data_frame, DUPLICATED_LINES_THRESHOLD: float = 5.0):
     """
     Calculates duplicated files absence (em3).
 
@@ -55,10 +58,11 @@ def absence_of_duplications(data_frame):
 
     return ems_functions.calculate_em3(data={
         "duplicated_lines_density": files_duplicated_lines_density
-    })
+    },
+    DUPLICATED_LINES_THRESHOLD = DUPLICATED_LINES_THRESHOLD)
 
 
-def test_coverage(data_frame):
+def test_coverage(data_frame, MINIMUM_COVERAGE_THRESHOLD: float = 60, MAXIMUM_COVERAGE_THRESHOLD: float = 90):
     """
     Calculates test coverage (em6).
 
@@ -71,10 +75,12 @@ def test_coverage(data_frame):
 
     return ems_functions.calculate_em6(data={
         "coverage": coverage
-    })
+    },
+    MINIMUM_COVERAGE_THRESHOLD = MINIMUM_COVERAGE_THRESHOLD,
+    MAXIMUM_COVERAGE_THRESHOLD = MAXIMUM_COVERAGE_THRESHOLD)
 
 
-def fast_test_builds(data_frame):
+def fast_test_builds(data_frame, MAXIMUM_COVERAGE_THRESHOLD_TEST: float = 300000):
     """
     Calculates fast test builds (em5)
     This function gets the dataframe metrics
@@ -89,7 +95,8 @@ def fast_test_builds(data_frame):
     return ems_functions.calculate_em5(data={
         "test_execution_time": test_execution_time,
         "tests": tests
-    })
+    },
+    MAXIMUM_COVERAGE_THRESHOLD_TEST = MAXIMUM_COVERAGE_THRESHOLD_TEST)
 
 
 def passed_tests(data_frame):

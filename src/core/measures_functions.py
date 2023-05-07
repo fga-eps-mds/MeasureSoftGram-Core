@@ -3,7 +3,7 @@ from typing import Dict
 import numpy as np
 import pandas as pd
 
-from util.exceptions import ImplicitMetricValueError, InvalidMetricValue
+from util.exceptions import ImplicitMetricValueError, InvalidMetricValue, InvalidThresholdValue
 from util.get_functions import create_coordinate_pair
 
 
@@ -27,13 +27,17 @@ def resolve_metric_list_parameter(metric):
     return pd.Series(metric, dtype=np.float64) if isinstance(metric, list) else metric
 
 
-def calculate_em1(data: Dict):
+def calculate_em1(data: Dict, COMPLEX_FILES_DENSITY_THRESHOLD: float = 10):
     """
     Calculates non-complex files density (em1).
 
     This function calculates non-complex files density measure (em1)
     used to assess the changeability quality sub characteristic.
     """
+    
+    if COMPLEX_FILES_DENSITY_THRESHOLD < 1:
+        raise InvalidThresholdValue(("COMPLEX_FILES_DENSITY_THRESHOLD is lesser than 1"))
+
     files_complexity = resolve_metric_list_parameter(data["complexity"])
     files_functions = resolve_metric_list_parameter(data["functions"])
 
@@ -57,8 +61,6 @@ def calculate_em1(data: Dict):
     if has_none or has_zero:
         return 0
 
-    COMPLEX_FILES_DENSITY_THRESHOLD = 10
-
     if files_complexity.sum() <= 0:
         raise InvalidMetricValue("The cyclomatic complexity of all files is lesser or equal than 0")
 
@@ -76,13 +78,24 @@ def calculate_em1(data: Dict):
     return em1
 
 
-def calculate_em2(data: Dict):
+def calculate_em2(data: Dict, MINIMUM_COMMENT_DENSITY_THRESHOLD: float = 10, MAXIMUM_COMMENT_DENSITY_THRESHOLD: float = 30):
     """
     Calculates commented files density (em2).
 
     This function calculates commented files density measure (em2)
     used to assess the changeability quality sub characteristic.
     """
+    if MINIMUM_COMMENT_DENSITY_THRESHOLD < 1:
+        raise InvalidThresholdValue(("MINIMUM_COMMENT_DENSITY_THRESHOLD is lesser than 1"))
+    
+    if MINIMUM_COMMENT_DENSITY_THRESHOLD >= MAXIMUM_COMMENT_DENSITY_THRESHOLD:
+        raise InvalidThresholdValue(
+            (
+                "MINIMUM_COMMENT_DENSITY_THRESHOLD is greater or equal to"
+                " MAXIMUM_COMMENT_DENSITY_THRESHOLD"
+            )
+        )    
+
     files_comment_lines_density = resolve_metric_list_parameter(data["comment_lines_density"])
 
     if "number_of_files" in data:
@@ -95,9 +108,6 @@ def calculate_em2(data: Dict):
 
     if has_none or has_zero:
         return 0
-
-    MINIMUM_COMMENT_DENSITY_THRESHOLD = 10
-    MAXIMUM_COMMENT_DENSITY_THRESHOLD = 30
 
     if files_comment_lines_density.sum() < 0:
         raise InvalidMetricValue("The number of files comment lines density is lesser than 0")
@@ -122,13 +132,16 @@ def calculate_em2(data: Dict):
     return em2
 
 
-def calculate_em3(data: Dict):
+def calculate_em3(data: Dict, DUPLICATED_LINES_THRESHOLD: float = 5.0):
     """
     Calculates duplicated files absence (em3).
 
     This function calculates the duplicated files absence measure (em3)
     used to assess the changeability quality sub characteristic.
     """
+    if DUPLICATED_LINES_THRESHOLD < 1:
+        raise InvalidThresholdValue(("DUPLICATED_LINES_THRESHOLD is lesser than 1"))
+
     files_duplicated_lines_density = resolve_metric_list_parameter(data["duplicated_lines_density"])
 
     if "number_of_files" in data:
@@ -141,8 +154,6 @@ def calculate_em3(data: Dict):
 
     if has_none or has_zero:
         return 0
-
-    DUPLICATED_LINES_THRESHOLD = 5.0
 
     if files_duplicated_lines_density.sum() < 0:
         raise InvalidMetricValue("The number of files duplicated lines density is lesser than 0")
@@ -188,13 +199,16 @@ def calculate_em4(data: Dict[str, float]):
         return np.interp(if4i, x, y)
 
 
-def calculate_em5(data: Dict[str, list]):
+def calculate_em5(data: Dict[str, list], MAXIMUM_COVERAGE_THRESHOLD_TEST: float = 300000):
     """
     Calculates fast test builds (em5)
 
     This function calculates the fast test builds measure (em5)
     used to assess the testing status sub characteristic.
     """
+    if MAXIMUM_COVERAGE_THRESHOLD_TEST < 1:
+        raise InvalidThresholdValue(("MAXIMUM_COVERAGE_THRESHOLD_TEST is lesser than 1"))
+
     execution_time = resolve_metric_list_parameter(data["test_execution_time"])
     number_of_tests = resolve_metric_list_parameter(data["tests"])
     number_of_files = len(execution_time)
@@ -205,11 +219,9 @@ def calculate_em5(data: Dict[str, list]):
     if has_none or has_zero:
         return 0
 
-    MAXIMUM_COVERAGE_THRESHOLD = 300000
+    x, y = create_coordinate_pair(0, MAXIMUM_COVERAGE_THRESHOLD_TEST)
 
-    x, y = create_coordinate_pair(0, MAXIMUM_COVERAGE_THRESHOLD)
-
-    execution_between_thresholds = execution_time[execution_time <= MAXIMUM_COVERAGE_THRESHOLD]
+    execution_between_thresholds = execution_time[execution_time <= MAXIMUM_COVERAGE_THRESHOLD_TEST]
     fast_tests_between_thresholds = np.divide(execution_between_thresholds, number_of_tests)
 
     em5i = interpolate_series(fast_tests_between_thresholds, x, y)
@@ -221,13 +233,25 @@ def calculate_em5(data: Dict[str, list]):
     return em5
 
 
-def calculate_em6(data: Dict):
+def calculate_em6(data: Dict, MINIMUM_COVERAGE_THRESHOLD: float = 60, MAXIMUM_COVERAGE_THRESHOLD: float = 90):
     """
     Calculates test coverage (em6).
 
     This function calculates the test coverage measure (em6)
     used to assess the testing status sub characteristic.
     """
+    if MINIMUM_COVERAGE_THRESHOLD < 1:
+        raise InvalidThresholdValue(("MINIMUM_COVERAGE_THRESHOLD is lesser than 1"))
+    
+    if MINIMUM_COVERAGE_THRESHOLD >= MAXIMUM_COVERAGE_THRESHOLD:
+        raise InvalidThresholdValue(
+            (
+                "MINIMUM_COVERAGE_THRESHOLD is greater or equal to" 
+                " MAXIMUM_COVERAGE_THRESHOLD"
+            )
+        )    
+
+
     coverage = resolve_metric_list_parameter(data["coverage"])
 
     if "number_of_files" in data:
@@ -240,9 +264,6 @@ def calculate_em6(data: Dict):
 
     if has_none or has_zero:
         return 0
-
-    MINIMUM_COVERAGE_THRESHOLD = 60
-    MAXIMUM_COVERAGE_THRESHOLD = 90
 
     x, y = create_coordinate_pair(
         MINIMUM_COVERAGE_THRESHOLD / 100,
