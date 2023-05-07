@@ -24,3 +24,7 @@ class ImplicitMetricValueError(MeasureSoftGramCoreException):
     obter seu valor de maneira implícita.
     """
     pass
+
+class InvalidThresholdValue(MeasureSoftGramCoreException):
+    """Raised when a invalid threshold value is provided to the interpretation function"""
+    pass
