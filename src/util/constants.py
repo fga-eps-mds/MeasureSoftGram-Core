@@ -104,7 +104,7 @@ MEASURES_INTERPRETATION_MAPPING = {
         "interpretation_function": non_complex_files_density,
         "calculation_function": ems_functions.calculate_em1,
         "schema": schemas.NonComplexFileDensitySchema,
-        "thresholds": ["COMPLEX_FILES_DENSITY_THRESHOLD"],
+        "thresholds": ["MINIMUM_COMPLEX_FILES_DENSITY_THRESHOLD" ,"MAXIMUM_COMPLEX_FILES_DENSITY_THRESHOLD"],
     },
     "commented_file_density": {
         "interpretation_function": commented_files_density,
@@ -116,19 +116,19 @@ MEASURES_INTERPRETATION_MAPPING = {
         "interpretation_function": absence_of_duplications,
         "calculation_function": ems_functions.calculate_em3,
         "schema": schemas.DuplicationAbsenceSchema,
-        "thresholds": ["DUPLICATED_LINES_THRESHOLD"],
+        "thresholds": ["MINIMUM_DUPLICATED_LINES_THRESHOLD" ,"MAXIMUM_DUPLICATED_LINES_THRESHOLD"],
     },
     "passed_tests": {
         "interpretation_function": passed_tests,
         "calculation_function": ems_functions.calculate_em4,
         "schema": schemas.PassedTestsSchema,
-        "thresholds": []
+        "thresholds": ["MINIMUM_PASSED_TESTS_THRESHOLD", "MAXIMUM_PASSED_TESTS_THRESHOLD"]
     },
     "test_builds": {
         "interpretation_function": fast_test_builds,
         "calculation_function": ems_functions.calculate_em5,
         "schema": schemas.TestBuildsSchema,
-        "thresholds": ["MAXIMUM_COVERAGE_THRESHOLD_TEST"],
+        "thresholds": ["MINIMUM_FAST_TEST_TIME_THRESHOLD", "MAXIMUM_FAST_TEST_TIME_THRESHOLD"],
     },
     "test_coverage": {
         "interpretation_function": test_coverage,
