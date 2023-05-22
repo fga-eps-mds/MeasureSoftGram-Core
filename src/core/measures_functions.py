@@ -79,8 +79,12 @@ def calculate_em1(data: Dict, MINIMUM_COMPLEX_FILES_DENSITY_THRESHOLD: float = 0
 
     x, y = create_coordinate_pair(MINIMUM_COMPLEX_FILES_DENSITY_THRESHOLD, MAXIMUM_COMPLEX_FILES_DENSITY_THRESHOLD)
 
-    files_in_thresholds_df = (files_complexity / files_functions) <= MAXIMUM_COMPLEX_FILES_DENSITY_THRESHOLD
-    IF1 = np.interp(list(files_in_thresholds_df[(files_functions > 0)]), x, y)
+    files_in_thresholds_df = files_complexity / files_functions
+    files_in_thresholds_bool_index = files_in_thresholds_df <= MAXIMUM_COMPLEX_FILES_DENSITY_THRESHOLD
+    files_functions_gt_zero_bool_index = files_functions > 0
+    IF1 = np.interp(list(
+        files_in_thresholds_df[files_in_thresholds_bool_index * files_functions_gt_zero_bool_index]
+    ), x, y)
     em1 = np.divide(sum(IF1), number_of_files)
 
     if np.isnan(em1) or np.isinf(em1):
