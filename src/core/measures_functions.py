@@ -3,7 +3,11 @@ from typing import Dict
 import numpy as np
 import pandas as pd
 
-from util.exceptions import ImplicitMetricValueError, InvalidMetricValue, InvalidThresholdValue
+from util.exceptions import (
+    ImplicitMetricValueError,
+    InvalidMetricValue,
+    InvalidThresholdValue,
+)
 from util.get_functions import create_coordinate_pair
 
 
@@ -42,7 +46,12 @@ def calculate_em1(
         raise InvalidThresholdValue(("min_complex_files_density is not equal to 0"))
 
     if min_complex_files_density >= max_complex_files_density:
-        raise InvalidThresholdValue(("min_complex_files_density is greater or equal to" " max_complex_files_density"))
+        raise InvalidThresholdValue(
+            (
+                "min_complex_files_density is greater or equal to"
+                " max_complex_files_density"
+            )
+        )
 
     # if max_complex_files_density > 100:
     #     raise InvalidThresholdValue(("max_complex_files_density is greater than 100"))
@@ -71,10 +80,14 @@ def calculate_em1(
         return 0
 
     if files_complexity.sum() <= 0:
-        raise InvalidMetricValue("The cyclomatic complexity of all files is lesser or equal than 0")
+        raise InvalidMetricValue(
+            "The cyclomatic complexity of all files is lesser or equal than 0"
+        )
 
     if files_functions.sum() <= 0:
-        raise InvalidMetricValue("The number of functions of all files is lesser or equal than 0")
+        raise InvalidMetricValue(
+            "The number of functions of all files is lesser or equal than 0"
+        )
 
     x, y = create_coordinate_pair(
         min_complex_files_density,
@@ -85,7 +98,11 @@ def calculate_em1(
     files_in_thresholds_bool_index = files_in_thresholds_df <= max_complex_files_density
     files_functions_gt_zero_bool_index = files_functions > 0
     IF1 = np.interp(
-        list(files_in_thresholds_df[files_in_thresholds_bool_index * files_functions_gt_zero_bool_index]),
+        list(
+            files_in_thresholds_df[
+                files_in_thresholds_bool_index * files_functions_gt_zero_bool_index
+            ]
+        ),
         x,
         y,
     )
@@ -111,11 +128,15 @@ def calculate_em2(
         raise InvalidThresholdValue(("min_comment_density is lesser than 0"))
 
     if min_comment_density >= max_comment_density:
-        raise InvalidThresholdValue(("min_comment_density is greater or equal to" " max_comment_density"))
+        raise InvalidThresholdValue(
+            ("min_comment_density is greater or equal to" " max_comment_density")
+        )
     if max_comment_density > 100:
         raise InvalidThresholdValue(("max_comment_density is greater than 100"))
 
-    files_comment_lines_density = resolve_metric_list_parameter(data["comment_lines_density"])
+    files_comment_lines_density = resolve_metric_list_parameter(
+        data["comment_lines_density"]
+    )
 
     if "number_of_files" in data:
         number_of_files = data["number_of_files"]
@@ -129,7 +150,9 @@ def calculate_em2(
         return 0
 
     if files_comment_lines_density.sum() < 0:
-        raise InvalidMetricValue("The number of files comment lines density is lesser than 0")
+        raise InvalidMetricValue(
+            "The number of files comment lines density is lesser than 0"
+        )
 
     x, y = create_coordinate_pair(
         min_comment_density / 100,
@@ -167,12 +190,16 @@ def calculate_em3(
         raise InvalidThresholdValue(("min_duplicated_lines is not equal to 0"))
 
     if min_duplicated_lines >= max_duplicated_lines:
-        raise InvalidThresholdValue(("min_duplicated_lines is greater or equal to" " max_duplicated_lines"))
+        raise InvalidThresholdValue(
+            ("min_duplicated_lines is greater or equal to" " max_duplicated_lines")
+        )
 
     if max_duplicated_lines > 100:
         raise InvalidThresholdValue(("max_duplicated_lines is greater than 100"))
 
-    files_duplicated_lines_density = resolve_metric_list_parameter(data["duplicated_lines_density"])
+    files_duplicated_lines_density = resolve_metric_list_parameter(
+        data["duplicated_lines_density"]
+    )
 
     if "number_of_files" in data:
         number_of_files = data["number_of_files"]
@@ -186,14 +213,18 @@ def calculate_em3(
         return 0
 
     if files_duplicated_lines_density.sum() < 0:
-        raise InvalidMetricValue("The number of files duplicated lines density is lesser than 0")
+        raise InvalidMetricValue(
+            "The number of files duplicated lines density is lesser than 0"
+        )
 
     x, y = create_coordinate_pair(
         min_duplicated_lines / 100,
         max_duplicated_lines / 100,
     )
 
-    files_below_threshold = files_duplicated_lines_density[files_duplicated_lines_density <= max_duplicated_lines]
+    files_below_threshold = files_duplicated_lines_density[
+        files_duplicated_lines_density <= max_duplicated_lines
+    ]
 
     em3i = interpolate_series(files_below_threshold, x, y)
     em3 = np.divide(np.sum(em3i), number_of_files)
@@ -258,7 +289,9 @@ def calculate_em5(
         raise InvalidThresholdValue(("min_fast_test_time is not equal to 0"))
 
     if min_fast_test_time >= max_fast_test_time:
-        raise InvalidThresholdValue(("min_fast_test_time is greater or equal to" " max_fast_test_time"))
+        raise InvalidThresholdValue(
+            ("min_fast_test_time is greater or equal to" " max_fast_test_time")
+        )
 
     execution_time = resolve_metric_list_parameter(data["test_execution_time"])
     number_of_tests = resolve_metric_list_parameter(data["tests"])
@@ -273,7 +306,9 @@ def calculate_em5(
     x, y = create_coordinate_pair(min_fast_test_time, max_fast_test_time)
 
     execution_between_thresholds = execution_time[execution_time <= max_fast_test_time]
-    fast_tests_between_thresholds = np.divide(execution_between_thresholds, number_of_tests)
+    fast_tests_between_thresholds = np.divide(
+        execution_between_thresholds, number_of_tests
+    )
 
     em5i = interpolate_series(fast_tests_between_thresholds, x, y)
     em5 = np.divide(np.sum(em5i), number_of_files)
@@ -300,7 +335,10 @@ def calculate_em6(
 
     if MINIMUM_COVERAGE_THRESHOLD >= MAXIMUM_COVERAGE_THRESHOLD:
         raise InvalidThresholdValue(
-            ("MINIMUM_COVERAGE_THRESHOLD is greater or equal to" " MAXIMUM_COVERAGE_THRESHOLD")
+            (
+                "MINIMUM_COVERAGE_THRESHOLD is greater or equal to"
+                " MAXIMUM_COVERAGE_THRESHOLD"
+            )
         )
 
     if MAXIMUM_COVERAGE_THRESHOLD > 100:
@@ -341,9 +379,13 @@ def calculate_em7(data: Dict):
     This function calculates the team throughput measure (em7)
     used to assess the functional completeness subcharacteristic.
     """
-    resolved_issues_with_us_label = data["number_of_resolved_issues_with_US_label_in_the_last_x_days"]
+    resolved_issues_with_us_label = data[
+        "number_of_resolved_issues_with_US_label_in_the_last_x_days"
+    ]
 
-    total_issues_with_us_label = data["total_number_of_issues_with_US_label_in_the_last_x_days"]
+    total_issues_with_us_label = data[
+        "total_number_of_issues_with_US_label_in_the_last_x_days"
+    ]
 
     x, y = create_coordinate_pair(0, 1, reverse_y=True)
 
