@@ -120,27 +120,27 @@ INVALID_TRESHOLD_DATA = [
         calculate_em6,
         {
             "data": {},
-            "MINIMUM_COVERAGE_THRESHOLD": -1,
-            "MAXIMUM_COVERAGE_THRESHOLD": -10,
+            "min_coverage": -1,
+            "max_coverage": -10,
         },
-        "MINIMUM_COVERAGE_THRESHOLD is lesser than 0",
+        "min_coverage is lesser than 0",
     ),
     (
         calculate_em6,
         {
             "data": {},
-            "MINIMUM_COVERAGE_THRESHOLD": 90,
-            "MAXIMUM_COVERAGE_THRESHOLD": 90,
+            "min_coverage": 90,
+            "max_coverage": 90,
         },
-        "MINIMUM_COVERAGE_THRESHOLD is greater or equal to MAXIMUM_COVERAGE_THRESHOLD",
+        "min_coverage is greater or equal to max_coverage",
     ),
     (
         calculate_em6,
         {
             "data": {},
-            "MINIMUM_COVERAGE_THRESHOLD": 90,
-            "MAXIMUM_COVERAGE_THRESHOLD": 900,
+            "min_coverage": 90,
+            "max_coverage": 900,
         },
-        "MAXIMUM_COVERAGE_THRESHOLD is greater than 100",
+        "max_coverage is greater than 100",
     ),
 ]

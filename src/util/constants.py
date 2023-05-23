@@ -134,7 +134,7 @@ MEASURES_INTERPRETATION_MAPPING = {
         "interpretation_function": test_coverage,
         "calculation_function": ems_functions.calculate_em6,
         "schema": schemas.TestCoverageSchema,
-        "thresholds": ["MINIMUM_COVERAGE_THRESHOLD", "MAXIMUM_COVERAGE_THRESHOLD"],
+        "thresholds": ["min_coverage", "max_coverage"],
     },
     "team_throughput": {
         "interpretation_function": ...,

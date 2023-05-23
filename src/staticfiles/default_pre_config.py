@@ -55,7 +55,7 @@ DEFAULT_PRE_CONFIG = {
         "max_comment_density": 30,
         "max_duplicated_lines": 5,
         "max_fast_test_time": 300000,
-        "MINIMUM_COVERAGE_THRESHOLD": 60,
-        "MAXIMUM_COVERAGE_THRESHOLD": 90,
+        "min_coverage": 60,
+        "max_coverage": 90,
     },
 }
