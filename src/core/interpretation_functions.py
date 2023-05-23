@@ -2,7 +2,11 @@ import core.measures_functions as ems_functions
 from util.check_functions import check_metric_value, check_metric_values
 
 
-def non_complex_files_density(data_frame, min_complex_files_density: float = 0, max_complex_files_density: float = 10):
+def non_complex_files_density(
+    data_frame,
+    min_complex_files_density: float = 0,
+    max_complex_files_density: float = 10,
+):
     """
     Calculates non-complex files density (em1).
     This function calculates non-complex files density measure (em1)
@@ -27,7 +31,9 @@ def non_complex_files_density(data_frame, min_complex_files_density: float = 0, 
     )
 
 
-def commented_files_density(data_frame, min_comment_density: float = 10, max_comment_density: float = 30):
+def commented_files_density(
+    data_frame, min_comment_density: float = 10, max_comment_density: float = 30
+):
     """
     Calculates commented files density (em2).
 
@@ -47,7 +53,9 @@ def commented_files_density(data_frame, min_comment_density: float = 10, max_com
     )
 
 
-def absence_of_duplications(data_frame, min_duplicated_lines: float = 0, max_duplicated_lines: float = 5.0):
+def absence_of_duplications(
+    data_frame, min_duplicated_lines: float = 0, max_duplicated_lines: float = 5.0
+):
     """
     Calculates duplicated files absence (em3).
 
@@ -65,7 +73,11 @@ def absence_of_duplications(data_frame, min_duplicated_lines: float = 0, max_dup
     )
 
 
-def test_coverage(data_frame, MINIMUM_COVERAGE_THRESHOLD: float = 60, MAXIMUM_COVERAGE_THRESHOLD: float = 90):
+def test_coverage(
+    data_frame,
+    MINIMUM_COVERAGE_THRESHOLD: float = 60,
+    MAXIMUM_COVERAGE_THRESHOLD: float = 90,
+):
     """
     Calculates test coverage (em6).
 
@@ -83,7 +95,9 @@ def test_coverage(data_frame, MINIMUM_COVERAGE_THRESHOLD: float = 60, MAXIMUM_CO
     )
 
 
-def fast_test_builds(data_frame, min_fast_test_time: float = 0, max_fast_test_time: float = 300000):
+def fast_test_builds(
+    data_frame, min_fast_test_time: float = 0, max_fast_test_time: float = 300000
+):
     """
     Calculates fast test builds (em5)
     This function gets the dataframe metrics

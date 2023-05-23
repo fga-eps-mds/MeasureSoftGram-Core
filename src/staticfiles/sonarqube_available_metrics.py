@@ -11,7 +11,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Maintainability",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "386",
@@ -22,7 +22,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Issues",
             "direction": 0,
             "qualitative": False,
-            "hidden": True
+            "hidden": True,
         },
         {
             "id": "78",
@@ -33,7 +33,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Issues",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "308",
@@ -44,7 +44,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Reliability",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "4",
@@ -55,7 +55,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Size",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "306",
@@ -66,7 +66,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Maintainability",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "347",
@@ -77,7 +77,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Complexity",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "32",
@@ -88,7 +88,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Size",
             "direction": 1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "239",
@@ -98,7 +98,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Size",
             "direction": 0,
             "qualitative": False,
-            "hidden": True
+            "hidden": True,
         },
         {
             "id": "33",
@@ -110,7 +110,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "direction": 1,
             "qualitative": True,
             "hidden": False,
-            "decimalScale": 1
+            "decimalScale": 1,
         },
         {
             "id": "27",
@@ -122,7 +122,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "direction": -1,
             "qualitative": True,
             "hidden": True,
-            "decimalScale": 1
+            "decimalScale": 1,
         },
         {
             "id": "38",
@@ -134,7 +134,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "direction": -1,
             "qualitative": True,
             "hidden": True,
-            "decimalScale": 1
+            "decimalScale": 1,
         },
         {
             "id": "28",
@@ -146,7 +146,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "direction": -1,
             "qualitative": True,
             "hidden": True,
-            "decimalScale": 1
+            "decimalScale": 1,
         },
         {
             "id": "272",
@@ -157,7 +157,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Complexity",
             "direction": -1,
             "qualitative": False,
-            "hidden": True
+            "hidden": True,
         },
         {
             "id": "273",
@@ -168,7 +168,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Complexity",
             "direction": -1,
             "qualitative": False,
-            "hidden": True
+            "hidden": True,
         },
         {
             "id": "97",
@@ -180,7 +180,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "direction": 1,
             "qualitative": True,
             "hidden": False,
-            "decimalScale": 1
+            "decimalScale": 1,
         },
         {
             "id": "178",
@@ -192,7 +192,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "direction": 1,
             "qualitative": True,
             "hidden": False,
-            "decimalScale": 1
+            "decimalScale": 1,
         },
         {
             "id": "95",
@@ -203,7 +203,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Coverage",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "176",
@@ -214,7 +214,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Coverage",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "277",
@@ -225,7 +225,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Issues",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "20",
@@ -237,7 +237,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "direction": 1,
             "qualitative": True,
             "hidden": False,
-            "decimalScale": 1
+            "decimalScale": 1,
         },
         {
             "id": "172",
@@ -249,7 +249,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "direction": 1,
             "qualitative": True,
             "hidden": False,
-            "decimalScale": 1
+            "decimalScale": 1,
         },
         {
             "id": "79",
@@ -260,7 +260,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Issues",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "26",
@@ -271,7 +271,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Complexity",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "181",
@@ -281,7 +281,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "SCM",
             "direction": 0,
             "qualitative": False,
-            "hidden": True
+            "hidden": True,
         },
         {
             "id": "280",
@@ -292,7 +292,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Maintainability",
             "direction": -1,
             "qualitative": True,
-            "hidden": True
+            "hidden": True,
         },
         {
             "id": "348",
@@ -304,7 +304,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "direction": -1,
             "qualitative": True,
             "hidden": True,
-            "decimalScale": 1
+            "decimalScale": 1,
         },
         {
             "id": "37",
@@ -315,7 +315,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Size",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "51",
@@ -326,7 +326,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Duplications",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "339",
@@ -337,7 +337,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Duplications",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "52",
@@ -348,7 +348,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Duplications",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "8",
@@ -359,7 +359,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Duplications",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "34",
@@ -371,7 +371,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "direction": -1,
             "qualitative": True,
             "hidden": False,
-            "decimalScale": 1
+            "decimalScale": 1,
         },
         {
             "id": "340",
@@ -383,7 +383,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "direction": -1,
             "qualitative": True,
             "hidden": False,
-            "decimalScale": 1
+            "decimalScale": 1,
         },
         {
             "id": "338",
@@ -394,7 +394,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Duplications",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "53",
@@ -405,7 +405,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Duplications",
             "direction": 0,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "312",
@@ -416,7 +416,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Maintainability",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "321",
@@ -426,7 +426,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Coverage",
             "direction": 0,
             "qualitative": False,
-            "hidden": True
+            "hidden": True,
         },
         {
             "id": "274",
@@ -437,7 +437,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Issues",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "154",
@@ -448,7 +448,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Complexity",
             "direction": 0,
             "qualitative": True,
-            "hidden": True
+            "hidden": True,
         },
         {
             "id": "36",
@@ -459,7 +459,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Size",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "59",
@@ -470,7 +470,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Complexity",
             "direction": 0,
             "qualitative": True,
-            "hidden": True
+            "hidden": True,
         },
         {
             "id": "6",
@@ -481,7 +481,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Size",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "150",
@@ -492,7 +492,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Size",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "151",
@@ -503,7 +503,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Size",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "82",
@@ -514,7 +514,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Issues",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "42",
@@ -525,7 +525,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Issues",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "94",
@@ -537,7 +537,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "direction": 1,
             "qualitative": True,
             "hidden": False,
-            "decimalScale": 1
+            "decimalScale": 1,
         },
         {
             "id": "175",
@@ -549,7 +549,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "direction": 1,
             "qualitative": True,
             "hidden": False,
-            "decimalScale": 1
+            "decimalScale": 1,
         },
         {
             "id": "55",
@@ -560,7 +560,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Size",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "5",
@@ -571,7 +571,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Size",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "293",
@@ -582,7 +582,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Size",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "92",
@@ -593,7 +593,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Coverage",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "173",
@@ -604,7 +604,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Coverage",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "163",
@@ -615,7 +615,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Maintainability",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "341",
@@ -626,7 +626,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Maintainability",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "80",
@@ -637,7 +637,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Issues",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "81",
@@ -648,7 +648,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Issues",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "238",
@@ -658,7 +658,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Size",
             "direction": 0,
             "qualitative": False,
-            "hidden": True
+            "hidden": True,
         },
         {
             "id": "165",
@@ -669,7 +669,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Issues",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "309",
@@ -680,7 +680,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Reliability",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "307",
@@ -691,7 +691,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Maintainability",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "166",
@@ -702,7 +702,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Issues",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "169",
@@ -713,7 +713,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Issues",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "164",
@@ -724,7 +724,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Issues",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "337",
@@ -735,7 +735,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Size",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "167",
@@ -746,7 +746,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Issues",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "168",
@@ -757,7 +757,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Issues",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "351",
@@ -768,7 +768,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "SecurityReview",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "311",
@@ -779,7 +779,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Security",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "275",
@@ -790,7 +790,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Issues",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "47",
@@ -801,7 +801,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "General",
             "direction": 0,
             "qualitative": False,
-            "hidden": True
+            "hidden": True,
         },
         {
             "id": "240",
@@ -812,7 +812,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Size",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "58",
@@ -823,7 +823,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Documentation",
             "direction": -1,
             "qualitative": False,
-            "hidden": True
+            "hidden": True,
         },
         {
             "id": "61",
@@ -835,7 +835,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "direction": 1,
             "qualitative": True,
             "hidden": True,
-            "decimalScale": 1
+            "decimalScale": 1,
         },
         {
             "id": "62",
@@ -846,7 +846,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Documentation",
             "direction": -1,
             "qualitative": True,
-            "hidden": True
+            "hidden": True,
         },
         {
             "id": "294",
@@ -857,7 +857,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "General",
             "direction": 0,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "48",
@@ -868,7 +868,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Releasability",
             "direction": 1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "315",
@@ -879,7 +879,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Reliability",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "342",
@@ -890,7 +890,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Reliability",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "313",
@@ -901,7 +901,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Reliability",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "314",
@@ -912,7 +912,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Reliability",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "276",
@@ -923,7 +923,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Issues",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "350",
@@ -934,7 +934,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "SecurityReview",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "354",
@@ -946,7 +946,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "direction": 1,
             "qualitative": True,
             "hidden": False,
-            "decimalScale": 1
+            "decimalScale": 1,
         },
         {
             "id": "355",
@@ -958,7 +958,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "direction": 1,
             "qualitative": True,
             "hidden": False,
-            "decimalScale": 1
+            "decimalScale": 1,
         },
         {
             "id": "319",
@@ -969,7 +969,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Security",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "343",
@@ -980,7 +980,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Security",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "317",
@@ -991,7 +991,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Security",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "318",
@@ -1002,7 +1002,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Security",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "352",
@@ -1013,7 +1013,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "SecurityReview",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "353",
@@ -1024,7 +1024,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "SecurityReview",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "356",
@@ -1035,7 +1035,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "SecurityReview",
             "direction": -1,
             "qualitative": False,
-            "hidden": True
+            "hidden": True,
         },
         {
             "id": "358",
@@ -1046,7 +1046,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "SecurityReview",
             "direction": -1,
             "qualitative": False,
-            "hidden": True
+            "hidden": True,
         },
         {
             "id": "357",
@@ -1057,7 +1057,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "SecurityReview",
             "direction": -1,
             "qualitative": False,
-            "hidden": True
+            "hidden": True,
         },
         {
             "id": "359",
@@ -1068,7 +1068,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "SecurityReview",
             "direction": -1,
             "qualitative": False,
-            "hidden": True
+            "hidden": True,
         },
         {
             "id": "11",
@@ -1079,7 +1079,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Coverage",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "60",
@@ -1090,7 +1090,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Size",
             "direction": -1,
             "qualitative": False,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "162",
@@ -1101,7 +1101,7 @@ SONARQUBE_AVAILABLE_METRICS = {
             "domain": "Maintainability",
             "direction": -1,
             "qualitative": True,
-            "hidden": False
+            "hidden": False,
         },
         {
             "id": "297",
@@ -1113,10 +1113,10 @@ SONARQUBE_AVAILABLE_METRICS = {
             "direction": -1,
             "qualitative": True,
             "hidden": False,
-            "decimalScale": 1
-        }
+            "decimalScale": 1,
+        },
     ],
     "total": 112,
     "p": 1,
-    "ps": 100
+    "ps": 100,
 }
