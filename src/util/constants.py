@@ -92,7 +92,7 @@ AVAILABLE_PRE_CONFIGS = {
             "characteristics": ["functional_suitability"],
             "metrics": [
                 "number_of_resolved_issues_with_US_label_in_the_last_x_days",
-                "total_number_of_issues_with_US_label_in_the_last_x_days"
+                "total_number_of_issues_with_US_label_in_the_last_x_days",
             ],
         },
     },
@@ -104,31 +104,31 @@ MEASURES_INTERPRETATION_MAPPING = {
         "interpretation_function": non_complex_files_density,
         "calculation_function": ems_functions.calculate_em1,
         "schema": schemas.NonComplexFileDensitySchema,
-        "thresholds": ["MINIMUM_COMPLEX_FILES_DENSITY_THRESHOLD" ,"MAXIMUM_COMPLEX_FILES_DENSITY_THRESHOLD"],
+        "thresholds": ["min_complex_files_density", "max_complex_files_density"],
     },
     "commented_file_density": {
         "interpretation_function": commented_files_density,
         "calculation_function": ems_functions.calculate_em2,
         "schema": schemas.CommentedFileDensitySchema,
-        "thresholds": ["MINIMUM_COMMENT_DENSITY_THRESHOLD", "MAXIMUM_COMMENT_DENSITY_THRESHOLD"],
+        "thresholds": ["min_comment_density", "max_comment_density"],
     },
     "duplication_absense": {
         "interpretation_function": absence_of_duplications,
         "calculation_function": ems_functions.calculate_em3,
         "schema": schemas.DuplicationAbsenceSchema,
-        "thresholds": ["MINIMUM_DUPLICATED_LINES_THRESHOLD" ,"MAXIMUM_DUPLICATED_LINES_THRESHOLD"],
+        "thresholds": ["min_duplicated_lines", "max_duplicated_lines"],
     },
     "passed_tests": {
         "interpretation_function": passed_tests,
         "calculation_function": ems_functions.calculate_em4,
         "schema": schemas.PassedTestsSchema,
-        "thresholds": ["MINIMUM_PASSED_TESTS_THRESHOLD", "MAXIMUM_PASSED_TESTS_THRESHOLD"]
+        "thresholds": ["min_passed_tests", "max_passed_tests"],
     },
     "test_builds": {
         "interpretation_function": fast_test_builds,
         "calculation_function": ems_functions.calculate_em5,
         "schema": schemas.TestBuildsSchema,
-        "thresholds": ["MINIMUM_FAST_TEST_TIME_THRESHOLD", "MAXIMUM_FAST_TEST_TIME_THRESHOLD"],
+        "thresholds": ["min_fast_test_time", "max_fast_test_time"],
     },
     "test_coverage": {
         "interpretation_function": test_coverage,
