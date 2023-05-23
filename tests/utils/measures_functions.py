@@ -9,138 +9,138 @@ from core.measures_functions import (
 
 INVALID_TRESHOLD_DATA = [
     (
-        calculate_em1,  # function
+        calculate_em1,
         {
             "data": {},
-            "MINIMUM_COMPLEX_FILES_DENSITY_THRESHOLD": 1,
-            "MAXIMUM_COMPLEX_FILES_DENSITY_THRESHOLD": 10,
-        },  # params
-        "MINIMUM_COMPLEX_FILES_DENSITY_THRESHOLD is not equal to 0",  # Expected
-    ),
-    (
-        calculate_em1,  # function
-        {
-            "data": {},
-            "MINIMUM_COMPLEX_FILES_DENSITY_THRESHOLD": 0,
-            "MAXIMUM_COMPLEX_FILES_DENSITY_THRESHOLD": -10,
-        },  # params
-        "MINIMUM_COMPLEX_FILES_DENSITY_THRESHOLD is greater or equal to MAXIMUM_COMPLEX_FILES_DENSITY_THRESHOLD",  # Expected
-    ),
-    (
-        calculate_em2,
-        {
-            "data": {},
-            "MINIMUM_COMMENT_DENSITY_THRESHOLD": -1,
-            "MAXIMUM_COMMENT_DENSITY_THRESHOLD": 100,
-        },  # params
-        "MINIMUM_COMMENT_DENSITY_THRESHOLD is lesser than 0",
-    ),
-    (
-        calculate_em2,
-        {
-            "data": {},
-            "MINIMUM_COMMENT_DENSITY_THRESHOLD": 0,
-            "MAXIMUM_COMMENT_DENSITY_THRESHOLD": 101,
-        },  # params
-        "MAXIMUM_COMMENT_DENSITY_THRESHOLD is greater than 100",
-    ),
-    (
-        calculate_em2,
-        {
-            "data": {},
-            "MINIMUM_COMMENT_DENSITY_THRESHOLD": 100,
-            "MAXIMUM_COMMENT_DENSITY_THRESHOLD": 99,
+            "min_complex_files_density": 1,
+            "max_complex_files_density": 10,
         },
-        "MINIMUM_COMMENT_DENSITY_THRESHOLD is greater or equal to MAXIMUM_COMMENT_DENSITY_THRESHOLD",
+        "min_complex_files_density is not equal to 0",
     ),
     (
-        calculate_em3,  # function
+        calculate_em1,
         {
             "data": {},
-            "MINIMUM_DUPLICATED_LINES_THRESHOLD": 1,
-            "MAXIMUM_DUPLICATED_LINES_THRESHOLD": 10,
-        },  # params
-        "MINIMUM_DUPLICATED_LINES_THRESHOLD is not equal to 0",  # Expected
+            "min_complex_files_density": 0,
+            "max_complex_files_density": -10,
+        },
+        "min_complex_files_density is greater or equal to max_complex_files_density",
     ),
     (
-        calculate_em3,  # function
+        calculate_em2,
         {
             "data": {},
-            "MINIMUM_DUPLICATED_LINES_THRESHOLD": 0,
-            "MAXIMUM_DUPLICATED_LINES_THRESHOLD": -1,
-        },  # params
-        "MINIMUM_DUPLICATED_LINES_THRESHOLD is greater or equal to MAXIMUM_DUPLICATED_LINES_THRESHOLD",  # Expected
+            "min_comment_density": -1,
+            "max_comment_density": 100,
+        },
+        "min_comment_density is lesser than 0",
     ),
     (
-        calculate_em3,  # function
+        calculate_em2,
         {
             "data": {},
-            "MINIMUM_DUPLICATED_LINES_THRESHOLD": 0,
-            "MAXIMUM_DUPLICATED_LINES_THRESHOLD": 101,
-        },  # params
-        "MAXIMUM_DUPLICATED_LINES_THRESHOLD is greater than 100",  # Expected
+            "min_comment_density": 0,
+            "max_comment_density": 101,
+        },
+        "max_comment_density is greater than 100",
     ),
     (
-        calculate_em4,  # function
+        calculate_em2,
         {
             "data": {},
-            "MINIMUM_PASSED_TESTS_THRESHOLD": 10,
-            "MAXIMUM_PASSED_TESTS_THRESHOLD": 1,
-        },  # params
-        "MINIMUM_PASSED_TESTS_THRESHOLD is not equal to 0",  # Expected
+            "min_comment_density": 100,
+            "max_comment_density": 99,
+        },
+        "min_comment_density is greater or equal to max_comment_density",
     ),
     (
-        calculate_em4,  # function
+        calculate_em3,
         {
             "data": {},
-            "MINIMUM_PASSED_TESTS_THRESHOLD": 0,
-            "MAXIMUM_PASSED_TESTS_THRESHOLD": 0.99,
-        },  # params
-        "MAXIMUM_PASSED_TESTS_THRESHOLD is not equal to 1",  # Expected
+            "min_duplicated_lines": 1,
+            "max_duplicated_lines": 10,
+        },
+        "min_duplicated_lines is not equal to 0",
     ),
     (
-        calculate_em5,  # function
+        calculate_em3,
         {
             "data": {},
-            "MINIMUM_FAST_TEST_TIME_THRESHOLD": -1,
-            "MAXIMUM_FAST_TEST_TIME_THRESHOLD": 0.99,
-        },  # params
-        "MINIMUM_FAST_TEST_TIME_THRESHOLD is not equal to 0",  # Expected
+            "min_duplicated_lines": 0,
+            "max_duplicated_lines": -1,
+        },
+        "min_duplicated_lines is greater or equal to max_duplicated_lines",
     ),
     (
-        calculate_em5,  # function
+        calculate_em3,
         {
             "data": {},
-            "MINIMUM_FAST_TEST_TIME_THRESHOLD": 0,
-            "MAXIMUM_FAST_TEST_TIME_THRESHOLD": -10,
-        },  # params
-        "MINIMUM_FAST_TEST_TIME_THRESHOLD is greater or equal to MAXIMUM_FAST_TEST_TIME_THRESHOLD",  # Expected
+            "min_duplicated_lines": 0,
+            "max_duplicated_lines": 101,
+        },
+        "max_duplicated_lines is greater than 100",
     ),
     (
-        calculate_em6,  # function
+        calculate_em4,
+        {
+            "data": {},
+            "min_passed_tests": 10,
+            "max_passed_tests": 1,
+        },
+        "min_passed_tests is not equal to 0",
+    ),
+    (
+        calculate_em4,
+        {
+            "data": {},
+            "min_passed_tests": 0,
+            "max_passed_tests": 0.99,
+        },
+        "max_passed_tests is not equal to 1",
+    ),
+    (
+        calculate_em5,
+        {
+            "data": {},
+            "min_fast_test_time": -1,
+            "max_fast_test_time": 0.99,
+        },
+        "min_fast_test_time is not equal to 0",
+    ),
+    (
+        calculate_em5,
+        {
+            "data": {},
+            "min_fast_test_time": 0,
+            "max_fast_test_time": -10,
+        },
+        "min_fast_test_time is greater or equal to max_fast_test_time",
+    ),
+    (
+        calculate_em6,
         {
             "data": {},
             "MINIMUM_COVERAGE_THRESHOLD": -1,
             "MAXIMUM_COVERAGE_THRESHOLD": -10,
-        },  # params
-        "MINIMUM_COVERAGE_THRESHOLD is lesser than 0",  # Expected
+        },
+        "MINIMUM_COVERAGE_THRESHOLD is lesser than 0",
     ),
     (
-        calculate_em6,  # function
+        calculate_em6,
         {
             "data": {},
             "MINIMUM_COVERAGE_THRESHOLD": 90,
             "MAXIMUM_COVERAGE_THRESHOLD": 90,
-        },  # params
-        "MINIMUM_COVERAGE_THRESHOLD is greater or equal to MAXIMUM_COVERAGE_THRESHOLD",  # Expected
+        },
+        "MINIMUM_COVERAGE_THRESHOLD is greater or equal to MAXIMUM_COVERAGE_THRESHOLD",
     ),
     (
-        calculate_em6,  # function
+        calculate_em6,
         {
             "data": {},
             "MINIMUM_COVERAGE_THRESHOLD": 90,
             "MAXIMUM_COVERAGE_THRESHOLD": 900,
-        },  # params
-        "MAXIMUM_COVERAGE_THRESHOLD is greater than 100",  # Expected
+        },
+        "MAXIMUM_COVERAGE_THRESHOLD is greater than 100",
     ),
 ]
