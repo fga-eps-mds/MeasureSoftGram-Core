@@ -53,7 +53,7 @@ CALCULATE_MEASURES_RESPONSE_DATA = {
         {'key': 'passed_tests', 'value': 1.0},
         {'key': 'test_builds', 'value': 0.9999959333997583},
         {'key': 'test_coverage', 'value': 0.4515625},
-        {'key': 'non_complex_file_density', 'value': 0.5361702127659572},
+        {'key': 'non_complex_file_density', 'value': 0.43738095238095254},
         {'key': 'commented_file_density', 'value': 0.04453125},
         {'key': 'duplication_absense', 'value': 1.0}
     ]

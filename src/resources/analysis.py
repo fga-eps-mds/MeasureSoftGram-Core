@@ -5,7 +5,7 @@ from core.schemas import (
     CalculateMeasureSchema,
     CalculateSubCharacteristicSchema,
     CalculateCharacteristicSchema,
-    CalculateSQCSchema
+    CalculateSQCSchema,
 )
 from core.agregation import aggregation_operation
 from core.weighting import weighting_operation
@@ -17,7 +17,7 @@ def calculate_aggregated_value(values_list, weights_list):
     return aggregation_operation(weighted_items, weights_list)
 
 
-def calculate_measures(extracted_measures):
+def calculate_measures(extracted_measures, config: dict = {"thresholds": {}}):
     # Validate if outter keys is valid
     try:
         data = CalculateMeasureSchema().load(extracted_measures)
@@ -25,7 +25,7 @@ def calculate_measures(extracted_measures):
         return {
             "error": "Failed to validate request",
             "schema_errors": error.messages,
-            "code": requests.codes.unprocessable_entity
+            "code": requests.codes.unprocessable_entity,
         }
 
     # Objeto retornado em caso de sucesso
@@ -34,12 +34,12 @@ def calculate_measures(extracted_measures):
     valid_measures = MEASURES_INTERPRETATION_MAPPING.keys()
 
     for measure in data["measures"]:
-        measure_key: str = measure['key']
+        measure_key: str = measure["key"]
 
         if measure_key not in valid_measures:
             return {
                 "error": f"Measure {measure_key} is not supported",
-                "code": requests.codes.unprocessable_entity
+                "code": requests.codes.unprocessable_entity,
             }
 
         measure_params = measure["parameters"]
@@ -51,16 +51,25 @@ def calculate_measures(extracted_measures):
             return {
                 "error": f"Metric parameters {measure_key} are not valid",
                 "schema_errors": exc.messages,
-                "code": requests.codes.unprocessable_entity
+                "code": requests.codes.unprocessable_entity,
             }
 
-        interpretation_function = MEASURES_INTERPRETATION_MAPPING[measure_key]["interpretation_function"]
-        result = interpretation_function(validated_params)
+        interpretation_function = MEASURES_INTERPRETATION_MAPPING[measure_key][
+            "interpretation_function"
+        ]
+        threshold_config = {
+            threshold: config["thresholds"][threshold]
+            for threshold in config["thresholds"].keys()
+            if threshold in MEASURES_INTERPRETATION_MAPPING[measure_key]["thresholds"]
+        }
+        result = interpretation_function(validated_params, **threshold_config)
 
-        response_data["measures"].append({
-            "key": measure_key,
-            "value": result,
-        })
+        response_data["measures"].append(
+            {
+                "key": measure_key,
+                "value": result,
+            }
+        )
 
     return response_data
 
@@ -72,7 +81,7 @@ def calculate_subcharacteristics(extracted_subcharacteristics):
         return {
             "error": "Failed to validate request",
             "schema_errors": error.messages,
-            "code": requests.codes.unprocessable_entity
+            "code": requests.codes.unprocessable_entity,
         }
 
     response_data = {"subcharacteristics": []}
@@ -87,10 +96,12 @@ def calculate_subcharacteristics(extracted_subcharacteristics):
 
         aggregated_value = calculate_aggregated_value(values_list, weights_list)
 
-        response_data["subcharacteristics"].append({
-            "key": subcharacteristic_key,
-            "value": aggregated_value,
-        })
+        response_data["subcharacteristics"].append(
+            {
+                "key": subcharacteristic_key,
+                "value": aggregated_value,
+            }
+        )
 
     return response_data
 
@@ -102,7 +113,7 @@ def calculate_characteristics(extracted_characteristics):
         return {
             "error": "Failed to validate request",
             "schema_errors": error.messages,
-            "code": requests.codes.unprocessable_entity
+            "code": requests.codes.unprocessable_entity,
         }
 
     response_data = {"characteristics": []}
@@ -117,10 +128,12 @@ def calculate_characteristics(extracted_characteristics):
 
         aggregated_value = calculate_aggregated_value(values_list, weights_list)
 
-        response_data["characteristics"].append({
-            "key": characteristic_key,
-            "value": aggregated_value,
-        })
+        response_data["characteristics"].append(
+            {
+                "key": characteristic_key,
+                "value": aggregated_value,
+            }
+        )
 
     return response_data
 
@@ -132,7 +145,7 @@ def calculate_sqc(extracted_sqc):
         return {
             "error": "Failed to validate request",
             "schema_errors": error.messages,
-            "code": requests.codes.unprocessable_entity
+            "code": requests.codes.unprocessable_entity,
         }
 
     response_data = {"sqc": []}
@@ -147,9 +160,11 @@ def calculate_sqc(extracted_sqc):
 
     aggregated_value = calculate_aggregated_value(values_list, weights_list)
 
-    response_data["sqc"].append({
-        "key": sqc_key,
-        "value": aggregated_value,
-    })
+    response_data["sqc"].append(
+        {
+            "key": sqc_key,
+            "value": aggregated_value,
+        }
+    )
 
     return response_data

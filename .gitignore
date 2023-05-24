@@ -2,6 +2,7 @@
 confs.txt
 /src/jsonteste.py
 /src/*.checkpoint.ipynb
+build
 __pycache__
 
 # Coverage
