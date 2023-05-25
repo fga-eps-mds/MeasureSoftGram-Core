@@ -31,7 +31,9 @@ def non_complex_files_density(
     )
 
 
-def commented_files_density(data_frame, min_comment_density: float = 10, max_comment_density: float = 30):
+def commented_files_density(
+    data_frame, min_comment_density: float = 10, max_comment_density: float = 30
+):
     """
     Calculates commented files density (em2).
 
@@ -51,7 +53,9 @@ def commented_files_density(data_frame, min_comment_density: float = 10, max_com
     )
 
 
-def absence_of_duplications(data_frame, min_duplicated_lines: float = 0, max_duplicated_lines: float = 5.0):
+def absence_of_duplications(
+    data_frame, min_duplicated_lines: float = 0, max_duplicated_lines: float = 5.0
+):
     """
     Calculates duplicated files absence (em3).
 
@@ -91,7 +95,9 @@ def test_coverage(
     )
 
 
-def fast_test_builds(data_frame, min_fast_test_time: float = 0, max_fast_test_time: float = 300000):
+def fast_test_builds(
+    data_frame, min_fast_test_time: float = 0, max_fast_test_time: float = 300000
+):
     """
     Calculates fast test builds (em5)
     This function gets the dataframe metrics
