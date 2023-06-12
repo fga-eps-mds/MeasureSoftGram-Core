@@ -19,7 +19,9 @@ def calculate_aggregated_value(values_list, weights_list):
 
 def calculate_measures(
     extracted_measures,
-    config: dict = {"characteristics": [{"subcharacteristics": [{"measures": [{}]}]}]},
+    config: dict = {
+        "characteristics": [{"subcharacteristics": [{"measures": [{"key": ""}]}]}]
+    },
 ):
     # Validate if outter keys is valid
     try:
@@ -60,13 +62,20 @@ def calculate_measures(
         interpretation_function = MEASURES_INTERPRETATION_MAPPING[measure_key][
             "interpretation_function"
         ]
-        threshold_config = {
-            key: item
+
+        measures = [
+            measure
             for characteristic in config["characteristics"]
             for subcharacteristic in characteristic["subcharacteristics"]
             for measure in subcharacteristic["measures"]
-            for key, item in measure.items()
-            if key in MEASURES_INTERPRETATION_MAPPING[measure_key]["thresholds"]
+        ]
+
+        threshold_config = {
+            key: value
+            for measure in measures
+            for key, value in measure.items()
+            if measure["key"] == measure_key
+            and key in MEASURES_INTERPRETATION_MAPPING[measure_key]["thresholds"]
         }
 
         result = interpretation_function(validated_params, **threshold_config)
