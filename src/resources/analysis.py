@@ -17,7 +17,12 @@ def calculate_aggregated_value(values_list, weights_list):
     return aggregation_operation(weighted_items, weights_list)
 
 
-def calculate_measures(extracted_measures, config: dict = {"thresholds": {}}):
+def calculate_measures(
+    extracted_measures,
+    config: dict = {
+        "characteristics": [{"subcharacteristics": [{"measures": [{"key": ""}]}]}]
+    },
+):
     # Validate if outter keys is valid
     try:
         data = CalculateMeasureSchema().load(extracted_measures)
@@ -57,11 +62,22 @@ def calculate_measures(extracted_measures, config: dict = {"thresholds": {}}):
         interpretation_function = MEASURES_INTERPRETATION_MAPPING[measure_key][
             "interpretation_function"
         ]
+
+        measures = [
+            measure
+            for characteristic in config["characteristics"]
+            for subcharacteristic in characteristic["subcharacteristics"]
+            for measure in subcharacteristic["measures"]
+        ]
+
         threshold_config = {
-            threshold: config["thresholds"][threshold]
-            for threshold in config["thresholds"].keys()
-            if threshold in MEASURES_INTERPRETATION_MAPPING[measure_key]["thresholds"]
+            key: value
+            for measure in measures
+            for key, value in measure.items()
+            if measure["key"] == measure_key
+            and key in MEASURES_INTERPRETATION_MAPPING[measure_key]["thresholds"]
         }
+
         result = interpretation_function(validated_params, **threshold_config)
 
         response_data["measures"].append(
