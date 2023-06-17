@@ -59,8 +59,8 @@ TEST_PARAMETERS = [
     ),
     (
         200,
-        "sqc",
-        {"sqc": 0.6596226503208683},
+        "tsqmi",
+        {"tsqmi": 0.6596226503208683},
     ),
 ]
 
@@ -275,7 +275,7 @@ METRICS_LIST = [
 ]
 
 
-CALCULATE_SQC_SUCCESS_DATA = [
+CALCULATE_TSQMI_SUCCESS_DATA = [
     (
         {
             "pre_config":
@@ -473,14 +473,14 @@ CALCULATE_ENTITY_INVALID_DATA = [
     ),
     (
         # Missing field `pre_config`
-        "sqc",
+        "tsqmi",
         {
             "metrics": METRICS_LIST,
         }
     ),
     (
         # Typo in field `pre-config` (must be `pre_config`)
-        "sqc",
+        "tsqmi",
         {
             "pre-config":
                 {

@@ -1,7 +1,6 @@
 import core.measures_functions as ems_functions
-from util.check_functions import check_metric_value, check_metric_values
-from util.check_thresholds import check_threshold
-from util.get_functions import interpretation_function, calculate_measure
+from util.check import check_threshold, check_metric_value, check_metric_values
+from transformations import interpretation_function, calculate_measure
 from util.exceptions import (
     ImplicitMetricValueError,
     InvalidMetricValue,
