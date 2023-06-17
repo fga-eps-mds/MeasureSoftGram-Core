@@ -56,3 +56,22 @@ def check_metric_values(metric_values, metric):
 
     for value in metric_values:
         check_metric_value(value, metric)
+
+
+def check_thresholds(min, max, measure):
+    callable(f"check_{measure}")(min, max)
+
+
+def check_non_complex_files_density(
+    min_complex_files_density, max_complex_files_density
+):
+    if min_complex_files_density != 0:
+        raise InvalidThresholdValue(("min_complex_files_density is not equal to 0"))
+
+    if min_complex_files_density >= max_complex_files_density:
+        raise InvalidThresholdValue(
+            (
+                "min_complex_files_density is greater or equal to"
+                " max_complex_files_density"
+            )
+        )
