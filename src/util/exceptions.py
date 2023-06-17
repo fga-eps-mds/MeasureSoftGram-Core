@@ -35,3 +35,15 @@ class InvalidThresholdValue(MeasureSoftGramCoreException):
     """Raised when a invalid threshold value is provided to the interpretation function"""
 
     pass
+
+
+class InvalidGainInterpretationValue(MeasureSoftGramCoreException):
+    """Raised when a invalid gain interpretation value is provided to the interpretation function"""
+
+    pass
+
+
+class InvalidCheckThreshold(MeasureSoftGramCoreException):
+    """Raised when a invalid check threshold function is called"""
+
+    pass

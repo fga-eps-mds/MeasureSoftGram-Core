@@ -1,5 +1,13 @@
 import core.measures_functions as ems_functions
 from util.check_functions import check_metric_value, check_metric_values
+from util.check_thresholds import check_threshold
+from util.get_functions import interpretation_function, calculate_measure
+from util.exceptions import (
+    ImplicitMetricValueError,
+    InvalidMetricValue,
+    InvalidThresholdValue,
+)
+import numpy as np
 
 
 def non_complex_files_density(
@@ -8,37 +16,57 @@ def non_complex_files_density(
     max_complex_files_density: float = 10,
 ):
     """
-    Calculates non-complex files density (em1).
-    This function calculates non-complex files density measure (em1)
+    Calculates non-complex files density.
+    This function calculates non-complex files density measure
     used to assess the changeability quality subcharacteristic.
 
     This function gets the dataframe metrics
-    and returns the non-complex files density measure (em1).
+    and returns the non-complex files density measure.
     """
-    files_complexity = data_frame["complexity"]  # m1 metric
-    files_functions = data_frame["functions"]  # m2 metric
+
+    check_threshold(
+        min_complex_files_density,
+        min_complex_files_density,
+        "non_complex_files_density",
+    )
+
+    files_complexity = data_frame["complexity"]
+    files_functions = data_frame["functions"]
 
     check_metric_values(files_complexity, "complexity")
     check_metric_values(files_functions, "functions")
 
-    return ems_functions.calculate_em1(
+    x, number_of_files = ems_functions.get_non_complex_files_density(
         data={
             "complexity": files_complexity,
             "functions": files_functions,
-        },
-        min_complex_files_density=min_complex_files_density,
-        max_complex_files_density=max_complex_files_density,
+        }
     )
 
+    files_in_thresholds_bool_index = x <= max_complex_files_density
+    files_functions_gt_zero_bool_index = files_functions > 0
+    x = x[files_in_thresholds_bool_index * files_functions_gt_zero_bool_index]
+
+    interpretation_function_value = interpretation_function(
+        x = x,
+        min_treshold = min_complex_files_density,
+        max_treshold = min_complex_files_density,
+        gain_interpretation = -1,
+    )
+
+    aggregated_and_normalized_measure = calculate_measure(
+        interpretation_function_value, number_of_files
+    )
+    return aggregated_and_normalized_measure
 
 def commented_files_density(
     data_frame, min_comment_density: float = 10, max_comment_density: float = 30
 ):
     """
-    Calculates commented files density (em2).
+    Calculates commented files density.
 
     This function gets the dataframe metrics
-    and returns the commented files density measure (em2).
+    and returns the commented files density measure.
     """
     files_comment_lines_density = data_frame["comment_lines_density"]  # m4 metric
 

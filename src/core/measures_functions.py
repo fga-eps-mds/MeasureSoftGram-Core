@@ -8,7 +8,7 @@ from util.exceptions import (
     InvalidMetricValue,
     InvalidThresholdValue,
 )
-from util.get_functions import create_coordinate_pair
+from util.get_functions import create_coordinate_pair, interpretation_function
 
 
 def interpolate_series(series, x, y):
@@ -31,30 +31,13 @@ def resolve_metric_list_parameter(metric):
     return pd.Series(metric, dtype=np.float64) if isinstance(metric, list) else metric
 
 
-def calculate_em1(
-    data: Dict,
-    min_complex_files_density: float = 0,
-    max_complex_files_density: float = 10,
-):
+def get_non_complex_files_density(data: Dict):
     """
     Calculates non-complex files density (em1).
 
     This function calculates non-complex files density measure (em1)
     used to assess the changeability quality sub characteristic.
     """
-    if min_complex_files_density != 0:
-        raise InvalidThresholdValue(("min_complex_files_density is not equal to 0"))
-
-    if min_complex_files_density >= max_complex_files_density:
-        raise InvalidThresholdValue(
-            (
-                "min_complex_files_density is greater or equal to"
-                " max_complex_files_density"
-            )
-        )
-
-    # if max_complex_files_density > 100:
-    #     raise InvalidThresholdValue(("max_complex_files_density is greater than 100"))
 
     files_complexity = resolve_metric_list_parameter(data["complexity"])
     files_functions = resolve_metric_list_parameter(data["functions"])
@@ -89,28 +72,10 @@ def calculate_em1(
             "The number of functions of all files is lesser or equal than 0"
         )
 
-    x, y = create_coordinate_pair(
-        min_complex_files_density,
-        max_complex_files_density,
-    )
-
     files_in_thresholds_df = files_complexity / files_functions
-    files_in_thresholds_bool_index = files_in_thresholds_df <= max_complex_files_density
-    files_functions_gt_zero_bool_index = files_functions > 0
-    IF1 = np.interp(
-        list(
-            files_in_thresholds_df[
-                files_in_thresholds_bool_index * files_functions_gt_zero_bool_index
-            ]
-        ),
-        x,
-        y,
-    )
-    em1 = np.divide(sum(IF1), number_of_files)
 
-    if np.isnan(em1) or np.isinf(em1):
-        return 0
-    return em1
+    x = np.array(files_in_thresholds_df)
+    return x, number_of_files
 
 
 def calculate_em2(
@@ -338,8 +303,8 @@ def calculate_em6(
             ("min_coverage is greater or equal to" " max_coverage")
         )
 
-    if max_coverage > 100:
-        raise InvalidThresholdValue(("max_coverage is greater than 100"))
+    if max_coverage != 100:
+        raise InvalidThresholdValue(("max_coverage is not equal to 100"))
 
     coverage = resolve_metric_list_parameter(data["coverage"])
 
