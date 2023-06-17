@@ -26,6 +26,5 @@
 # urllib3~=1.26.3
 pandas==1.4.*
 tensorly==0.7.*
-requests==2.28.*
-gunicorn==20.1.*
-flask-marshmallow==0.14.*
+# requests==2.28.*
+marshmallow
