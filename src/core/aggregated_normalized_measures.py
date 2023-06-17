@@ -1,12 +1,8 @@
-import core.measures_functions as ems_functions
-from util.check import check_threshold, check_metric_value, check_metric_values
-from transformations import interpretation_function, calculate_measure
-from util.exceptions import (
-    ImplicitMetricValueError,
-    InvalidMetricValue,
-    InvalidThresholdValue,
-)
 import numpy as np
+
+import core.measures_functions as ems_functions
+from core.transformations import calculate_measure, interpretation_function
+from util.check import Checker
 
 
 def non_complex_files_density(
@@ -22,41 +18,46 @@ def non_complex_files_density(
     This function gets the dataframe metrics
     and returns the non-complex files density measure.
     """
+    files_complexity = np.array(data_frame["complexity"])
+    files_functions = np.array(data_frame["functions"])
 
-    check_threshold(
+    Checker.check_metric_values(files_complexity, "complexity")
+    Checker.check_metric_values(files_functions, "functions")
+
+    Checker.check_threshold(
         min_complex_files_density,
-        min_complex_files_density,
+        max_complex_files_density,
         "non_complex_files_density",
     )
 
-    files_complexity = data_frame["complexity"]
-    files_functions = data_frame["functions"]
-
-    check_metric_values(files_complexity, "complexity")
-    check_metric_values(files_functions, "functions")
-
-    x, number_of_files = ems_functions.get_non_complex_files_density(
+    (
+        complex_files_density,
+        number_of_files,
+    ) = ems_functions.get_non_complex_files_density(
         data={
             "complexity": files_complexity,
             "functions": files_functions,
         }
     )
 
-    files_in_thresholds_bool_index = x <= max_complex_files_density
+    files_in_thresholds_bool_index = complex_files_density <= max_complex_files_density
     files_functions_gt_zero_bool_index = files_functions > 0
-    x = x[files_in_thresholds_bool_index * files_functions_gt_zero_bool_index]
+    x = complex_files_density[
+        files_in_thresholds_bool_index * files_functions_gt_zero_bool_index
+    ]
 
     interpretation_function_value = interpretation_function(
-        x = x,
-        min_treshold = min_complex_files_density,
-        max_treshold = min_complex_files_density,
-        gain_interpretation = -1,
+        x=x,
+        min_threshold=min_complex_files_density,
+        max_threshold=max_complex_files_density,
+        gain_interpretation=-1,
     )
 
     aggregated_and_normalized_measure = calculate_measure(
         interpretation_function_value, number_of_files
     )
     return aggregated_and_normalized_measure
+
 
 def commented_files_density(
     data_frame, min_comment_density: float = 10, max_comment_density: float = 30
@@ -67,17 +68,40 @@ def commented_files_density(
     This function gets the dataframe metrics
     and returns the commented files density measure.
     """
-    files_comment_lines_density = data_frame["comment_lines_density"]  # m4 metric
+    files_comment_lines_density = data_frame["comment_lines_density"]
 
-    check_metric_values(files_comment_lines_density, "comment_lines_density")
+    Checker.check_metric_values(files_comment_lines_density, "comment_lines_density")
 
-    return ems_functions.calculate_em2(
+    Checker.check_threshold(
+        min_comment_density, max_comment_density, "comment_files_density"
+    )
+
+    (
+        files_comment_lines_density,
+        number_of_files,
+    ) = ems_functions.get_commented_files_density(
         data={
             "comment_lines_density": files_comment_lines_density,
-        },
-        min_comment_density=min_comment_density,
-        max_comment_density=max_comment_density,
+        }
     )
+
+    x = files_comment_lines_density[
+        files_comment_lines_density.between(
+            min_comment_density,
+            max_comment_density,
+            inclusive="both",
+        )
+    ]
+    interpretation_function_value = interpretation_function(
+        x=x,
+        min_threshold=min_comment_density,
+        max_threshold=max_comment_density,
+        gain_interpretation=-1,
+    )
+    aggregated_and_normalized_measure = calculate_measure(
+        interpretation_function_value, number_of_files
+    )
+    return aggregated_and_normalized_measure
 
 
 def absence_of_duplications(
@@ -91,19 +115,41 @@ def absence_of_duplications(
     """
     files_duplicated_lines_density = data_frame["duplicated_lines_density"]  # m5 metric
 
-    check_metric_values(files_duplicated_lines_density, "duplicated_lines_density")
-
-    return ems_functions.calculate_em3(
-        data={"duplicated_lines_density": files_duplicated_lines_density},
-        min_duplicated_lines=min_duplicated_lines,
-        max_duplicated_lines=max_duplicated_lines,
+    Checker.check_metric_values(
+        files_duplicated_lines_density, "duplicated_lines_density"
     )
+
+    Checker.check_threshold(
+        min_duplicated_lines, max_duplicated_lines, "absence_of_duplications"
+    )
+
+    (
+        files_duplicated_lines_density,
+        number_of_files,
+    ) = ems_functions.get_absence_of_duplications(
+        data={"duplicated_lines_density": files_duplicated_lines_density},
+    )
+
+    x = files_duplicated_lines_density[
+        files_duplicated_lines_density <= max_duplicated_lines
+    ]
+
+    interpretation_function_value = interpretation_function(
+        x=x,
+        min_threshold=min_duplicated_lines,
+        max_threshold=max_duplicated_lines,
+        gain_interpretation=-1,
+    )
+    aggregated_and_normalized_measure = calculate_measure(
+        interpretation_function_value, number_of_files
+    )
+    return aggregated_and_normalized_measure
 
 
 def test_coverage(
     data_frame,
     min_coverage: float = 60,
-    max_coverage: float = 90,
+    max_coverage: float = 100,
 ):
     """
     Calculates test coverage (em6).
@@ -113,13 +159,24 @@ def test_coverage(
     """
     coverage = data_frame["coverage"]  # m6 metric
 
-    check_metric_values(coverage, "coverage")
+    Checker.check_metric_values(coverage, "coverage")
 
-    return ems_functions.calculate_em6(
+    Checker.check_threshold(min_coverage, max_coverage, "test_coverage")
+
+    coverage, number_of_files = ems_functions.get_test_coverage(
         data={"coverage": coverage},
-        min_coverage=min_coverage,
-        max_coverage=max_coverage,
     )
+    x = coverage[coverage >= min_coverage]
+    interpretation_function_value = interpretation_function(
+        x=x,
+        min_threshold=min_coverage,
+        max_threshold=max_coverage,
+        gain_interpretation=1,
+    )
+    aggregated_and_normalized_measure = calculate_measure(
+        interpretation_function_value, number_of_files
+    )
+    return aggregated_and_normalized_measure
 
 
 def fast_test_builds(
@@ -133,14 +190,35 @@ def fast_test_builds(
     test_execution_time = data_frame["test_execution_time"]
     tests = data_frame["tests"]
 
-    check_metric_values(test_execution_time, "test_execution_time")
-    check_metric_values(tests, "tests")
+    Checker.check_metric_values(test_execution_time, "test_execution_time")
+    Checker.check_metric_values(tests, "tests")
 
-    return ems_functions.calculate_em5(
+    Checker.check_threshold(min_fast_test_time, max_fast_test_time, "fast_test_builds")
+
+    (
+        execution_time,
+        number_of_files,
+        number_of_tests,
+    ) = ems_functions.get_fast_test_builds(
         data={"test_execution_time": test_execution_time, "tests": tests},
-        min_fast_test_time=min_fast_test_time,
-        max_fast_test_time=max_fast_test_time,
     )
+
+    # Apply threshold
+    execution_between_thresholds = execution_time[execution_time <= max_fast_test_time]
+    x = np.divide(execution_between_thresholds, number_of_tests)
+
+    interpretation_function_value = interpretation_function(
+        x=x / 100,  # ask to teacher
+        min_threshold=min_fast_test_time,
+        max_threshold=max_fast_test_time,
+        gain_interpretation=-1,
+    )
+
+    aggregated_and_normalized_measure = calculate_measure(
+        interpretation_function_value, number_of_files
+    )
+
+    return aggregated_and_normalized_measure
 
 
 def passed_tests(data_frame, min_passed_tests: float = 0, max_passed_tests: float = 1):
@@ -150,20 +228,34 @@ def passed_tests(data_frame, min_passed_tests: float = 0, max_passed_tests: floa
     This function gets the dataframe metrics
     and returns the passed tests measure (em4).
     """
+
     tests = data_frame["tests"]  # m6 metrics
     test_errors = data_frame["test_errors"]  # m7 metrics
     test_failures = data_frame["test_failures"]  # m8 metrics
 
-    check_metric_values(tests, "tests")
-    check_metric_value(test_failures, "test_failures")
-    check_metric_value(test_errors, "test_errors")
+    Checker.check_metric_values(tests, "tests")
+    Checker.check_metric_value(test_failures, "test_failures")
+    Checker.check_metric_value(test_errors, "test_errors")
 
-    return ems_functions.calculate_em4(
+    Checker.check_threshold(min_passed_tests, max_passed_tests, "passed_tests")
+
+    number_of_tests, number_of_fail_tests = ems_functions.get_passed_tests(
         data={
             "tests": tests,
             "test_errors": float(test_errors),
             "test_failures": float(test_failures),
-        },
-        min_passed_tests=min_passed_tests,
-        max_passed_tests=max_passed_tests,
+        }
     )
+
+    x = np.divide((number_of_tests - number_of_fail_tests), number_of_tests)
+
+    interpretation_function_value = interpretation_function(
+        x=x,
+        min_threshold=min_passed_tests,
+        max_threshold=max_passed_tests,
+        gain_interpretation=1,
+    )
+
+    aggregated_and_normalized_measure = calculate_measure(interpretation_function_value)
+
+    return aggregated_and_normalized_measure

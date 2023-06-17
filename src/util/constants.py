@@ -1,6 +1,5 @@
-import core.measures_functions as ems_functions
 from core import schemas
-from core.interpretation_functions import (
+from core.aggregated_normalized_measures import (
     absence_of_duplications,
     commented_files_density,
     fast_test_builds,
@@ -98,47 +97,39 @@ AVAILABLE_PRE_CONFIGS = {
     },
 }
 
-
-MEASURES_INTERPRETATION_MAPPING = {
+AGGREGATED_NORMALIZED_MEASURES_MAPPING = {
     "non_complex_file_density": {
-        "interpretation_function": non_complex_files_density,
-        "calculation_function": ems_functions.calculate_em1,
+        "aggregated_normalized_measure": non_complex_files_density,
         "schema": schemas.NonComplexFileDensitySchema,
         "thresholds": ["min_complex_files_density", "max_complex_files_density"],
     },
     "commented_file_density": {
-        "interpretation_function": commented_files_density,
-        "calculation_function": ems_functions.calculate_em2,
+        "aggregated_normalized_measure": commented_files_density,
         "schema": schemas.CommentedFileDensitySchema,
         "thresholds": ["min_comment_density", "max_comment_density"],
     },
     "duplication_absense": {
-        "interpretation_function": absence_of_duplications,
-        "calculation_function": ems_functions.calculate_em3,
+        "aggregated_normalized_measure": absence_of_duplications,
         "schema": schemas.DuplicationAbsenceSchema,
         "thresholds": ["min_duplicated_lines", "max_duplicated_lines"],
     },
     "passed_tests": {
-        "interpretation_function": passed_tests,
-        "calculation_function": ems_functions.calculate_em4,
+        "aggregated_normalized_measure": passed_tests,
         "schema": schemas.PassedTestsSchema,
         "thresholds": ["min_passed_tests", "max_passed_tests"],
     },
     "test_builds": {
-        "interpretation_function": fast_test_builds,
-        "calculation_function": ems_functions.calculate_em5,
+        "aggregated_normalized_measure": fast_test_builds,
         "schema": schemas.TestBuildsSchema,
         "thresholds": ["min_fast_test_time", "max_fast_test_time"],
     },
     "test_coverage": {
-        "interpretation_function": test_coverage,
-        "calculation_function": ems_functions.calculate_em6,
+        "aggregated_normalized_measure": test_coverage,
         "schema": schemas.TestCoverageSchema,
         "thresholds": ["min_coverage", "max_coverage"],
     },
     "team_throughput": {
-        "interpretation_function": ...,
-        "calculation_function": ems_functions.calculate_em7,
+        "aggregated_normalized_measure": ...,
         "schema": schemas.TeamThroughputSchema,
         "thresholds": [],
     },
