@@ -121,20 +121,20 @@ CALCULATE_CHARACTERISTICS_ERROR_INFOS = [
     )
 ]
 
-EXTRACTED_SQC_DATA = {
-    'sqc': {'key': 'sqc', 'characteristics': [
+EXTRACTED_TSQMI_DATA = {
+    'tsqmi': {'key': 'tsqmi', 'characteristics': [
         {'key': 'reliability', 'value': 0.8508631402592323, 'weight': 50},
         {'key': 'maintainability', 'value': 0.6642882099299446, 'weight': 50}
     ]}
 }
-CALCULATE_SQC_RESPONSE_DATA = {
-    'sqc': [
-        {'key': 'sqc', 'value': 0.76329774967038}
+CALCULATE_TSQMI_RESPONSE_DATA = {
+    'tsqmi': [
+        {'key': 'tsqmi', 'value': 0.76329774967038}
     ]
 }
-CALCULATE_SQC_ERROR_INFOS = [
+CALCULATE_TSQMI_ERROR_INFOS = [
     (
-        {'sqc': None},
+        {'tsqmi': None},
         "Failed to validate request"
     )
 ]

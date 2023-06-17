@@ -5,17 +5,12 @@ from core.schemas import (
     CalculateMeasureSchema,
     CalculateSubCharacteristicSchema,
     CalculateCharacteristicSchema,
-    CalculateSQCSchema,
+    CalculateTSQMISchema,
 )
-from core.agregation import aggregation_operation
-from core.weighting import weighting_operation
+
 from util.constants import MEASURES_INTERPRETATION_MAPPING
-
-
-def calculate_aggregated_value(values_list, weights_list):
-    weighted_items = weighting_operation(values_list, weights_list)
-    return aggregation_operation(weighted_items, weights_list)
-
+from core.transformations import calculate_aggregated_weighted_value
+import numpy as np 
 
 def calculate_measures(
     extracted_measures,
@@ -104,13 +99,17 @@ def calculate_subcharacteristics(extracted_subcharacteristics):
 
     for subcharacteristic in data["subcharacteristics"]:
         subcharacteristic_key: str = subcharacteristic["key"]
-
-        values_list, weights_list = [], []
+        
+        vector_aggregated_normalized_measure = np.array([])
+        vector_weight_aggregated_normalized_measure = np.array([])
+        
         for measure in subcharacteristic["measures"]:
-            values_list.append(measure["value"])
-            weights_list.append(measure["weight"])
+            np.append(vector_aggregated_normalized_measure,measure["value"])
+            np.append(vector_weight_aggregated_normalized_measure,measure["weight"])
 
-        aggregated_value = calculate_aggregated_value(values_list, weights_list)
+        aggregated_value = calculate_aggregated_weighted_value(
+                            vector_aggregated_normalized_measure, 
+                            vector_weight_aggregated_normalized_measure)
 
         response_data["subcharacteristics"].append(
             {
@@ -137,12 +136,13 @@ def calculate_characteristics(extracted_characteristics):
     for characteristic in data["characteristics"]:
         characteristic_key: str = characteristic["key"]
 
-        values_list, weights_list = [], []
-        for measure in characteristic["subcharacteristics"]:
-            values_list.append(measure["value"])
-            weights_list.append(measure["weight"])
+        vector_aggregated_normalized_subcharacteristics = np.array([])
+        vector_weight_aggregated_normalized_subcharacteristics = np.array([])
+        for subcharacteristics in characteristic["subcharacteristics"]:
+            np.append(vector_aggregated_normalized_subcharacteristics,subcharacteristics["value"])
+            np.append(vector_weight_aggregated_normalized_subcharacteristics,subcharacteristics["weight"])
 
-        aggregated_value = calculate_aggregated_value(values_list, weights_list)
+        aggregated_value = calculate_aggregated_weighted_value(vector_aggregated_normalized_subcharacteristics, vector_weight_aggregated_normalized_subcharacteristics)
 
         response_data["characteristics"].append(
             {
@@ -154,9 +154,9 @@ def calculate_characteristics(extracted_characteristics):
     return response_data
 
 
-def calculate_sqc(extracted_sqc):
+def calculate_tsqmi(extracted_tsqmi):
     try:
-        data = CalculateSQCSchema().load(extracted_sqc)
+        data = CalculateTSQMISchema().load(extracted_tsqmi)
     except ValidationError as error:
         return {
             "error": "Failed to validate request",
@@ -164,21 +164,24 @@ def calculate_sqc(extracted_sqc):
             "code": requests.codes.unprocessable_entity,
         }
 
-    response_data = {"sqc": []}
+    response_data = {"tsqmi": []}
 
-    sqc = data["sqc"]
-    sqc_key: str = sqc["key"]
+    tsqmi = data["tsqmi"]
+    tsqmi_key: str = tsqmi["key"]
 
-    values_list, weights_list = [], []
-    for characteristic in sqc["characteristics"]:
-        values_list.append(characteristic["value"])
-        weights_list.append(characteristic["weight"])
 
-    aggregated_value = calculate_aggregated_value(values_list, weights_list)
+    vector_aggregated_normalized_characteristics = np.array([])
+    vector_weight_aggregated_normalized_characteristics = np.array([])
+    for characteristic in tsqmi["characteristics"]:
+        np.append(vector_aggregated_normalized_characteristics, characteristic["value"])
+        np.append(vector_weight_aggregated_normalized_characteristics, characteristic["weight"])
+        
+    aggregated_value = calculate_aggregated_weighted_value(vector_aggregated_normalized_characteristics,
+                                                           vector_weight_aggregated_normalized_characteristics)
 
-    response_data["sqc"].append(
+    response_data["tsqmi"].append(
         {
-            "key": sqc_key,
+            "key": tsqmi_key,
             "value": aggregated_value,
         }
     )

@@ -8,8 +8,6 @@ from util.exceptions import (
     InvalidMetricValue,
     InvalidThresholdValue,
 )
-from util.get_functions import create_coordinate_pair, interpretation_function
-
 
 def interpolate_series(series, x, y):
     """
@@ -31,7 +29,11 @@ def resolve_metric_list_parameter(metric):
     return pd.Series(metric, dtype=np.float64) if isinstance(metric, list) else metric
 
 
-def get_non_complex_files_density(data: Dict):
+def get_non_complex_files_density(
+    data: Dict,
+    min_complex_files_density: float = 0,
+    max_complex_files_density: float = 10,
+):
     """
     Calculates non-complex files density (em1).
 
@@ -39,13 +41,10 @@ def get_non_complex_files_density(data: Dict):
     used to assess the changeability quality sub characteristic.
     """
 
-    files_complexity = resolve_metric_list_parameter(data["complexity"])
-    files_functions = resolve_metric_list_parameter(data["functions"])
+    files_complexity = resolve_metric_list_parameter(data.get("complexity"))
+    files_functions = resolve_metric_list_parameter(data.get("functions"))
 
-    if "number_of_files" in data:
-        number_of_files = data["number_of_files"]
-
-    elif len(files_complexity) != len(files_functions):
+    if len(files_complexity) != len(files_functions):
         raise ImplicitMetricValueError(
             (
                 "Unable to get the implicit value of metric `number_of_file` "
@@ -54,7 +53,7 @@ def get_non_complex_files_density(data: Dict):
             )
         )
     else:
-        number_of_files = len(files_complexity)
+        number_of_files =  data.get("number_of_files",len(files_complexity))
 
     has_none = files_complexity is None or files_functions is None
     has_zero = len(files_complexity) == 0 or len(files_functions) == 0
@@ -73,10 +72,9 @@ def get_non_complex_files_density(data: Dict):
         )
 
     files_in_thresholds_df = files_complexity / files_functions
-
+    
     x = np.array(files_in_thresholds_df)
     return x, number_of_files
-
 
 def calculate_em2(
     data: Dict,
