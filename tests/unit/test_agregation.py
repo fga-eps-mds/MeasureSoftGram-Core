@@ -1,6 +1,6 @@
 import pytest
 
-from src.core.transformations import calculate_aggregated_weighted_value
+from core.transformations import calculate_aggregated_weighted_value
 from tests.utils.aggregation_data import VALUES_1, VALUES_2, WEIGHTS_1, WEIGHTS_2
 
 
