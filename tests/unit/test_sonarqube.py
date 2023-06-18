@@ -1,6 +1,6 @@
 import json
 
-from src.parsers.sonarqube import Sonarqube
+from parsers.sonarqube import Sonarqube
 
 
 def test_extract_sonarqube_available_metrics():

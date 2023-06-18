@@ -320,7 +320,7 @@ CALCULATE_MEASURES_RESPONSE_DATA = {
     "measures": [
         {"key": "passed_tests", "value": 1.0},
         {"key": "test_builds", "value": 0.9999959333997583},
-        {"key": "test_coverage", "value": 0.4515625},
+        {"key": "test_coverage", "value": 0.414921875},
         {"key": "non_complex_file_density", "value": 0.43738095238095254},
         {"key": "commented_file_density", "value": 0.04453125},
         {"key": "duplication_absense", "value": 1.0},
@@ -329,7 +329,10 @@ CALCULATE_MEASURES_RESPONSE_DATA = {
 
 
 CALCULATE_MEASURES_ERROR_INFOS = [
-    ({"measures": None}, "Failed to validate request"),
+    (
+        {"measures": None},
+        "error: Failed to validate input.\nschema_errors: {'measures': ['Field may not be null.']}",
+    ),
     (
         {"measures": [{"key": "inexistent", "parameters": {"inexistent_v2": [1]}}]},
         "Measure inexistent is not supported",
@@ -343,7 +346,7 @@ CALCULATE_MEASURES_ERROR_INFOS = [
                 }
             ]
         },
-        "Metric parameters duplication_absense are not valid",
+        "error: Metric parameters duplication_absense are not valid.\nschema_errors: {'duplicated_lines_density': {0: ['Field may not be null.']}}",  # noqa E501
     ),
 ]
 
@@ -378,7 +381,10 @@ CALCULATE_SUBCHARACTERISTICS_RESPONSE_DATA = {
     ]
 }
 CALCULATE_SUBCHARACTERISTICS_ERROR_INFOS = [
-    ({"subcharacteristics": None}, "Failed to validate request")
+    (
+        {"subcharacteristics": None},
+        "error: Failed to validate input.\nschema_errors: {'subcharacteristics': ['Field may not be null.']}",
+    ),
 ]
 
 EXTRACTED_CHARACTERISTICS_DATA = {
@@ -404,7 +410,10 @@ CALCULATE_CHARACTERISTICS_RESPONSE_DATA = {
     ]
 }
 CALCULATE_CHARACTERISTICS_ERROR_INFOS = [
-    ({"characteristics": None}, "Failed to validate request")
+    (
+        {"characteristics": None},
+        "error: Failed to validate input.\nschema_errors: {'characteristics': ['Field may not be null.']}",
+    )
 ]
 
 EXTRACTED_TSQMI_DATA = {
@@ -417,4 +426,9 @@ EXTRACTED_TSQMI_DATA = {
     }
 }
 CALCULATE_TSQMI_RESPONSE_DATA = {"tsqmi": [{"key": "tsqmi", "value": 0.76329774967038}]}
-CALCULATE_TSQMI_ERROR_INFOS = [({"tsqmi": None}, "Failed to validate request")]
+CALCULATE_TSQMI_ERROR_INFOS = [
+    (
+        {"tsqmi": None},
+        "error: Failed to validate input.\nschema_errors: {'tsqmi': ['Field may not be null.']}",
+    )
+]
