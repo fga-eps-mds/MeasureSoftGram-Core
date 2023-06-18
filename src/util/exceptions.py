@@ -47,3 +47,9 @@ class InvalidCheckThreshold(MeasureSoftGramCoreException):
     """Raised when a invalid check threshold function is called"""
 
     pass
+
+
+class MeasureKeyNotSupported(MeasureSoftGramCoreException):
+    """Raised when a measure key is not supported"""
+
+    pass

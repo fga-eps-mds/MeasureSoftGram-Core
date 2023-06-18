@@ -4,16 +4,6 @@ import pandas as pd
 from util.exceptions import ImplicitMetricValueError, InvalidMetricValue
 
 
-def interpolate_series(series, x, y):
-    """
-    Interpolates a series using the given x and y values.
-
-    This function interpolates a series using the given x and y values.
-    """
-
-    return [np.interp(item / 100, x, y) for item in series]
-
-
 def resolve_metric_list_parameter(metric):
     """
     Resolves the metric list parameter to calculate a measure
@@ -192,25 +182,26 @@ def get_test_coverage(data: dict):
 
     return coverage, number_of_files
 
-def calculate_em7(data: dict):
-    """
-    Calculates team throughput (em7).
 
-    This function calculates the team throughput measure (em7)
-    used to assess the functional completeness subcharacteristic.
-    """
-    resolved_issues_with_us_label = data[
-        "number_of_resolved_issues_with_US_label_in_the_last_x_days"
-    ]
+# def calculate_em7(data: dict):
+#     """
+#     Calculates team throughput (em7).
 
-    total_issues_with_us_label = data[
-        "total_number_of_issues_with_US_label_in_the_last_x_days"
-    ]
+#     This function calculates the team throughput measure (em7)
+#     used to assess the functional completeness subcharacteristic.
+#     """
+#     resolved_issues_with_us_label = data[
+#         "number_of_resolved_issues_with_US_label_in_the_last_x_days"
+#     ]
 
-    # x, y = create_coordinate_pair(0, 1, reverse_y=True)
+#     total_issues_with_us_label = data[
+#         "total_number_of_issues_with_US_label_in_the_last_x_days"
+#     ]
 
-    if7 = np.divide(resolved_issues_with_us_label, total_issues_with_us_label)
+#     x, y = create_coordinate_pair(0, 1, reverse_y=True)
 
-    if np.isnan(if7) or np.isinf(if7):
-        return 0
-    return np.interp(if7, x, y)
+#     if7 = np.divide(resolved_issues_with_us_label, total_issues_with_us_label)
+
+#     if np.isnan(if7) or np.isinf(if7):
+#         return 0
+#     return np.interp(if7, x, y)
