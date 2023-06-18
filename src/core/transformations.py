@@ -42,21 +42,13 @@ def interpolation(x: np.array, min: float, max: float) -> np.array:
 
 def calculate_measure(interpretated_measure: np.array, number_of_files=None) -> float:
     if number_of_files:
-        print(f"input {interpretated_measure}")
-        print(f"soma {np.sum(interpretated_measure)}")
-        print(f"number of files {number_of_files}")
-        print(f"division {np.divide(np.sum(interpretated_measure), number_of_files)}")
         aggregated_and_normalized_measure = np.divide(
             np.sum(interpretated_measure), number_of_files
         )
-        print(
-            np.isnan(interpretated_measure).all(), np.isinf(interpretated_measure).all()
-        )
-        if (
-            np.isnan(interpretated_measure).all()
-            or np.isinf(interpretated_measure).all()
+        if np.isnan(aggregated_and_normalized_measure) or np.isinf(
+            aggregated_and_normalized_measure
         ):
-            return 0
+            return 0.0
     else:
         aggregated_and_normalized_measure = interpretated_measure
     return aggregated_and_normalized_measure
