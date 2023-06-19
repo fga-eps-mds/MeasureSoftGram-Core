@@ -67,8 +67,8 @@ def calculate_aggregated_weighted_value(values, weights):
     return aggregated_weighted_value
 
 
-def normDiff(rp, rd):
-    """The normDiff function performs a vector transformation between the planned release vector and the redeveloped
+def norm_diff(rp, rd):
+    """The norm_diff function performs a vector transformation between the planned release vector and the redeveloped
     release vector. This transformation represents the quantitative perception of the difference between the
     planned quality requirement for a release, and the observed result, after its development.
     """
