@@ -42,7 +42,9 @@ def non_complex_files_density(
 
     files_in_thresholds_bool_index = complex_files_density <= max_complex_files_density
     files_functions_gt_zero_bool_index = files_functions > 0
-    x = complex_files_density[files_in_thresholds_bool_index * files_functions_gt_zero_bool_index]
+    x = complex_files_density[
+        files_in_thresholds_bool_index * files_functions_gt_zero_bool_index
+    ]
 
     interpretation_function_value = interpretation_function(
         x=x,
@@ -51,11 +53,15 @@ def non_complex_files_density(
         gain_interpretation=-1,
     )
 
-    aggregated_and_normalized_measure = calculate_measure(interpretation_function_value, number_of_files)
+    aggregated_and_normalized_measure = calculate_measure(
+        interpretation_function_value, number_of_files
+    )
     return aggregated_and_normalized_measure
 
 
-def commented_files_density(data_frame, min_comment_density: float = 10, max_comment_density: float = 30):
+def commented_files_density(
+    data_frame, min_comment_density: float = 10, max_comment_density: float = 30
+):
     """
     Calculates commented files density.
 
@@ -66,7 +72,9 @@ def commented_files_density(data_frame, min_comment_density: float = 10, max_com
 
     Checker.check_metric_values(files_comment_lines_density, "comment_lines_density")
 
-    Checker.check_threshold(min_comment_density, max_comment_density, "comment_files_density")
+    Checker.check_threshold(
+        min_comment_density, max_comment_density, "comment_files_density"
+    )
 
     (
         files_comment_lines_density,
@@ -90,11 +98,15 @@ def commented_files_density(data_frame, min_comment_density: float = 10, max_com
         max_threshold=max_comment_density,
         gain_interpretation=-1,
     )
-    aggregated_and_normalized_measure = calculate_measure(interpretation_function_value, number_of_files)
+    aggregated_and_normalized_measure = calculate_measure(
+        interpretation_function_value, number_of_files
+    )
     return aggregated_and_normalized_measure
 
 
-def absence_of_duplications(data_frame, min_duplicated_lines: float = 0, max_duplicated_lines: float = 5.0):
+def absence_of_duplications(
+    data_frame, min_duplicated_lines: float = 0, max_duplicated_lines: float = 5.0
+):
     """
     Calculates duplicated files absence (em3).
 
@@ -103,9 +115,13 @@ def absence_of_duplications(data_frame, min_duplicated_lines: float = 0, max_dup
     """
     files_duplicated_lines_density = data_frame["duplicated_lines_density"]  # m5 metric
 
-    Checker.check_metric_values(files_duplicated_lines_density, "duplicated_lines_density")
+    Checker.check_metric_values(
+        files_duplicated_lines_density, "duplicated_lines_density"
+    )
 
-    Checker.check_threshold(min_duplicated_lines, max_duplicated_lines, "absence_of_duplications")
+    Checker.check_threshold(
+        min_duplicated_lines, max_duplicated_lines, "absence_of_duplications"
+    )
 
     (
         files_duplicated_lines_density,
@@ -114,7 +130,9 @@ def absence_of_duplications(data_frame, min_duplicated_lines: float = 0, max_dup
         data={"duplicated_lines_density": files_duplicated_lines_density},
     )
 
-    x = files_duplicated_lines_density[files_duplicated_lines_density <= max_duplicated_lines]
+    x = files_duplicated_lines_density[
+        files_duplicated_lines_density <= max_duplicated_lines
+    ]
 
     interpretation_function_value = interpretation_function(
         x=x,
@@ -122,7 +140,9 @@ def absence_of_duplications(data_frame, min_duplicated_lines: float = 0, max_dup
         max_threshold=max_duplicated_lines,
         gain_interpretation=-1,
     )
-    aggregated_and_normalized_measure = calculate_measure(interpretation_function_value, number_of_files)
+    aggregated_and_normalized_measure = calculate_measure(
+        interpretation_function_value, number_of_files
+    )
     return aggregated_and_normalized_measure
 
 
@@ -153,11 +173,15 @@ def test_coverage(
         max_threshold=max_coverage,
         gain_interpretation=1,
     )
-    aggregated_and_normalized_measure = calculate_measure(interpretation_function_value, number_of_files)
+    aggregated_and_normalized_measure = calculate_measure(
+        interpretation_function_value, number_of_files
+    )
     return aggregated_and_normalized_measure
 
 
-def fast_test_builds(data_frame, min_fast_test_time: float = 0, max_fast_test_time: float = 300000):
+def fast_test_builds(
+    data_frame, min_fast_test_time: float = 0, max_fast_test_time: float = 300000
+):
     """
     Calculates fast test builds (em5)
     This function gets the dataframe metrics
@@ -190,7 +214,9 @@ def fast_test_builds(data_frame, min_fast_test_time: float = 0, max_fast_test_ti
         gain_interpretation=-1,
     )
 
-    aggregated_and_normalized_measure = calculate_measure(interpretation_function_value, number_of_files)
+    aggregated_and_normalized_measure = calculate_measure(
+        interpretation_function_value, number_of_files
+    )
 
     return aggregated_and_normalized_measure
 
