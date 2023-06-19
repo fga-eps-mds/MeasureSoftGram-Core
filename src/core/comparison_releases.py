@@ -2,9 +2,10 @@ import numpy as np
 
 from util.exceptions import ReleasePlannedAndDevelopedOfDifferentSizes
 
-"""The normDiff function performs a vector transformation between the planned release vector and the redeveloped release
-   vector. This transformation represents the quantitative perception of the difference between the planned quality
-   requirement for a release, and the observed result, after its development."""
+"""The normDiff function performs a vector transformation between the planned release vector and the redeveloped
+release vector. This transformation represents the quantitative perception of the difference between the
+planned quality requirement for a release, and the observed result, after its development."""
+
 
 def normDiff(rp, rd):
     if len(rp) != len(rd):
@@ -15,8 +16,9 @@ def normDiff(rp, rd):
 
 
 """The diff function interprets a vector transformation between the planned and developed release vectors.
-    It generates a vector that expresses whether the result observed in a release is above or below the planned quality
-    requirement."""
+It generates a vector that expresses whether the result observed in a release is above or below the planned quality
+requirement."""
+
 
 def diff(rp, rd):
     if len(rp) != len(rd):

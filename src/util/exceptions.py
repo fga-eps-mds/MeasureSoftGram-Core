@@ -36,6 +36,7 @@ class InvalidThresholdValue(MeasureSoftGramCoreException):
 
     pass
 
+
 class ReleasePlannedAndDevelopedOfDifferentSizes(MeasureSoftGramCoreException):
     """Raised when the sizes of the planned and developed release vectors are different"""
 
