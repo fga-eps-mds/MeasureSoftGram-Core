@@ -35,3 +35,9 @@ class InvalidThresholdValue(MeasureSoftGramCoreException):
     """Raised when a invalid threshold value is provided to the interpretation function"""
 
     pass
+
+
+class ReleasePlannedAndDevelopedOfDifferentSizes(MeasureSoftGramCoreException):
+    """Raised when the sizes of the planned and developed release vectors are different"""
+
+    pass
