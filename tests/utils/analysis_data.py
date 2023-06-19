@@ -319,7 +319,7 @@ EXTRACTED_MEASURES_DATA = {
 CALCULATE_MEASURES_RESPONSE_DATA = {
     "measures": [
         {"key": "passed_tests", "value": 1.0},
-        {"key": "test_builds", "value": 0.9999959333997583},
+        {"key": "test_builds", "value": 0.9995933399758454},
         {"key": "test_coverage", "value": 0.414921875},
         {"key": "non_complex_file_density", "value": 0.43738095238095254},
         {"key": "commented_file_density", "value": 0.04453125},
@@ -356,7 +356,7 @@ EXTRACTED_SUBCHARACTERISTICS_DATA = {
             "key": "testing_status",
             "measures": [
                 {"key": "passed_tests", "value": 1.0, "weight": 33},
-                {"key": "test_builds", "value": 0.9999959333997583, "weight": 33},
+                {"key": "test_builds", "value": 0.9995933399758454, "weight": 33},
                 {"key": "test_coverage", "value": 0.4515625, "weight": 34},
             ],
         },
@@ -376,7 +376,7 @@ EXTRACTED_SUBCHARACTERISTICS_DATA = {
 }
 CALCULATE_SUBCHARACTERISTICS_RESPONSE_DATA = {
     "subcharacteristics": [
-        {"key": "testing_status", "value": 0.8508631402592323},
+        {"key": "testing_status", "value": 0.8507086078793112},
         {"key": "modifiability", "value": 0.6642882099299446},
     ]
 }
@@ -392,7 +392,7 @@ EXTRACTED_CHARACTERISTICS_DATA = {
         {
             "key": "reliability",
             "subcharacteristics": [
-                {"key": "testing_status", "value": 0.8508631402592323, "weight": 100}
+                {"key": "testing_status", "value": 0.8507086078793112, "weight": 100}
             ],
         },
         {
@@ -405,7 +405,7 @@ EXTRACTED_CHARACTERISTICS_DATA = {
 }
 CALCULATE_CHARACTERISTICS_RESPONSE_DATA = {
     "characteristics": [
-        {"key": "reliability", "value": 0.8508631402592323},
+        {"key": "reliability", "value": 0.8507086078793112},
         {"key": "maintainability", "value": 0.6642882099299446},
     ]
 }
@@ -420,12 +420,14 @@ EXTRACTED_TSQMI_DATA = {
     "tsqmi": {
         "key": "tsqmi",
         "characteristics": [
-            {"key": "reliability", "value": 0.8508631402592323, "weight": 50},
+            {"key": "reliability", "value": 0.8507086078793112, "weight": 50},
             {"key": "maintainability", "value": 0.6642882099299446, "weight": 50},
         ],
     }
 }
-CALCULATE_TSQMI_RESPONSE_DATA = {"tsqmi": [{"key": "tsqmi", "value": 0.76329774967038}]}
+CALCULATE_TSQMI_RESPONSE_DATA = {
+    "tsqmi": [{"key": "tsqmi", "value": 0.7632116224782893}]
+}
 CALCULATE_TSQMI_ERROR_INFOS = [
     (
         {"tsqmi": None},

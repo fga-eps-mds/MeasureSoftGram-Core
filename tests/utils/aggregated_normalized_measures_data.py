@@ -370,7 +370,7 @@ SUCCESS_TEST_DATA = [
                 2.0,
             ],
         },
-        0.9999959333997583,
+        0.9995933399758454,
     ),
     (
         interpret_test_coverage,

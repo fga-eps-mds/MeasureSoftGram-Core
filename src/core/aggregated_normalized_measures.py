@@ -208,7 +208,7 @@ def fast_test_builds(
     x = np.divide(execution_between_thresholds, number_of_tests)
 
     interpretation_function_value = interpretation_function(
-        x=x / 100,
+        x=x,
         min_threshold=min_fast_test_time,
         max_threshold=max_fast_test_time,
         gain_interpretation=-1,
