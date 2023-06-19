@@ -1,7 +1,7 @@
 import numpy as np
 
 import core.measures_functions as ems_functions
-from core.transformations import calculate_measure, interpretation_function
+import core.transformations as transformations
 from util.check import Checker
 
 
@@ -46,14 +46,14 @@ def non_complex_files_density(
         files_in_thresholds_bool_index * files_functions_gt_zero_bool_index
     ]
 
-    interpretation_function_value = interpretation_function(
+    interpretation_function_value = transformations.interpretation_function(
         x=x,
         min_threshold=min_complex_files_density,
         max_threshold=max_complex_files_density,
         gain_interpretation=-1,
     )
 
-    aggregated_and_normalized_measure = calculate_measure(
+    aggregated_and_normalized_measure = transformations.calculate_measure(
         interpretation_function_value, number_of_files
     )
     return aggregated_and_normalized_measure
@@ -92,13 +92,13 @@ def commented_files_density(
             inclusive="both",
         )
     ]
-    interpretation_function_value = interpretation_function(
+    interpretation_function_value = transformations.interpretation_function(
         x=x,
         min_threshold=min_comment_density,
         max_threshold=max_comment_density,
         gain_interpretation=-1,
     )
-    aggregated_and_normalized_measure = calculate_measure(
+    aggregated_and_normalized_measure = transformations.calculate_measure(
         interpretation_function_value, number_of_files
     )
     return aggregated_and_normalized_measure
@@ -134,13 +134,13 @@ def absence_of_duplications(
         files_duplicated_lines_density <= max_duplicated_lines
     ]
 
-    interpretation_function_value = interpretation_function(
+    interpretation_function_value = transformations.interpretation_function(
         x=x,
         min_threshold=min_duplicated_lines,
         max_threshold=max_duplicated_lines,
         gain_interpretation=-1,
     )
-    aggregated_and_normalized_measure = calculate_measure(
+    aggregated_and_normalized_measure = transformations.calculate_measure(
         interpretation_function_value, number_of_files
     )
     return aggregated_and_normalized_measure
@@ -167,13 +167,13 @@ def test_coverage(
         data={"coverage": coverage},
     )
     x = coverage[coverage >= min_coverage]
-    interpretation_function_value = interpretation_function(
+    interpretation_function_value = transformations.interpretation_function(
         x=x,
         min_threshold=min_coverage,
         max_threshold=max_coverage,
         gain_interpretation=1,
     )
-    aggregated_and_normalized_measure = calculate_measure(
+    aggregated_and_normalized_measure = transformations.calculate_measure(
         interpretation_function_value, number_of_files
     )
     return aggregated_and_normalized_measure
@@ -207,14 +207,14 @@ def fast_test_builds(
     execution_between_thresholds = execution_time[execution_time <= max_fast_test_time]
     x = np.divide(execution_between_thresholds, number_of_tests)
 
-    interpretation_function_value = interpretation_function(
+    interpretation_function_value = transformations.interpretation_function(
         x=x,
         min_threshold=min_fast_test_time,
         max_threshold=max_fast_test_time,
         gain_interpretation=-1,
     )
 
-    aggregated_and_normalized_measure = calculate_measure(
+    aggregated_and_normalized_measure = transformations.calculate_measure(
         interpretation_function_value, number_of_files
     )
 
@@ -249,13 +249,15 @@ def passed_tests(data_frame, min_passed_tests: float = 0, max_passed_tests: floa
 
     x = np.divide((number_of_tests - number_of_fail_tests), number_of_tests)
 
-    interpretation_function_value = interpretation_function(
+    interpretation_function_value = transformations.interpretation_function(
         x=x,
         min_threshold=min_passed_tests,
         max_threshold=max_passed_tests,
         gain_interpretation=1,
     )
 
-    aggregated_and_normalized_measure = calculate_measure(interpretation_function_value)
+    aggregated_and_normalized_measure = transformations.calculate_measure(
+        interpretation_function_value
+    )
 
     return aggregated_and_normalized_measure
