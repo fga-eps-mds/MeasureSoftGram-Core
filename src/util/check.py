@@ -79,10 +79,10 @@ class Checker:
     @staticmethod
     def check_passed_tests_threshold(min_passed_tests: float, max_passed_tests: float):
         if min_passed_tests != 0:
-            raise InvalidThresholdValue(("min_passed_tests is not equal to 0"))
+            raise InvalidThresholdValue("min_passed_tests is not equal to 0")
 
         if max_passed_tests != 1:
-            raise InvalidThresholdValue(("max_passed_tests is not equal to 1"))
+            raise InvalidThresholdValue("max_passed_tests is not equal to 1")
 
     @staticmethod
     def check_threshold(min: float, max: float, measure: str):
