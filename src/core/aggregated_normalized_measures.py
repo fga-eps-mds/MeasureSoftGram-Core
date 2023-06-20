@@ -24,6 +24,9 @@ def non_complex_files_density(
     Checker.check_metric_values(files_complexity, "complexity")
     Checker.check_metric_values(files_functions, "functions")
 
+    if len(files_complexity) == len(files_functions) == 0:
+        return 0.0
+
     Checker.check_threshold(
         min_complex_files_density,
         max_complex_files_density,
@@ -72,6 +75,9 @@ def commented_files_density(
 
     Checker.check_metric_values(files_comment_lines_density, "comment_lines_density")
 
+    if len(files_comment_lines_density) == 0:
+        return 0.0
+
     Checker.check_threshold(
         min_comment_density, max_comment_density, "comment_files_density"
     )
@@ -119,6 +125,9 @@ def absence_of_duplications(
         files_duplicated_lines_density, "duplicated_lines_density"
     )
 
+    if len(files_duplicated_lines_density) == 0:
+        return 0.0
+
     Checker.check_threshold(
         min_duplicated_lines, max_duplicated_lines, "absence_of_duplications"
     )
@@ -161,6 +170,9 @@ def test_coverage(
 
     Checker.check_metric_values(coverage, "coverage")
 
+    if len(coverage) == 0:
+        return 0.0
+
     Checker.check_threshold(min_coverage, max_coverage, "test_coverage")
 
     coverage, number_of_files = ems_functions.get_test_coverage(
@@ -193,6 +205,9 @@ def fast_test_builds(
     Checker.check_metric_values(test_execution_time, "test_execution_time")
     Checker.check_metric_values(tests, "tests")
 
+    if len(test_execution_time) == len(tests) == 0:
+        return 0.0
+
     Checker.check_threshold(min_fast_test_time, max_fast_test_time, "fast_test_builds")
 
     (
@@ -203,7 +218,6 @@ def fast_test_builds(
         data={"test_execution_time": test_execution_time, "tests": tests},
     )
 
-    # Apply threshold
     execution_between_thresholds = execution_time[execution_time <= max_fast_test_time]
     x = np.divide(execution_between_thresholds, number_of_tests)
 
@@ -234,6 +248,8 @@ def passed_tests(data_frame, min_passed_tests: float = 0, max_passed_tests: floa
     test_failures = data_frame["test_failures"]  # m8 metrics
 
     Checker.check_metric_values(tests, "tests")
+    if len(tests) == 0:
+        return 0.0
     Checker.check_metric_value(test_failures, "test_failures")
     Checker.check_metric_value(test_errors, "test_errors")
 

@@ -73,7 +73,7 @@ class Checker:
 
         if min_fast_test_time >= max_fast_test_time:
             raise InvalidThresholdValue(
-                ("min_fast_test_time is greater or equal to" " max_fast_test_time")
+                "min_fast_test_time is greater or equal to max_fast_test_time"
             )
 
     @staticmethod
@@ -104,8 +104,8 @@ class Checker:
         if not isinstance(metric_values, (list, np.ndarray)):
             raise InvalidMetricValue(f'"{metric}" is not a list or a np.ndarray')
 
-        if not len(metric_values):
-            raise InvalidMetricValue(f'"{metric}" is empty')
+        # if not len(metric_values):
+        #     raise InvalidMetricValue(f'"{metric}" is empty')
 
         for value in metric_values:
             Checker.check_metric_value(value, metric)

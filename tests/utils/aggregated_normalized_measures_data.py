@@ -12,7 +12,7 @@ from src.core.aggregated_normalized_measures import (
 INVALID_METRICS_TEST_DATA = [
     (
         non_complex_files_density,
-        {"complexity": [14], "functions": [None]},
+        {"complexity": [14], "functions": [None, None]},
         '"functions" has an invalid metric value',
     ),
     (
@@ -84,11 +84,6 @@ INVALID_METRICS_TEST_DATA = [
         passed_tests,
         {"tests": [0.45], "test_errors": 0.0, "test_failures": "nan"},
         '"test_failures" has an invalid metric value',
-    ),
-    (
-        passed_tests,
-        {"tests": [], "test_errors": 0.0, "test_failures": None},
-        '"tests" is empty',
     ),
 ]
 
@@ -198,6 +193,14 @@ SUCCESS_TEST_DATA = [
         0.43738095238095254,
     ),
     (
+        non_complex_files_density,
+        {
+            "functions": [],
+            "complexity": [],
+        },
+        0.0,
+    ),
+    (
         commented_files_density,
         {
             "comment_lines_density": [
@@ -236,6 +239,11 @@ SUCCESS_TEST_DATA = [
             ]
         },
         0.04453125,
+    ),
+    (
+        commented_files_density,
+        {"comment_lines_density": []},
+        0.0,
     ),
     (
         absence_of_duplications,
@@ -293,6 +301,11 @@ SUCCESS_TEST_DATA = [
         1.0,
     ),
     (
+        absence_of_duplications,
+        {"duplicated_lines_density": []},
+        0.0,
+    ),
+    (
         passed_tests,
         {
             "test_failures": 0.0,
@@ -321,6 +334,15 @@ SUCCESS_TEST_DATA = [
             ],
         },
         1.0,
+    ),
+    (
+        passed_tests,
+        {
+            "test_failures": 0.0,
+            "test_errors": 0.0,
+            "tests": [],
+        },
+        0.0,
     ),
     (
         fast_test_builds,
@@ -373,6 +395,14 @@ SUCCESS_TEST_DATA = [
         0.9995933399758454,
     ),
     (
+        fast_test_builds,
+        {
+            "test_execution_time": [],
+            "tests": [],
+        },
+        0.0,
+    ),
+    (
         interpret_test_coverage,
         {
             "coverage": [
@@ -411,6 +441,11 @@ SUCCESS_TEST_DATA = [
             ]
         },
         0.414921875,
+    ),
+    (
+        interpret_test_coverage,
+        {"coverage": []},
+        0.0,
     ),
 ]
 

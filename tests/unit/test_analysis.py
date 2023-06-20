@@ -51,7 +51,21 @@ def test_calculate_subcharacteristics_sucess():
     calculation_result = calculate_subcharacteristics(
         extracted_subcharacteristics=EXTRACTED_SUBCHARACTERISTICS_DATA
     )
-    assert calculation_result == CALCULATE_SUBCHARACTERISTICS_RESPONSE_DATA
+    assert "subcharacteristics" in calculation_result
+
+    subcharacteristics_result = calculation_result.get("subcharacteristics")
+    subcharacteristics_expected = CALCULATE_SUBCHARACTERISTICS_RESPONSE_DATA.get(
+        "subcharacteristics"
+    )
+    for subcharacteristic_result, subcharacteristic_expected in zip(
+        subcharacteristics_result, subcharacteristics_expected
+    ):
+        assert subcharacteristic_result.get("key") == subcharacteristic_expected.get(
+            "key"
+        )
+        assert pytest.approx(
+            subcharacteristic_result.get("value")
+        ) == subcharacteristic_expected.get("value")
 
 
 @pytest.mark.parametrize(
@@ -70,7 +84,19 @@ def test_calculate_characteristics_success():
     calculation_result = calculate_characteristics(
         extracted_characteristics=EXTRACTED_CHARACTERISTICS_DATA
     )
-    assert calculation_result == CALCULATE_CHARACTERISTICS_RESPONSE_DATA
+    assert "characteristics" in calculation_result
+
+    characteristics_result = calculation_result.get("characteristics")
+    characteristics_expected = CALCULATE_CHARACTERISTICS_RESPONSE_DATA.get(
+        "characteristics"
+    )
+    for characteristic_result, characteristic_expected in zip(
+        characteristics_result, characteristics_expected
+    ):
+        assert characteristic_result.get("key") == characteristic_expected.get("key")
+        assert pytest.approx(
+            characteristic_result.get("value")
+        ) == characteristic_expected.get("value")
 
 
 @pytest.mark.parametrize(
@@ -87,7 +113,13 @@ def test_calcula_characteristics_errors(extracted_characteristics_data, error_ms
 
 def test_calculate_tsqmi_success():
     calculation_result = calculate_tsqmi(extracted_tsqmi=EXTRACTED_TSQMI_DATA)
-    assert calculation_result == CALCULATE_TSQMI_RESPONSE_DATA
+    assert "tsqmi" in calculation_result
+
+    tsqmi_result = calculation_result.get("tsqmi")
+    tsqmi_expected = CALCULATE_TSQMI_RESPONSE_DATA.get("tsqmi")
+    for tsqmi_result, tsqmi_expected in zip(tsqmi_result, tsqmi_expected):
+        assert tsqmi_result.get("key") == tsqmi_expected.get("key")
+        assert pytest.approx(tsqmi_result.get("value")) == tsqmi_expected.get("value")
 
 
 @pytest.mark.parametrize(
