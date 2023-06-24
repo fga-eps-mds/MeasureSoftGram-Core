@@ -37,6 +37,24 @@ class InvalidThresholdValue(MeasureSoftGramCoreException):
     pass
 
 
+class InvalidGainInterpretationValue(MeasureSoftGramCoreException):
+    """Raised when a invalid gain interpretation value is provided to the interpretation function"""
+
+    pass
+
+
+class InvalidCheckThreshold(MeasureSoftGramCoreException):
+    """Raised when a invalid check threshold function is called"""
+
+    pass
+
+
+class MeasureKeyNotSupported(MeasureSoftGramCoreException):
+    """Raised when a measure key is not supported"""
+
+    pass
+
+
 class ReleasePlannedAndDevelopedOfDifferentSizes(MeasureSoftGramCoreException):
     """Raised when the sizes of the planned and developed release vectors are different"""
 
