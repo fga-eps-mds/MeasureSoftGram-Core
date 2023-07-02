@@ -7,8 +7,8 @@ from util.check import Checker
 
 def non_complex_files_density(
     data_frame,
-    min_complex_files_density: float = 0,
-    max_complex_files_density: float = 10,
+    min_threshold: float = 0,
+    max_threshold: float = 10,
 ):
     """
     Calculates non-complex files density.
@@ -28,8 +28,8 @@ def non_complex_files_density(
         return 0.0
 
     Checker.check_threshold(
-        min_complex_files_density,
-        max_complex_files_density,
+        min_threshold,
+        max_threshold,
         "non_complex_files_density",
     )
 
@@ -43,16 +43,14 @@ def non_complex_files_density(
         }
     )
 
-    files_in_thresholds_bool_index = complex_files_density <= max_complex_files_density
+    files_in_thresholds_bool_index = complex_files_density <= max_threshold
     files_functions_gt_zero_bool_index = files_functions > 0
-    x = complex_files_density[
-        files_in_thresholds_bool_index * files_functions_gt_zero_bool_index
-    ]
+    x = complex_files_density[files_in_thresholds_bool_index * files_functions_gt_zero_bool_index]
 
     interpretation_function_value = transformations.interpretation_function(
         x=x,
-        min_threshold=min_complex_files_density,
-        max_threshold=max_complex_files_density,
+        min_threshold=min_threshold,
+        max_threshold=max_threshold,
         gain_interpretation=-1,
     )
 
@@ -62,9 +60,7 @@ def non_complex_files_density(
     return aggregated_and_normalized_measure
 
 
-def commented_files_density(
-    data_frame, min_comment_density: float = 10, max_comment_density: float = 30
-):
+def commented_files_density(data_frame, min_threshold: float = 10, max_threshold: float = 30):
     """
     Calculates commented files density.
 
@@ -78,9 +74,7 @@ def commented_files_density(
     if len(files_comment_lines_density) == 0:
         return 0.0
 
-    Checker.check_threshold(
-        min_comment_density, max_comment_density, "comment_files_density"
-    )
+    Checker.check_threshold(min_threshold, max_threshold, "comment_files_density")
 
     (
         files_comment_lines_density,
@@ -93,15 +87,15 @@ def commented_files_density(
 
     x = files_comment_lines_density[
         files_comment_lines_density.between(
-            min_comment_density,
-            max_comment_density,
+            min_threshold,
+            max_threshold,
             inclusive="both",
         )
     ]
     interpretation_function_value = transformations.interpretation_function(
         x=x,
-        min_threshold=min_comment_density,
-        max_threshold=max_comment_density,
+        min_threshold=min_threshold,
+        max_threshold=max_threshold,
         gain_interpretation=-1,
     )
     aggregated_and_normalized_measure = transformations.calculate_measure(
@@ -110,9 +104,7 @@ def commented_files_density(
     return aggregated_and_normalized_measure
 
 
-def absence_of_duplications(
-    data_frame, min_duplicated_lines: float = 0, max_duplicated_lines: float = 5.0
-):
+def absence_of_duplications(data_frame, min_threshold: float = 0, max_threshold: float = 5.0):
     """
     Calculates duplicated files absence (em3).
 
@@ -121,16 +113,12 @@ def absence_of_duplications(
     """
     files_duplicated_lines_density = data_frame["duplicated_lines_density"]  # m5 metric
 
-    Checker.check_metric_values(
-        files_duplicated_lines_density, "duplicated_lines_density"
-    )
+    Checker.check_metric_values(files_duplicated_lines_density, "duplicated_lines_density")
 
     if len(files_duplicated_lines_density) == 0:
         return 0.0
 
-    Checker.check_threshold(
-        min_duplicated_lines, max_duplicated_lines, "absence_of_duplications"
-    )
+    Checker.check_threshold(min_threshold, max_threshold, "absence_of_duplications")
 
     (
         files_duplicated_lines_density,
@@ -139,14 +127,12 @@ def absence_of_duplications(
         data={"duplicated_lines_density": files_duplicated_lines_density},
     )
 
-    x = files_duplicated_lines_density[
-        files_duplicated_lines_density <= max_duplicated_lines
-    ]
+    x = files_duplicated_lines_density[files_duplicated_lines_density <= max_threshold]
 
     interpretation_function_value = transformations.interpretation_function(
         x=x,
-        min_threshold=min_duplicated_lines,
-        max_threshold=max_duplicated_lines,
+        min_threshold=min_threshold,
+        max_threshold=max_threshold,
         gain_interpretation=-1,
     )
     aggregated_and_normalized_measure = transformations.calculate_measure(
@@ -157,8 +143,8 @@ def absence_of_duplications(
 
 def test_coverage(
     data_frame,
-    min_coverage: float = 60,
-    max_coverage: float = 100,
+    min_threshold: float = 60,
+    max_threshold: float = 100,
 ):
     """
     Calculates test coverage (em6).
@@ -173,16 +159,16 @@ def test_coverage(
     if len(coverage) == 0:
         return 0.0
 
-    Checker.check_threshold(min_coverage, max_coverage, "test_coverage")
+    Checker.check_threshold(min_threshold, max_threshold, "test_coverage")
 
     coverage, number_of_files = ems_functions.get_test_coverage(
         data={"coverage": coverage},
     )
-    x = coverage[coverage >= min_coverage]
+    x = coverage[coverage >= min_threshold]
     interpretation_function_value = transformations.interpretation_function(
         x=x,
-        min_threshold=min_coverage,
-        max_threshold=max_coverage,
+        min_threshold=min_threshold,
+        max_threshold=max_threshold,
         gain_interpretation=1,
     )
     aggregated_and_normalized_measure = transformations.calculate_measure(
@@ -191,9 +177,7 @@ def test_coverage(
     return aggregated_and_normalized_measure
 
 
-def fast_test_builds(
-    data_frame, min_fast_test_time: float = 0, max_fast_test_time: float = 300000
-):
+def fast_test_builds(data_frame, min_threshold: float = 0, max_threshold: float = 300000):
     """
     Calculates fast test builds (em5)
     This function gets the dataframe metrics
@@ -208,7 +192,7 @@ def fast_test_builds(
     if len(test_execution_time) == len(tests) == 0:
         return 0.0
 
-    Checker.check_threshold(min_fast_test_time, max_fast_test_time, "fast_test_builds")
+    Checker.check_threshold(min_threshold, max_threshold, "fast_test_builds")
 
     (
         execution_time,
@@ -218,13 +202,13 @@ def fast_test_builds(
         data={"test_execution_time": test_execution_time, "tests": tests},
     )
 
-    execution_between_thresholds = execution_time[execution_time <= max_fast_test_time]
+    execution_between_thresholds = execution_time[execution_time <= max_threshold]
     x = np.divide(execution_between_thresholds, number_of_tests)
 
     interpretation_function_value = transformations.interpretation_function(
         x=x,
-        min_threshold=min_fast_test_time,
-        max_threshold=max_fast_test_time,
+        min_threshold=min_threshold,
+        max_threshold=max_threshold,
         gain_interpretation=-1,
     )
 
@@ -235,7 +219,7 @@ def fast_test_builds(
     return aggregated_and_normalized_measure
 
 
-def passed_tests(data_frame, min_passed_tests: float = 0, max_passed_tests: float = 1):
+def passed_tests(data_frame, min_threshold: float = 0, max_threshold: float = 1):
     """
     Calculates passed tests (em4)
 
@@ -253,7 +237,7 @@ def passed_tests(data_frame, min_passed_tests: float = 0, max_passed_tests: floa
     Checker.check_metric_value(test_failures, "test_failures")
     Checker.check_metric_value(test_errors, "test_errors")
 
-    Checker.check_threshold(min_passed_tests, max_passed_tests, "passed_tests")
+    Checker.check_threshold(min_threshold, max_threshold, "passed_tests")
 
     number_of_tests, number_of_fail_tests = ems_functions.get_passed_tests(
         data={
@@ -267,13 +251,11 @@ def passed_tests(data_frame, min_passed_tests: float = 0, max_passed_tests: floa
 
     interpretation_function_value = transformations.interpretation_function(
         x=x,
-        min_threshold=min_passed_tests,
-        max_threshold=max_passed_tests,
+        min_threshold=min_threshold,
+        max_threshold=max_threshold,
         gain_interpretation=1,
     )
 
-    aggregated_and_normalized_measure = transformations.calculate_measure(
-        interpretation_function_value
-    )
+    aggregated_and_normalized_measure = transformations.calculate_measure(interpretation_function_value)
 
     return aggregated_and_normalized_measure

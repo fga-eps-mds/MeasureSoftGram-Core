@@ -5,9 +5,7 @@ from src.core.aggregated_normalized_measures import (
     non_complex_files_density,
     passed_tests,
 )
-from src.core.aggregated_normalized_measures import (
-    test_coverage as interpret_test_coverage,
-)
+from src.core.aggregated_normalized_measures import test_coverage as interpret_test_coverage
 
 INVALID_METRICS_TEST_DATA = [
     (
@@ -553,10 +551,10 @@ INVALID_THRESHOLD_TEST_DATA = [
                     10.0,
                 ],
             },
-            "min_complex_files_density": 1,
-            "max_complex_files_density": 10,
+            "min_threshold": 1,
+            "max_threshold": 10,
         },
-        "min_complex_files_density is not equal to 0",
+        "min_threshold is not equal to 0",
     ),
     (
         non_complex_files_density,
@@ -661,10 +659,10 @@ INVALID_THRESHOLD_TEST_DATA = [
                     10.0,
                 ],
             },
-            "min_complex_files_density": 0,
-            "max_complex_files_density": -10,
+            "min_threshold": 0,
+            "max_threshold": -10,
         },
-        "min_complex_files_density is greater or equal to max_complex_files_density",
+        "min_threshold is greater or equal to max_threshold",
     ),
     (
         commented_files_density,
@@ -705,10 +703,10 @@ INVALID_THRESHOLD_TEST_DATA = [
                     0.0,
                 ]
             },
-            "min_comment_density": -1,
-            "max_comment_density": 100,
+            "min_threshold": -1,
+            "max_threshold": 100,
         },
-        "min_comment_density is lesser than 0",
+        "min_threshold is lesser than 0",
     ),
     (
         commented_files_density,
@@ -749,10 +747,10 @@ INVALID_THRESHOLD_TEST_DATA = [
                     0.0,
                 ]
             },
-            "min_comment_density": 0,
-            "max_comment_density": 101,
+            "min_threshold": 0,
+            "max_threshold": 101,
         },
-        "max_comment_density is greater than 100",
+        "max_threshold is greater than 100",
     ),
     (
         commented_files_density,
@@ -793,10 +791,10 @@ INVALID_THRESHOLD_TEST_DATA = [
                     0.0,
                 ]
             },
-            "min_comment_density": 100,
-            "max_comment_density": 99,
+            "min_threshold": 100,
+            "max_threshold": 99,
         },
-        "min_comment_density is greater or equal to max_comment_density",
+        "min_threshold is greater or equal to max_threshold",
     ),
     (
         absence_of_duplications,
@@ -852,10 +850,10 @@ INVALID_THRESHOLD_TEST_DATA = [
                     0.0,
                 ]
             },
-            "min_duplicated_lines": 1,
-            "max_duplicated_lines": 10,
+            "min_threshold": 1,
+            "max_threshold": 10,
         },
-        "min_duplicated_lines is not equal to 0",
+        "min_threshold is not equal to 0",
     ),
     (
         absence_of_duplications,
@@ -911,10 +909,10 @@ INVALID_THRESHOLD_TEST_DATA = [
                     0.0,
                 ]
             },
-            "min_duplicated_lines": 0,
-            "max_duplicated_lines": -1,
+            "min_threshold": 0,
+            "max_threshold": -1,
         },
-        "min_duplicated_lines is greater or equal to max_duplicated_lines",
+        "min_threshold is greater or equal to max_threshold",
     ),
     (
         absence_of_duplications,
@@ -970,10 +968,10 @@ INVALID_THRESHOLD_TEST_DATA = [
                     0.0,
                 ]
             },
-            "min_duplicated_lines": 0,
-            "max_duplicated_lines": 101,
+            "min_threshold": 0,
+            "max_threshold": 101,
         },
-        "max_duplicated_lines is greater than 100",
+        "max_threshold is greater than 100",
     ),
     (
         passed_tests,
@@ -1004,10 +1002,10 @@ INVALID_THRESHOLD_TEST_DATA = [
                     2.0,
                 ],
             },
-            "min_passed_tests": 10,
-            "max_passed_tests": 1,
+            "min_threshold": 10,
+            "max_threshold": 1,
         },
-        "min_passed_tests is not equal to 0",
+        "min_threshold is not equal to 0",
     ),
     (
         passed_tests,
@@ -1038,10 +1036,10 @@ INVALID_THRESHOLD_TEST_DATA = [
                     2.0,
                 ],
             },
-            "min_passed_tests": 0,
-            "max_passed_tests": 0.99,
+            "min_threshold": 0,
+            "max_threshold": 0.99,
         },
-        "max_passed_tests is not equal to 1",
+        "max_threshold is not equal to 1",
     ),
     (
         fast_test_builds,
@@ -1092,10 +1090,10 @@ INVALID_THRESHOLD_TEST_DATA = [
                     2.0,
                 ],
             },
-            "min_fast_test_time": -1,
-            "max_fast_test_time": 0.99,
+            "min_threshold": -1,
+            "max_threshold": 0.99,
         },
-        "min_fast_test_time is not equal to 0",
+        "min_threshold is not equal to 0",
     ),
     (
         fast_test_builds,
@@ -1146,10 +1144,10 @@ INVALID_THRESHOLD_TEST_DATA = [
                     2.0,
                 ],
             },
-            "min_fast_test_time": 0,
-            "max_fast_test_time": -10,
+            "min_threshold": 0,
+            "max_threshold": -10,
         },
-        "min_fast_test_time is greater or equal to max_fast_test_time",
+        "min_threshold is greater or equal to max_threshold",
     ),
     (
         interpret_test_coverage,
@@ -1190,10 +1188,10 @@ INVALID_THRESHOLD_TEST_DATA = [
                     13.3,
                 ]
             },
-            "min_coverage": -1,
-            "max_coverage": -10,
+            "min_threshold": -1,
+            "max_threshold": -10,
         },
-        "min_coverage is lesser than 0",
+        "min_threshold is lesser than 0",
     ),
     (
         interpret_test_coverage,
@@ -1234,10 +1232,10 @@ INVALID_THRESHOLD_TEST_DATA = [
                     13.3,
                 ]
             },
-            "min_coverage": 90,
-            "max_coverage": 90,
+            "min_threshold": 90,
+            "max_threshold": 90,
         },
-        "min_coverage is greater or equal to max_coverage",
+        "min_threshold is greater or equal to max_threshold",
     ),
     (
         interpret_test_coverage,
@@ -1278,9 +1276,9 @@ INVALID_THRESHOLD_TEST_DATA = [
                     13.3,
                 ]
             },
-            "min_coverage": 90,
-            "max_coverage": 900,
+            "min_threshold": 90,
+            "max_threshold": 900,
         },
-        "max_coverage is not equal to 100",
+        "max_threshold is not equal to 100",
     ),
 ]

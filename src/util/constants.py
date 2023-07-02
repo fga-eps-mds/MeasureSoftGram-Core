@@ -101,36 +101,29 @@ AGGREGATED_NORMALIZED_MEASURES_MAPPING = {
     "non_complex_file_density": {
         "aggregated_normalized_measure": non_complex_files_density,
         "schema": schemas.NonComplexFileDensitySchema,
-        "thresholds": ["min_complex_files_density", "max_complex_files_density"],
     },
     "commented_file_density": {
         "aggregated_normalized_measure": commented_files_density,
         "schema": schemas.CommentedFileDensitySchema,
-        "thresholds": ["min_comment_density", "max_comment_density"],
     },
     "duplication_absense": {
         "aggregated_normalized_measure": absence_of_duplications,
         "schema": schemas.DuplicationAbsenceSchema,
-        "thresholds": ["min_duplicated_lines", "max_duplicated_lines"],
     },
     "passed_tests": {
         "aggregated_normalized_measure": passed_tests,
         "schema": schemas.PassedTestsSchema,
-        "thresholds": ["min_passed_tests", "max_passed_tests"],
     },
     "test_builds": {
         "aggregated_normalized_measure": fast_test_builds,
         "schema": schemas.TestBuildsSchema,
-        "thresholds": ["min_fast_test_time", "max_fast_test_time"],
     },
     "test_coverage": {
         "aggregated_normalized_measure": test_coverage,
         "schema": schemas.TestCoverageSchema,
-        "thresholds": ["min_coverage", "max_coverage"],
     },
     "team_throughput": {
         "aggregated_normalized_measure": ...,
         "schema": schemas.TeamThroughputSchema,
-        "thresholds": [],
     },
 }

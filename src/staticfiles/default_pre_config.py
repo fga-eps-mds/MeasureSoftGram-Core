@@ -13,20 +13,20 @@ DEFAULT_PRE_CONFIG = {
                         {
                             "key": "passed_tests",
                             "weight": 33,
-                            "min_passed_tests": 0,
-                            "max_passed_tests": 1,
+                            "min_threshold": 0,
+                            "max_threshold": 1,
                         },
                         {
                             "key": "test_builds",
                             "weight": 33,
-                            "min_fast_test_time": 0,
-                            "max_fast_test_time": 300000,
+                            "min_threshold": 0,
+                            "max_threshold": 300000,
                         },
                         {
                             "key": "test_coverage",
                             "weight": 34,
-                            "min_coverage": 60,
-                            "max_coverage": 100,
+                            "min_threshold": 60,
+                            "max_threshold": 100,
                         },
                     ],
                 }
@@ -43,20 +43,20 @@ DEFAULT_PRE_CONFIG = {
                         {
                             "key": "non_complex_file_density",
                             "weight": 33,
-                            "min_complex_files_density": 0,
-                            "max_complex_files_density": 10,
+                            "min_threshold": 0,
+                            "max_threshold": 10,
                         },
                         {
                             "key": "commented_file_density",
                             "weight": 33,
-                            "min_comment_density": 10,
-                            "max_comment_density": 30,
+                            "min_threshold": 10,
+                            "max_threshold": 30,
                         },
                         {
                             "key": "duplication_absense",
                             "weight": 34,
-                            "min_duplicated_lines": 0,
-                            "max_duplicated_lines": 5,
+                            "min_threshold": 0,
+                            "max_threshold": 5,
                         },
                     ],
                 }
