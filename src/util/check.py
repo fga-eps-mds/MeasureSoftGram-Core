@@ -12,77 +12,59 @@ from util.exceptions import (
 
 class Checker:
     @staticmethod
-    def check_non_complex_files_density_threshold(
-        min_complex_files_density: float, max_complex_files_density: float
-    ):
-        if min_complex_files_density != 0:
-            raise InvalidThresholdValue("min_complex_files_density is not equal to 0")
+    def check_non_complex_files_density_threshold(min_threshold: float, max_threshold: float):
+        if min_threshold != 0:
+            raise InvalidThresholdValue("min_threshold is not equal to 0")
 
-        if min_complex_files_density >= max_complex_files_density:
-            raise InvalidThresholdValue(
-                "min_complex_files_density is greater or equal to max_complex_files_density"
-            )
+        if min_threshold >= max_threshold:
+            raise InvalidThresholdValue("min_threshold is greater or equal to max_threshold")
 
     @staticmethod
-    def check_comment_files_density_threshold(
-        min_comment_density: float, max_comment_density: float
-    ):
-        if min_comment_density < 0:
-            raise InvalidThresholdValue("min_comment_density is lesser than 0")
-        if min_comment_density >= max_comment_density:
-            raise InvalidThresholdValue(
-                "min_comment_density is greater or equal to max_comment_density"
-            )
-        if max_comment_density > 100:
-            raise InvalidThresholdValue("max_comment_density is greater than 100")
+    def check_comment_files_density_threshold(min_threshold: float, max_threshold: float):
+        if min_threshold < 0:
+            raise InvalidThresholdValue("min_threshold is lesser than 0")
+        if min_threshold >= max_threshold:
+            raise InvalidThresholdValue("min_threshold is greater or equal to max_threshold")
+        if max_threshold > 100:
+            raise InvalidThresholdValue("max_threshold is greater than 100")
 
     @staticmethod
-    def check_absence_of_duplications_threshold(
-        min_duplicated_lines: float, max_duplicated_lines: float
-    ):
-        if min_duplicated_lines != 0:
-            raise InvalidThresholdValue("min_duplicated_lines is not equal to 0")
+    def check_absence_of_duplications_threshold(min_threshold: float, max_threshold: float):
+        if min_threshold != 0:
+            raise InvalidThresholdValue("min_threshold is not equal to 0")
 
-        if min_duplicated_lines >= max_duplicated_lines:
-            raise InvalidThresholdValue(
-                "min_duplicated_lines is greater or equal to max_duplicated_lines"
-            )
+        if min_threshold >= max_threshold:
+            raise InvalidThresholdValue("min_threshold is greater or equal to max_threshold")
 
-        if max_duplicated_lines > 100:
-            raise InvalidThresholdValue("max_duplicated_lines is greater than 100")
+        if max_threshold > 100:
+            raise InvalidThresholdValue("max_threshold is greater than 100")
 
     @staticmethod
-    def check_test_coverage_threshold(min_coverage, max_coverage):
-        if min_coverage < 0:
-            raise InvalidThresholdValue("min_coverage is lesser than 0")
+    def check_test_coverage_threshold(min_threshold, max_threshold):
+        if min_threshold < 0:
+            raise InvalidThresholdValue("min_threshold is lesser than 0")
 
-        if min_coverage >= max_coverage:
-            raise InvalidThresholdValue(
-                "min_coverage is greater or equal to max_coverage"
-            )
+        if min_threshold >= max_threshold:
+            raise InvalidThresholdValue("min_threshold is greater or equal to max_threshold")
 
-        if max_coverage != 100:
-            raise InvalidThresholdValue("max_coverage is not equal to 100")
+        if max_threshold != 100:
+            raise InvalidThresholdValue("max_threshold is not equal to 100")
 
     @staticmethod
-    def check_fast_test_builds_threshold(
-        min_fast_test_time: float, max_fast_test_time: float
-    ):
-        if min_fast_test_time != 0:
-            raise InvalidThresholdValue(("min_fast_test_time is not equal to 0"))
+    def check_fast_test_builds_threshold(min_threshold: float, max_threshold: float):
+        if min_threshold != 0:
+            raise InvalidThresholdValue(("min_threshold is not equal to 0"))
 
-        if min_fast_test_time >= max_fast_test_time:
-            raise InvalidThresholdValue(
-                "min_fast_test_time is greater or equal to max_fast_test_time"
-            )
+        if min_threshold >= max_threshold:
+            raise InvalidThresholdValue("min_threshold is greater or equal to max_threshold")
 
     @staticmethod
-    def check_passed_tests_threshold(min_passed_tests: float, max_passed_tests: float):
-        if min_passed_tests != 0:
-            raise InvalidThresholdValue("min_passed_tests is not equal to 0")
+    def check_passed_tests_threshold(min_threshold: float, max_threshold: float):
+        if min_threshold != 0:
+            raise InvalidThresholdValue("min_threshold is not equal to 0")
 
-        if max_passed_tests != 1:
-            raise InvalidThresholdValue("max_passed_tests is not equal to 1")
+        if max_threshold != 1:
+            raise InvalidThresholdValue("max_threshold is not equal to 1")
 
     @staticmethod
     def check_threshold(min: float, max: float, measure: str):

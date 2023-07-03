@@ -75,16 +75,12 @@ class CalculateSubCharacteristicSchema(Schema):
     }
     """
 
-    subcharacteristics = fields.List(
-        fields.Nested(SubCharacteristicSchema), required=True
-    )
+    subcharacteristics = fields.List(fields.Nested(SubCharacteristicSchema), required=True)
 
 
 class CharacteristicSchema(Schema):
     key = fields.Str(required=True)
-    subcharacteristics = fields.List(
-        fields.Nested(CalculatedSubEntitySchema), required=True
-    )
+    subcharacteristics = fields.List(fields.Nested(CalculatedSubEntitySchema), required=True)
 
 
 class CalculateCharacteristicSchema(Schema):
@@ -112,9 +108,7 @@ class CalculateCharacteristicSchema(Schema):
 
 class TSQMISchema(Schema):
     key = fields.Str(required=True)
-    characteristics = fields.List(
-        fields.Nested(CalculatedSubEntitySchema), required=True
-    )
+    characteristics = fields.List(fields.Nested(CalculatedSubEntitySchema), required=True)
 
 
 class CalculateTSQMISchema(Schema):
@@ -201,9 +195,5 @@ class TeamThroughputSchema(Schema):
     "function": calculate_em7
     """
 
-    number_of_resolved_issues_with_US_label_in_the_last_x_days = fields.Integer(
-        required=True
-    )
-    total_number_of_issues_with_US_label_in_the_last_x_days = fields.Integer(
-        required=True
-    )
+    number_of_resolved_issues_with_US_label_in_the_last_x_days = fields.Integer(required=True)
+    total_number_of_issues_with_US_label_in_the_last_x_days = fields.Integer(required=True)

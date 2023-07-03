@@ -316,7 +316,7 @@ EXTRACTED_MEASURES_DATA = {
     ]
 }
 
-CALCULATE_MEASURES_RESPONSE_DATA = {
+CALCULATE_MEASURES_RESULT_DATA = {
     "measures": [
         {"key": "passed_tests", "value": 1.0},
         {"key": "test_builds", "value": 0.9995933399758454},
@@ -374,7 +374,7 @@ EXTRACTED_SUBCHARACTERISTICS_DATA = {
         },
     ]
 }
-CALCULATE_SUBCHARACTERISTICS_RESPONSE_DATA = {
+CALCULATE_SUBCHARACTERISTICS_RESULT_DATA = {
     "subcharacteristics": [
         {"key": "testing_status", "value": 0.8507086078793112},
         {"key": "modifiability", "value": 0.6642882099299446},
@@ -391,19 +391,15 @@ EXTRACTED_CHARACTERISTICS_DATA = {
     "characteristics": [
         {
             "key": "reliability",
-            "subcharacteristics": [
-                {"key": "testing_status", "value": 0.8507086078793112, "weight": 100}
-            ],
+            "subcharacteristics": [{"key": "testing_status", "value": 0.8507086078793112, "weight": 100}],
         },
         {
             "key": "maintainability",
-            "subcharacteristics": [
-                {"key": "modifiability", "value": 0.6642882099299446, "weight": 100}
-            ],
+            "subcharacteristics": [{"key": "modifiability", "value": 0.6642882099299446, "weight": 100}],
         },
     ]
 }
-CALCULATE_CHARACTERISTICS_RESPONSE_DATA = {
+CALCULATE_CHARACTERISTICS_RESULT_DATA = {
     "characteristics": [
         {"key": "reliability", "value": 0.8507086078793112},
         {"key": "maintainability", "value": 0.6642882099299446},
@@ -425,9 +421,7 @@ EXTRACTED_TSQMI_DATA = {
         ],
     }
 }
-CALCULATE_TSQMI_RESPONSE_DATA = {
-    "tsqmi": [{"key": "tsqmi", "value": 0.7632116224782893}]
-}
+CALCULATE_TSQMI_RESULT_DATA = {"tsqmi": [{"key": "tsqmi", "value": 0.7632116224782893}]}
 CALCULATE_TSQMI_ERROR_INFOS = [
     (
         {"tsqmi": None},
