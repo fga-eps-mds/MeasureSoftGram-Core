@@ -1,6 +1,5 @@
-import core.measures_functions as ems_functions
 from core import schemas
-from core.interpretation_functions import (
+from core.aggregated_normalized_measures import (
     absence_of_duplications,
     commented_files_density,
     fast_test_builds,
@@ -92,47 +91,39 @@ AVAILABLE_PRE_CONFIGS = {
             "characteristics": ["functional_suitability"],
             "metrics": [
                 "number_of_resolved_issues_with_US_label_in_the_last_x_days",
-                "total_number_of_issues_with_US_label_in_the_last_x_days"
+                "total_number_of_issues_with_US_label_in_the_last_x_days",
             ],
         },
     },
 }
 
-
-MEASURES_INTERPRETATION_MAPPING = {
+AGGREGATED_NORMALIZED_MEASURES_MAPPING = {
     "non_complex_file_density": {
-        "interpretation_function": non_complex_files_density,
-        "calculation_function": ems_functions.calculate_em1,
+        "aggregated_normalized_measure": non_complex_files_density,
         "schema": schemas.NonComplexFileDensitySchema,
     },
     "commented_file_density": {
-        "interpretation_function": commented_files_density,
-        "calculation_function": ems_functions.calculate_em2,
+        "aggregated_normalized_measure": commented_files_density,
         "schema": schemas.CommentedFileDensitySchema,
     },
     "duplication_absense": {
-        "interpretation_function": absence_of_duplications,
-        "calculation_function": ems_functions.calculate_em3,
+        "aggregated_normalized_measure": absence_of_duplications,
         "schema": schemas.DuplicationAbsenceSchema,
     },
     "passed_tests": {
-        "interpretation_function": passed_tests,
-        "calculation_function": ems_functions.calculate_em4,
+        "aggregated_normalized_measure": passed_tests,
         "schema": schemas.PassedTestsSchema,
     },
     "test_builds": {
-        "interpretation_function": fast_test_builds,
-        "calculation_function": ems_functions.calculate_em5,
+        "aggregated_normalized_measure": fast_test_builds,
         "schema": schemas.TestBuildsSchema,
     },
     "test_coverage": {
-        "interpretation_function": test_coverage,
-        "calculation_function": ems_functions.calculate_em6,
+        "aggregated_normalized_measure": test_coverage,
         "schema": schemas.TestCoverageSchema,
     },
     "team_throughput": {
-        "interpretation_function": ...,
-        "calculation_function": ems_functions.calculate_em7,
+        "aggregated_normalized_measure": ...,
         "schema": schemas.TeamThroughputSchema,
     },
 }

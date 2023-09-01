@@ -19,7 +19,6 @@ METRICS_LIST = [
 
 
 def read_json(json_path):
-
     with open(json_path) as json_file:
         json_obj = json.load(json_file)
 
@@ -27,11 +26,9 @@ def read_json(json_path):
 
 
 def create_base_component_df(json_list):
-
     df = pd.DataFrame()
 
     for i in json_list:
-
         base_component = read_json(i)
 
         base_component_data = base_component["baseComponent"]["measures"]
@@ -46,7 +43,6 @@ def create_base_component_df(json_list):
 
 
 def metric_per_file(json):
-
     file_json = []
 
     for component in json["components"]:
@@ -56,14 +52,12 @@ def metric_per_file(json):
 
 
 def check_component_is_valid(component, language_extension):
-
     return (
         component["qualifier"] == "DIR" or component["language"] == language_extension
     )
 
 
 def generate_file_dataframe_per_release(metric_list, json, language_extension):
-
     df_columns = metric_list + ["qualifier"]
     df = pd.DataFrame(columns=df_columns)
 
@@ -80,11 +74,9 @@ def generate_file_dataframe_per_release(metric_list, json, language_extension):
 
 
 def create_file_df(json_list, language_extension="js"):
-
     df = pd.DataFrame()
 
     for json_file in json_list:
-
         file_component = read_json(json_file)
 
         file_component_data = metric_per_file(file_component)

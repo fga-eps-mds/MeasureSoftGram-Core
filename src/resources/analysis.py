@@ -1,155 +1,181 @@
-import requests
+import numpy as np
 from marshmallow.exceptions import ValidationError
 
 from core.schemas import (
+    CalculateCharacteristicSchema,
     CalculateMeasureSchema,
     CalculateSubCharacteristicSchema,
-    CalculateCharacteristicSchema,
-    CalculateSQCSchema
+    CalculateTSQMISchema,
 )
-from core.agregation import aggregation_operation
-from core.weighting import weighting_operation
-from util.constants import MEASURES_INTERPRETATION_MAPPING
+from core.transformations import calculate_aggregated_weighted_value
+from util.constants import AGGREGATED_NORMALIZED_MEASURES_MAPPING
+from util.exceptions import MeasureKeyNotSupported
 
 
-def calculate_aggregated_value(values_list, weights_list):
-    weighted_items = weighting_operation(values_list, weights_list)
-    return aggregation_operation(weighted_items, weights_list)
-
-
-def calculate_measures(extracted_measures):
+def calculate_measures(
+    extracted_measures: CalculateMeasureSchema,
+    config: dict = {"characteristics": [{"subcharacteristics": [{"measures": [{"key": ""}]}]}]},
+):
     # Validate if outter keys is valid
     try:
         data = CalculateMeasureSchema().load(extracted_measures)
     except ValidationError as error:
-        return {
-            "error": "Failed to validate request",
-            "schema_errors": error.messages,
-            "code": requests.codes.unprocessable_entity
-        }
+        raise ValidationError(f"error: Failed to validate input.\nschema_errors: {error.messages}")
 
     # Objeto retornado em caso de sucesso
-    response_data = {"measures": []}
+    result_data = {"measures": []}
 
-    valid_measures = MEASURES_INTERPRETATION_MAPPING.keys()
+    valid_measures = AGGREGATED_NORMALIZED_MEASURES_MAPPING.keys()
 
     for measure in data["measures"]:
-        measure_key: str = measure['key']
+        measure_key: str = measure["key"]
 
         if measure_key not in valid_measures:
-            return {
-                "error": f"Measure {measure_key} is not supported",
-                "code": requests.codes.unprocessable_entity
-            }
+            raise MeasureKeyNotSupported(f"Measure {measure_key} is not supported")
 
         measure_params = measure["parameters"]
-        schema = MEASURES_INTERPRETATION_MAPPING[measure_key]["schema"]
+        schema = AGGREGATED_NORMALIZED_MEASURES_MAPPING[measure_key]["schema"]
 
         try:
             validated_params = schema().load(measure_params)
         except ValidationError as exc:
-            return {
-                "error": f"Metric parameters {measure_key} are not valid",
-                "schema_errors": exc.messages,
-                "code": requests.codes.unprocessable_entity
+            raise ValidationError(
+                f"error: Metric parameters {measure_key} are not valid.\nschema_errors: {exc.messages}"
+            )
+
+        aggregated_normalized_measure = AGGREGATED_NORMALIZED_MEASURES_MAPPING[measure_key][
+            "aggregated_normalized_measure"
+        ]
+
+        measures = [
+            measure
+            for characteristic in config["characteristics"]
+            for subcharacteristic in characteristic["subcharacteristics"]
+            for measure in subcharacteristic["measures"]
+        ]
+
+        threshold_config = {
+            key: value
+            for measure in measures
+            for key, value in measure.items()
+            if measure["key"] == measure_key and ("min_threshold" == key or "max_threshold" == key)
+        }
+        result = aggregated_normalized_measure(validated_params, **threshold_config)
+
+        result_data["measures"].append(
+            {
+                "key": measure_key,
+                "value": result,
             }
+        )
 
-        interpretation_function = MEASURES_INTERPRETATION_MAPPING[measure_key]["interpretation_function"]
-        result = interpretation_function(validated_params)
-
-        response_data["measures"].append({
-            "key": measure_key,
-            "value": result,
-        })
-
-    return response_data
+    return result_data
 
 
 def calculate_subcharacteristics(extracted_subcharacteristics):
     try:
         data = CalculateSubCharacteristicSchema().load(extracted_subcharacteristics)
     except ValidationError as error:
-        return {
-            "error": "Failed to validate request",
-            "schema_errors": error.messages,
-            "code": requests.codes.unprocessable_entity
-        }
+        raise ValidationError(f"error: Failed to validate input.\nschema_errors: {error.messages}")
 
-    response_data = {"subcharacteristics": []}
+    result_data = {"subcharacteristics": []}
 
     for subcharacteristic in data["subcharacteristics"]:
         subcharacteristic_key: str = subcharacteristic["key"]
 
-        values_list, weights_list = [], []
+        vector_aggregated_normalized_measure = np.array([])
+        vector_weight_aggregated_normalized_measure = np.array([])
+
         for measure in subcharacteristic["measures"]:
-            values_list.append(measure["value"])
-            weights_list.append(measure["weight"])
+            vector_aggregated_normalized_measure = np.append(vector_aggregated_normalized_measure, measure["value"])
+            vector_weight_aggregated_normalized_measure = np.append(
+                vector_weight_aggregated_normalized_measure, measure["weight"]
+            )
+        aggregated_value = calculate_aggregated_weighted_value(
+            vector_aggregated_normalized_measure,
+            vector_weight_aggregated_normalized_measure,
+        )
 
-        aggregated_value = calculate_aggregated_value(values_list, weights_list)
+        result_data["subcharacteristics"].append(
+            {
+                "key": subcharacteristic_key,
+                "value": aggregated_value,
+            }
+        )
 
-        response_data["subcharacteristics"].append({
-            "key": subcharacteristic_key,
-            "value": aggregated_value,
-        })
-
-    return response_data
+    return result_data
 
 
 def calculate_characteristics(extracted_characteristics):
     try:
         data = CalculateCharacteristicSchema().load(extracted_characteristics)
     except ValidationError as error:
-        return {
-            "error": "Failed to validate request",
-            "schema_errors": error.messages,
-            "code": requests.codes.unprocessable_entity
-        }
+        raise ValidationError(f"error: Failed to validate input.\nschema_errors: {error.messages}")
 
-    response_data = {"characteristics": []}
+    result_data = {"characteristics": []}
 
     for characteristic in data["characteristics"]:
         characteristic_key: str = characteristic["key"]
 
-        values_list, weights_list = [], []
-        for measure in characteristic["subcharacteristics"]:
-            values_list.append(measure["value"])
-            weights_list.append(measure["weight"])
+        vector_aggregated_normalized_subcharacteristics = np.array([])
+        vector_weight_aggregated_normalized_subcharacteristics = np.array([])
+        for subcharacteristics in characteristic["subcharacteristics"]:
+            vector_aggregated_normalized_subcharacteristics = np.append(
+                vector_aggregated_normalized_subcharacteristics,
+                subcharacteristics["value"],
+            )
+            vector_weight_aggregated_normalized_subcharacteristics = np.append(
+                vector_weight_aggregated_normalized_subcharacteristics,
+                subcharacteristics["weight"],
+            )
 
-        aggregated_value = calculate_aggregated_value(values_list, weights_list)
+        aggregated_value = calculate_aggregated_weighted_value(
+            vector_aggregated_normalized_subcharacteristics,
+            vector_weight_aggregated_normalized_subcharacteristics,
+        )
 
-        response_data["characteristics"].append({
-            "key": characteristic_key,
-            "value": aggregated_value,
-        })
+        result_data["characteristics"].append(
+            {
+                "key": characteristic_key,
+                "value": aggregated_value,
+            }
+        )
 
-    return response_data
+    return result_data
 
 
-def calculate_sqc(extracted_sqc):
+def calculate_tsqmi(extracted_tsqmi):
     try:
-        data = CalculateSQCSchema().load(extracted_sqc)
+        data = CalculateTSQMISchema().load(extracted_tsqmi)
     except ValidationError as error:
-        return {
-            "error": "Failed to validate request",
-            "schema_errors": error.messages,
-            "code": requests.codes.unprocessable_entity
+        raise ValidationError(f"error: Failed to validate input.\nschema_errors: {error.messages}")
+
+    result_data = {"tsqmi": []}
+
+    tsqmi = data["tsqmi"]
+    tsqmi_key: str = tsqmi["key"]
+
+    vector_aggregated_normalized_characteristics = np.array([])
+    vector_weight_aggregated_normalized_characteristics = np.array([])
+    for characteristic in tsqmi["characteristics"]:
+        vector_aggregated_normalized_characteristics = np.append(
+            vector_aggregated_normalized_characteristics, characteristic["value"]
+        )
+        vector_weight_aggregated_normalized_characteristics = np.append(
+            vector_weight_aggregated_normalized_characteristics,
+            characteristic["weight"],
+        )
+
+    aggregated_value = calculate_aggregated_weighted_value(
+        vector_aggregated_normalized_characteristics,
+        vector_weight_aggregated_normalized_characteristics,
+    )
+
+    result_data["tsqmi"].append(
+        {
+            "key": tsqmi_key,
+            "value": aggregated_value,
         }
+    )
 
-    response_data = {"sqc": []}
-
-    sqc = data["sqc"]
-    sqc_key: str = sqc["key"]
-
-    values_list, weights_list = [], []
-    for characteristic in sqc["characteristics"]:
-        values_list.append(characteristic["value"])
-        weights_list.append(characteristic["weight"])
-
-    aggregated_value = calculate_aggregated_value(values_list, weights_list)
-
-    response_data["sqc"].append({
-        "key": sqc_key,
-        "value": aggregated_value,
-    })
-
-    return response_data
+    return result_data

@@ -1,4 +1,4 @@
-SONARQUBE_SUPPORTED_MEASURES = [
+SUPPORTED_MEASURES = [
     {
         "passed_tests": {
             "metrics": [
