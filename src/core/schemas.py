@@ -1,20 +1,39 @@
 from marshmallow import Schema, fields, validate
 
+class MetricSchema(Schema):
+    """
+    {
+        "key": "tests"
+        "value": 10
+    }
+    """
+    key = fields.Str(required=True)
+    value = fields.Number(required=True)
+
 
 class MeasureSchema(Schema):
     """
     {
         "key": "passed_tests",
-        "parameters": {
-            "tests": 10,
-            "test_errors": 3,
-            "test_failures": 1
-        }
+        "metrics": [
+            {
+                "key": "tests",
+                "value": 10
+            },
+            {
+                "key": "test_errors",
+                "value": 3
+            },
+            {
+                "key": "test_failures",
+                "value": 1
+            }
+        ]
     }
     """
 
     key = fields.Str(required=True)
-    parameters = fields.Dict(required=True)
+    metrics = fields.List(fields.Nested(MetricSchema), required=True)
 
 
 class CalculateMeasureSchema(Schema):
