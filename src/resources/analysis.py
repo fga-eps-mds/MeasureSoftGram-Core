@@ -11,6 +11,12 @@ from core.transformations import calculate_aggregated_weighted_value
 from util.constants import AGGREGATED_NORMALIZED_MEASURES_MAPPING
 from util.exceptions import MeasureKeyNotSupported
 
+def convert_metrics_to_dict(metrics_list):
+    metrics_dict = {}
+    for metric in metrics_list:
+        metrics_dict[metric["key"]] = metric["value"]
+    return metrics_dict
+
 
 def calculate_measures(
     extracted_measures: CalculateMeasureSchema,
@@ -33,7 +39,8 @@ def calculate_measures(
         if measure_key not in valid_measures:
             raise MeasureKeyNotSupported(f"Measure {measure_key} is not supported")
 
-        measure_params = measure["parameters"]
+        metrics = measure["metrics"]
+        measure_params = convert_metrics_to_dict(metrics)
         schema = AGGREGATED_NORMALIZED_MEASURES_MAPPING[measure_key]["schema"]
 
         try:
