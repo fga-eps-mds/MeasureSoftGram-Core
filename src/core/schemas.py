@@ -39,28 +39,74 @@ class MeasureSchema(Schema):
 class CalculateMeasureSchema(Schema):
     """
     {
-        "measures": [
+        
+    "measures": [
             {
                 "key": "passed_tests",
-                "parameters": {
-                    "tests": 10,
-                    "test_errors": 3,
-                    "test_failures": 1
-                }
+                "metrics": [
+                    {
+                        "key": "tests",
+                        "value":10
+                    },
+                    {
+                        "key": "test_errors",
+                        "value":3
+                    },
+                    {
+                        "key": "test_failures",
+                        "value":1
+                    }
+                ]
             },
             {
                 "key": "test_builds",
-                "parameters": {
-                    "param1": 8,
-                    "param2": 19,
-                    "parma3": 4
-                }
-            }
-        ]
+                "metrics": [
+                    {
+                        "key": "param1",
+                        "value":8
+                    },
+                    {
+                        "key": "param2",
+                        "value":19
+                    },
+                    {
+                        "key": "param3",
+                        "value":4
+                    }
+                ]
+            },
     }
     """
 
     measures = fields.List(fields.Nested(MeasureSchema), required=True)
+
+# ANTIGO
+#
+# class CalculateMeasureSchema(Schema):
+#     """
+#     {
+#         "measures": [
+#             {
+#                 "key": "passed_tests",
+#                 "parameters": {
+#                     "tests": 10,
+#                     "test_errors": 3,
+#                     "test_failures": 1
+#                 }
+#             },
+#             {
+#                 "key": "test_builds",
+#                 "parameters": {
+#                     "param1": 8,
+#                     "param2": 19,
+#                     "parma3": 4
+#                 }
+#             }
+#         ]
+#     }
+#     """
+#
+#     measures = fields.List(fields.Nested(MeasureSchema), required=True)
 
 
 class CalculatedSubEntitySchema(Schema):
