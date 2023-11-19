@@ -259,3 +259,41 @@ def passed_tests(data_frame, min_threshold: float = 0, max_threshold: float = 1)
     aggregated_and_normalized_measure = transformations.calculate_measure(interpretation_function_value)
 
     return aggregated_and_normalized_measure
+
+
+def team_throughput(
+    data_frame,
+    min_threshold: float = 0,
+    max_threshold: float = 1,
+):
+    """
+    Calculates team throughput (em7).
+
+    This function gets the dataframe metrics
+    and returns the team throughput measure (em7).
+    """
+    total_issues = data_frame["total_issues"]
+    resolved_issues = data_frame["resolved_issues"]  
+
+    Checker.check_metric_value(total_issues, "total_issues")
+    Checker.check_metric_value(resolved_issues, "resolved_issues")
+
+    Checker.check_threshold(min_threshold, max_threshold, "team_throughput")
+
+    team_throughput_value = ems_functions.get_team_throughput(
+        data={
+            "total_issues": int(total_issues),
+            "resolved_issues": int(resolved_issues),
+        }
+    )
+
+    interpretation_function_value = transformations.interpretation_function(
+        x=team_throughput_value,
+        min_threshold=min_threshold,
+        max_threshold=max_threshold,
+        gain_interpretation=1,
+    )
+
+    aggregated_and_normalized_measure = transformations.calculate_measure(interpretation_function_value)
+
+    return aggregated_and_normalized_measure

@@ -188,12 +188,11 @@ class TestCoverageSchema(Schema):
 
     coverage = fields.List(fields.Float(required=True))
 
-
 class TeamThroughputSchema(Schema):
     """
     "key": "team_throughput",
     "function": calculate_em7
     """
 
-    number_of_resolved_issues_with_US_label_in_the_last_x_days = fields.Integer(required=True)
-    total_number_of_issues_with_US_label_in_the_last_x_days = fields.Integer(required=True)
+    total_issues = fields.Int(required=True)
+    resolved_issues = fields.Int(required=True)

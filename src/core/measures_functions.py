@@ -183,25 +183,15 @@ def get_test_coverage(data: dict):
     return coverage, number_of_files
 
 
-# def calculate_em7(data: dict):
-#     """
-#     Calculates team throughput (em7).
+def get_team_throughput(data: dict[str, int]):
+    """
+    Calculates team throughput (em7)
 
-#     This function calculates the team throughput measure (em7)
-#     used to assess the functional completeness subcharacteristic.
-#     """
-#     resolved_issues_with_us_label = data[
-#         "number_of_resolved_issues_with_US_label_in_the_last_x_days"
-#     ]
+    This function calculates the team throughput measure (em7)
+    used to assess the testing status sub characteristic.
+    """
 
-#     total_issues_with_us_label = data[
-#         "total_number_of_issues_with_US_label_in_the_last_x_days"
-#     ]
+    total_issues = data["total_issues"]
+    resolved_issues = data["resolved_issues"]
 
-#     x, y = create_coordinate_pair(0, 1, reverse_y=True)
-
-#     if7 = np.divide(resolved_issues_with_us_label, total_issues_with_us_label)
-
-#     if np.isnan(if7) or np.isinf(if7):
-#         return 0
-#     return np.interp(if7, x, y)
+    return resolved_issues/ total_issues

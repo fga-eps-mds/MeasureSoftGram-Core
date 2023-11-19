@@ -6,6 +6,7 @@ from core.aggregated_normalized_measures import (
     non_complex_files_density,
     passed_tests,
     test_coverage,
+    team_throughput,
 )
 
 AVAILABLE_PRE_CONFIGS = {
@@ -90,8 +91,7 @@ AVAILABLE_PRE_CONFIGS = {
             "subcharacteristics": ["functional_completeness"],
             "characteristics": ["functional_suitability"],
             "metrics": [
-                "number_of_resolved_issues_with_US_label_in_the_last_x_days",
-                "total_number_of_issues_with_US_label_in_the_last_x_days",
+                "resolved_issues_density",
             ],
         },
     },
@@ -123,7 +123,7 @@ AGGREGATED_NORMALIZED_MEASURES_MAPPING = {
         "schema": schemas.TestCoverageSchema,
     },
     "team_throughput": {
-        "aggregated_normalized_measure": ...,
+        "aggregated_normalized_measure": team_throughput,
         "schema": schemas.TeamThroughputSchema,
     },
 }
