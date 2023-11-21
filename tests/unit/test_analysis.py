@@ -1,7 +1,7 @@
 import pytest
 from marshmallow.exceptions import ValidationError
 
-from resources.analysis import (
+from src.resources.analysis import (
     calculate_characteristics,
     calculate_measures,
     calculate_subcharacteristics,

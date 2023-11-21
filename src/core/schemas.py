@@ -4,11 +4,11 @@ class MetricSchema(Schema):
     """
     {
         "key": "tests"
-        "value": 10
+        "value": [10.0]
     }
     """
     key = fields.Str(required=True)
-    value = fields.Number(required=True)
+    value = fields.List(fields.Float (required=True))
 
 
 class MeasureSchema(Schema):
@@ -18,15 +18,15 @@ class MeasureSchema(Schema):
         "metrics": [
             {
                 "key": "tests",
-                "value": 10
+                "value": [10.0]
             },
             {
                 "key": "test_errors",
-                "value": 3
+                "value": [3.0]
             },
             {
                 "key": "test_failures",
-                "value": 1
+                "value": [1.0]
             }
         ]
     }
@@ -46,15 +46,15 @@ class CalculateMeasureSchema(Schema):
                 "metrics": [
                     {
                         "key": "tests",
-                        "value":10
+                        "value": 10.0
                     },
                     {
                         "key": "test_errors",
-                        "value":3
+                        "value": 3.0
                     },
                     {
                         "key": "test_failures",
-                        "value":1
+                        "value": 1.0
                     }
                 ]
             },
@@ -63,15 +63,15 @@ class CalculateMeasureSchema(Schema):
                 "metrics": [
                     {
                         "key": "param1",
-                        "value":8
+                        "value": 8.0
                     },
                     {
                         "key": "param2",
-                        "value":19
+                        "value": 19.0
                     },
                     {
                         "key": "param3",
-                        "value":4
+                        "value": 4.0
                     }
                 ]
             },
