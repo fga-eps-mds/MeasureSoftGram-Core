@@ -48,7 +48,8 @@ SUPPORTED_MEASURES = [
     {
         "team_throughput": {
             "metrics": [
-                "resolved_issues_density",
+                "total_issues",
+                "resolved_issues",
             ],
         }
     },

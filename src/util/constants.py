@@ -19,9 +19,9 @@ AVAILABLE_PRE_CONFIGS = {
             "name": "Maintainability",
             "subcharacteristics": ["modifiability"],
         },
-        "productivity": {
-            "name": "Productivity",
-            "subcharacteristics": ["issues_velocity"],
+        "functional_suitability": {
+            "name": "Functional Suitability",
+            "subcharacteristics": ["functional_completeness"],
         },
     },
     "subcharacteristics": {
@@ -43,10 +43,10 @@ AVAILABLE_PRE_CONFIGS = {
             ],
             "characteristics": ["maintainability"],
         },
-        "issues_velocity": {
-            "name": "Issues Velocity",
+        "functional_completeness": {
+            "name": "Functional Completeness",
             "measures": ["team_throughput"],
-            "characteristics": ["productivity"],
+            "characteristics": ["functional_suitability"],
         },
     },
     "measures": {
@@ -91,7 +91,8 @@ AVAILABLE_PRE_CONFIGS = {
             "subcharacteristics": ["functional_completeness"],
             "characteristics": ["functional_suitability"],
             "metrics": [
-                "resolved_issues_density",
+                "total_issues",
+                "resolved_issues",
             ],
         },
     },

@@ -63,11 +63,11 @@ DEFAULT_PRE_CONFIG = {
             ],
         },
         {
-            "key": "Productivity",
+            "key": "functional_suitability",
             "weight": 33,
             "subcharacteristics": [
                 {
-                    "key": "Issues_velocity",
+                    "key": "functional_completeness",
                     "weight": 100,
                     "measures": [
                         {
