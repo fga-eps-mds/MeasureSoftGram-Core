@@ -273,7 +273,7 @@ def team_throughput(
     and returns the team throughput measure (em7).
     """
     total_issues = data_frame["total_issues"]
-    resolved_issues = data_frame["resolved_issues"]  
+    resolved_issues = data_frame["resolved_issues"]
 
     Checker.check_metric_value(total_issues, "total_issues")
     Checker.check_metric_value(resolved_issues, "resolved_issues")

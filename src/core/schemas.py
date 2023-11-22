@@ -188,6 +188,7 @@ class TestCoverageSchema(Schema):
 
     coverage = fields.List(fields.Float(required=True))
 
+
 class TeamThroughputSchema(Schema):
     """
     "key": "team_throughput",
