@@ -4,7 +4,7 @@ DEFAULT_PRE_CONFIG = {
     "characteristics": [
         {
             "key": "reliability",
-            "weight": 50,
+            "weight": 34,
             "subcharacteristics": [
                 {
                     "key": "testing_status",
@@ -34,7 +34,7 @@ DEFAULT_PRE_CONFIG = {
         },
         {
             "key": "maintainability",
-            "weight": 50,
+            "weight": 33,
             "subcharacteristics": [
                 {
                     "key": "modifiability",
@@ -62,21 +62,23 @@ DEFAULT_PRE_CONFIG = {
                 }
             ],
         },
-        # {
-        #   "key": "functional_suitability",
-        #   "weight": 34.0,
-        #   "subcharacteristics": [
-        #     {
-        #       "key": "functional_completeness",
-        #       "weight": 100.0,
-        #       "measures": [
-        #         {
-        #           "key": "team_throughput",
-        #           "weight": 100.0
-        #         }
-        #       ]
-        #     }
-        #   ]
-        # }
+        {
+            "key": "functional_suitability",
+            "weight": 33,
+            "subcharacteristics": [
+                {
+                    "key": "functional_completeness",
+                    "weight": 100,
+                    "measures": [
+                        {
+                            "key": "team_throughput",
+                            "weight": 100.0,
+                            "min_threshold": 0,
+                            "max_threshold": 1,
+                        },
+                    ],
+                }
+            ],
+        },
     ]
 }

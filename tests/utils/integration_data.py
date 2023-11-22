@@ -197,12 +197,12 @@ METRICS_LIST = [
         "measure_key": "duplication_absense",
     },
     {
-        "key": "number_of_resolved_issues_with_US_label_in_the_last_x_days",
+        "key": "resolved_issues",
         "value": 1.0,
         "measure_key": "team_throughput",
     },
     {
-        "key": "total_number_of_issues_with_US_label_in_the_last_x_days",
+        "key": "total_issues",
         "value": 29.0,
         "measure_key": "team_throughput",
     },
