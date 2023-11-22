@@ -46,15 +46,15 @@ class CalculateMeasureSchema(Schema):
                 "metrics": [
                     {
                         "key": "tests",
-                        "value": 10.0
+                        "value": [10.0]
                     },
                     {
                         "key": "test_errors",
-                        "value": 3.0
+                        "value": [3.0]
                     },
                     {
                         "key": "test_failures",
-                        "value": 1.0
+                        "value": [1.0]
                     }
                 ]
             },
@@ -62,16 +62,12 @@ class CalculateMeasureSchema(Schema):
                 "key": "test_builds",
                 "metrics": [
                     {
-                        "key": "param1",
-                        "value": 8.0
+                        "key": "test_execution_time",
+                        "value": [8.0]
                     },
                     {
-                        "key": "param2",
-                        "value": 19.0
-                    },
-                    {
-                        "key": "param3",
-                        "value": 4.0
+                        "key": "tests",
+                        "value": [10.0]
                     }
                 ]
             },
@@ -79,34 +75,6 @@ class CalculateMeasureSchema(Schema):
     """
 
     measures = fields.List(fields.Nested(MeasureSchema), required=True)
-
-# ANTIGO
-#
-# class CalculateMeasureSchema(Schema):
-#     """
-#     {
-#         "measures": [
-#             {
-#                 "key": "passed_tests",
-#                 "parameters": {
-#                     "tests": 10,
-#                     "test_errors": 3,
-#                     "test_failures": 1
-#                 }
-#             },
-#             {
-#                 "key": "test_builds",
-#                 "parameters": {
-#                     "param1": 8,
-#                     "param2": 19,
-#                     "parma3": 4
-#                 }
-#             }
-#         ]
-#     }
-#     """
-#
-#     measures = fields.List(fields.Nested(MeasureSchema), required=True)
 
 
 class CalculatedSubEntitySchema(Schema):
@@ -197,63 +165,37 @@ class CalculateTSQMISchema(Schema):
 
 
 class NonComplexFileDensitySchema(Schema):
-    """
-    "key": "non_complex_file_density",
-    "function": calculate_em1
-    """
-
-    complexity = fields.List(fields.Float(required=True))
-    functions = fields.List(fields.Float(required=True))
+    metrics = fields.List(fields.Nested(MetricSchema), required=True)
 
 
 class CommentedFileDensitySchema(Schema):
-    """
-    "key": "commented_file_density",
-    "function": calculate_em2
-    """
-
-    comment_lines_density = fields.List(fields.Float(required=True))
+    metrics = fields.List(fields.Nested(MetricSchema), required=True)
 
 
 class DuplicationAbsenceSchema(Schema):
-    """
-    "key": "duplication_absense",
-    "function": calculate_em3
-    """
-
-    duplicated_lines_density = fields.List(fields.Float(required=True))
+    metrics = fields.List(fields.Nested(MetricSchema), required=True)
 
 
 class PassedTestsSchema(Schema):
-    """
-    "key": "passed_tests",
-    "function": calculate_em4
-    """
+    metrics = fields.List(fields.Nested(MetricSchema), required=True)
+    @staticmethod
+    def validate_metrics(metrics):
+        for metric in metrics:
+            #As métricas test_failures e test_errors só podem ser representadas por um valor flutuante 
+            if metric['key'] in ['test_failures', 'test_errors'] and len(metric['value']) != 1:
+                raise ValueError(f"'{metric['key']}' deveria ter apenas um valor flutuante")
 
-    tests = fields.List(fields.Float(required=True))
-    test_errors = fields.Float(required=True)
-    test_failures = fields.Float(required=True)
+
 
 
 class TestBuildsSchema(Schema):
-    """
-    "key": "test_builds",
-    "function": calculate_em5
-    """
-
-    test_execution_time = fields.List(fields.Float(required=True))
-    tests = fields.List(fields.Float(required=True))
+    metrics = fields.List(fields.Nested(MetricSchema), required=True)
 
 
 class TestCoverageSchema(Schema):
-    """
-    "key": "test_coverage",
-    "function": calculate_em6
-    """
+    metrics = fields.List(fields.Nested(MetricSchema), required=True)
 
-    coverage = fields.List(fields.Float(required=True))
-
-
+#Todo : Implementar métricas do tipo inteiro
 class TeamThroughputSchema(Schema):
     """
     "key": "team_throughput",

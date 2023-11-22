@@ -1,20 +1,25 @@
 import numpy as np
 from marshmallow.exceptions import ValidationError
 
-from core.schemas import (
+from src.core.schemas import (
     CalculateCharacteristicSchema,
     CalculateMeasureSchema,
     CalculateSubCharacteristicSchema,
     CalculateTSQMISchema,
 )
-from core.transformations import calculate_aggregated_weighted_value
-from util.constants import AGGREGATED_NORMALIZED_MEASURES_MAPPING
-from util.exceptions import MeasureKeyNotSupported
+from src.core.transformations import calculate_aggregated_weighted_value
+from src.util.constants import AGGREGATED_NORMALIZED_MEASURES_MAPPING
+from src.util.exceptions import MeasureKeyNotSupported
 
+#Todo : Colocar na pasta UTILS
 def convert_metrics_to_dict(metrics_list):
     metrics_dict = {}
     for metric in metrics_list:
-        metrics_dict[metric["key"]] = metric["value"]
+        if  len(metric["value"]) == 1:
+            metrics_dict[metric["key"]] = float(metric["value"][0])
+        else:
+            metrics_dict[metric["key"]] = metric["value"]
+
     return metrics_dict
 
 
@@ -39,12 +44,13 @@ def calculate_measures(
         if measure_key not in valid_measures:
             raise MeasureKeyNotSupported(f"Measure {measure_key} is not supported")
 
-        metrics = measure["metrics"]
-        measure_params = convert_metrics_to_dict(metrics)
+        measure_metrics = measure["metrics"]
         schema = AGGREGATED_NORMALIZED_MEASURES_MAPPING[measure_key]["schema"]
 
         try:
-            validated_params = schema().load(measure_params)
+            validated_params = schema().load({'metrics':measure_metrics})
+            if hasattr(schema(), 'validate_measures') and callable(getattr(schema(), 'validate_measures')):
+                schema().validate_metrics(validated_params['metrics'])
         except ValidationError as exc:
             raise ValidationError(
                 f"error: Metric parameters {measure_key} are not valid.\nschema_errors: {exc.messages}"
@@ -67,7 +73,9 @@ def calculate_measures(
             for key, value in measure.items()
             if measure["key"] == measure_key and ("min_threshold" == key or "max_threshold" == key)
         }
-        result = aggregated_normalized_measure(validated_params, **threshold_config)
+
+        validated_params_dict = convert_metrics_to_dict(validated_params['metrics'])
+        result = aggregated_normalized_measure(validated_params_dict, **threshold_config)
 
         result_data["measures"].append(
             {
