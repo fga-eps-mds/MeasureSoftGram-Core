@@ -44,12 +44,13 @@ def calculate_measures(
         if measure_key not in valid_measures:
             raise MeasureKeyNotSupported(f"Measure {measure_key} is not supported")
 
-        measure_metrics = measure["metrics"]
         schema = AGGREGATED_NORMALIZED_MEASURES_MAPPING[measure_key]["schema"]
+        measure_metrics = measure["metrics"]
 
         try:
             validated_params = schema().load({'metrics':measure_metrics})
-            if hasattr(schema(), 'validate_measures') and callable(getattr(schema(), 'validate_measures')):
+            #Se o schema da medida tem validações específicas para alguma métrica
+            if hasattr(schema(), 'validate_metrics') and callable(getattr(schema(), 'validate_metrics')):
                 schema().validate_metrics(validated_params['metrics'])
         except ValidationError as exc:
             raise ValidationError(

@@ -1,4 +1,5 @@
 from marshmallow import Schema, fields, validate
+from marshmallow.exceptions import ValidationError
 
 class MetricSchema(Schema):
     """
@@ -165,34 +166,47 @@ class CalculateTSQMISchema(Schema):
 
 
 class NonComplexFileDensitySchema(Schema):
+    #1 Validação : Se contém uma lista de métricas
     metrics = fields.List(fields.Nested(MetricSchema), required=True)
 
 
 class CommentedFileDensitySchema(Schema):
+    #1 Validação : Se contém uma lista de métricas
     metrics = fields.List(fields.Nested(MetricSchema), required=True)
 
 
 class DuplicationAbsenceSchema(Schema):
+    #1 Validação : Se contém uma lista de métricas
     metrics = fields.List(fields.Nested(MetricSchema), required=True)
 
 
 class PassedTestsSchema(Schema):
+
+    #1 Validação : Se contém uma lista de métricas
     metrics = fields.List(fields.Nested(MetricSchema), required=True)
+    
+    #2 Validação:   As métricas test_failures e test_errors só 
+    #               podem ser representadas por um array de um único elemento flutuante
     @staticmethod
     def validate_metrics(metrics):
-        for metric in metrics:
-            #As métricas test_failures e test_errors só podem ser representadas por um valor flutuante 
-            if metric['key'] in ['test_failures', 'test_errors'] and len(metric['value']) != 1:
-                raise ValueError(f"'{metric['key']}' deveria ter apenas um valor flutuante")
+        for metric in metrics: 
+            if metric['key'] in ['test_failures', 'test_errors']:
+                print(f"-----PRINT metric['value'][0]----:{metric['value'][0]}")
+                if len(metric['value']) != 1:
+                    raise ValidationError(f"'{metric['key']}' deveria ser um array de um único valor")
+                if not isinstance(metric['value'][0], float): 
+                    raise ValidationError(f"'{metric['key']}' deveria ser um valor flutuante")
 
 
 
 
 class TestBuildsSchema(Schema):
+    #1 Validação : Se contém uma lista de métricas
     metrics = fields.List(fields.Nested(MetricSchema), required=True)
 
 
 class TestCoverageSchema(Schema):
+    #1 Validação : Se contém uma lista de métricas
     metrics = fields.List(fields.Nested(MetricSchema), required=True)
 
 #Todo : Implementar métricas do tipo inteiro
