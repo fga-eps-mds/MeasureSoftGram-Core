@@ -34,19 +34,14 @@ def test_calculate_measures_success():
         assert measure_result.get("key") == measure_expected.get("key")
         assert pytest.approx(measure_result.get("value")) == measure_expected.get("value")
 
-#Todo : Solucionar esse teste
-# @pytest.mark.parametrize(
-#     "extracted_measure_data,error_msg",
-#     CALCULATE_MEASURES_ERROR_INFOS,
-# )
-# def test_calcula_measures_errors(extracted_measure_data, error_msg):
-#     with pytest.raises((ValidationError, MeasureKeyNotSupported)) as error:
-#         calculate_measures(extracted_measures=extracted_measure_data)
-
-#     print(f'-----------PRINT error.value------------ :{error.value}')
-#     print(f'-----------PRINT error_msg------------ :{error_msg}')
-#     assert str(error.value) == error_msg
-
+@pytest.mark.parametrize(
+    "extracted_measures_data, error_msg",
+    CALCULATE_MEASURES_ERROR_INFOS,
+)
+def test_calculate_measures_errors(extracted_measures_data, error_msg):
+    with pytest.raises((ValidationError, MeasureKeyNotSupported)) as error:
+        calculate_measures(extracted_measures=extracted_measures_data)
+    assert error_msg in str(error.value)
 
 def test_calculate_subcharacteristics_sucess():
     calculation_result = calculate_subcharacteristics(extracted_subcharacteristics=EXTRACTED_SUBCHARACTERISTICS_DATA)

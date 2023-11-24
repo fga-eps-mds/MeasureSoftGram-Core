@@ -54,7 +54,7 @@ def calculate_measures(
                 schema().validate_metrics(validated_params['metrics'])
         except ValidationError as exc:
             raise ValidationError(
-                f"error: Metric parameters {measure_key} are not valid.\nschema_errors: {exc.messages}"
+                f"error: Metrics in {measure_key} are not valid.\nschema_errors: {exc.messages}"
             )
 
         aggregated_normalized_measure = AGGREGATED_NORMALIZED_MEASURES_MAPPING[measure_key][

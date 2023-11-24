@@ -113,19 +113,36 @@ CALCULATE_MEASURES_ERROR_INFOS = [
         "error: Failed to validate input.\nschema_errors: {'measures': ['Field may not be null.']}",
     ),
     (
-        {"measures": [{"key": "inexistent", "parameters": {"inexistent_v2": [1]}}]},
-        "Measure inexistent is not supported",
+        {
+            "measures": [
+                {
+                    "key": "inexistent",
+                    "metrics": [
+                            {
+                                "key": "inexistent_v2",
+                                "value":[1]
+                            },
+                    ]
+                }
+            ]
+        },
+        "Measure inexistent is not supported",    
     ),
     (
         {
             "measures": [
                 {
-                    "key": "duplication_absense",
-                    "parameters": {"duplicated_lines_density": [None]},
+                    "key": "passed_tests",
+                    "metrics": [
+                            {
+                                "key": "inexistent_v3",
+                                "value": [1]
+                            },     
+                        ],
                 }
             ]
         },
-        "error: Metric parameters duplication_absense are not valid.\nschema_errors: {'duplicated_lines_density': {0: ['Field may not be null.']}}",  # noqa E501
+        "error: Metrics in passed_tests are not valid."
     ),
 ]
 
