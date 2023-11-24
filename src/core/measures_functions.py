@@ -193,5 +193,5 @@ def get_team_throughput(data: dict[str, int]):
 
     total_issues = data["total_issues"]
     resolved_issues = data["resolved_issues"]
-
-    return resolved_issues / total_issues
+    
+    return 100 * (resolved_issues / total_issues)
