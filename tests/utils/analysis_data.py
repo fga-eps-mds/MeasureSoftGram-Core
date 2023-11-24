@@ -65,6 +65,7 @@ EXTRACTED_MEASURES_DATA = {
                         47.0,
                         5.0,
                     ]
+
                 },
                 {
                     "key": "tests",
@@ -92,7 +93,153 @@ EXTRACTED_MEASURES_DATA = {
                     ]
                 }                
             ]
+        },
+        {
+            "key":"test_coverage",
+            "metrics" :[
+                {
+                    "key":"coverage",
+                    "value":[
+                        90.7,
+                        71.4,
+                        44.2,
+                        18.4,
+                        60.8,
+                        4.6,
+                        5.3,
+                        70.1,
+                        70.7,
+                        22.4,
+                        86.0,
+                        16.0,
+                        20.5,
+                        89.1,
+                        21.2,
+                        43.9,
+                        25.8,
+                        26.3,
+                        93.2,
+                        95.4                        
+                    ]
+                }
+            ]
+        },
+        {
+            "key":"non_complex_file_density",
+            "metrics" :[
+                {
+                    "key":"complexity",
+                    "value":[
+                        49.3,
+                        57.8,
+                        32.1,
+                        63.5,
+                        91.2,
+                        82.5,
+                        68.7,
+                        14.2,
+                        79.4,
+                        56.1,
+                        43.0,
+                        85.7,
+                        73.6,
+                        20.4,
+                        9.5,
+                        61.0,
+                        36.7,
+                        28.8,
+                        53.5,
+                        47.7
+                    ]
+                },
+                {
+                    "key":"functions",
+                    "value":[
+                        62.7,
+                        95.1,
+                        38.4,
+                        71.5,
+                        18.9,
+                        84.9,
+                        29.4,
+                        55.3,
+                        47.5,
+                        89.6,
+                        53.8,
+                        26.0,
+                        12.7,
+                        68.9,
+                        40.5,
+                        79.8,
+                        90.2,
+                        37.6,
+                        64.3,
+                        51.4
+                    ]
+                },
+            ]
+        },
+        {
+            "key":"commented_file_density",
+            "metrics" :[
+                {
+                    "key":"comment_lines_density",
+                    "value":[
+                        31.2,
+                        73.4,
+                        88.5,
+                        42.1,
+                        59.7,
+                        14.6,
+                        67.2,
+                        25.8,
+                        96.1,
+                        50.9,
+                        85.2,
+                        39.7,
+                        18.3,
+                        71.0,
+                        57.6,
+                        49.0,
+                        23.9,
+                        62.5,
+                        37.4,
+                        81.8
+                    ]
+                }
+            ]
+        },
+        {
+            "key":"duplication_absense",
+            "metrics" :[
+                {
+                    "key":"duplicated_lines_density",
+                    "value":[
+                        77.2,
+                        44.9,
+                        59.6,
+                        33.8,
+                        20.7,
+                        92.5,
+                        68.3,
+                        51.0,
+                        86.4,
+                        37.6,
+                        64.9,
+                        12.8,
+                        58.0,
+                        43.5,
+                        75.1,
+                        28.1,
+                        95.0,
+                        80.7,
+                        15.9,
+                        70.5
+                    ]
+                }
+            ]
         }
+        
     ]
 }
 
@@ -100,10 +247,10 @@ CALCULATE_MEASURES_RESULT_DATA = {
     "measures": [
         {"key": "passed_tests", "value": 1.0},
         {"key": "test_builds", "value": 0.9995933399758454},
-        {"key": "test_coverage", "value": 0.414921875},
-        {"key": "non_complex_file_density", "value": 0.43738095238095254},
-        {"key": "commented_file_density", "value": 0.04453125},
-        {"key": "duplication_absense", "value": 1.0},
+        {"key": "test_coverage", "value": 0.23425},
+        {"key": "non_complex_file_density", "value": 0.8603745807930887},
+        {"key": "commented_file_density", "value": 0.0935},
+        {"key": "duplication_absense", "value": 0.0},
     ]
 }
 
