@@ -169,17 +169,35 @@ class NonComplexFileDensitySchema(Schema):
     #1 Validação : Se contém uma lista de métricas
     metrics = fields.List(fields.Nested(MetricSchema), required=True)
 
+    @staticmethod
+    def validate_metrics(metrics):
+        for metric in metrics: 
+            #2 Validação : Se foi passada alguma métrica não pertencente a medida
+            if metric['key'] not in ['complexity','functions']:
+                raise ValidationError(f"'{metric['key']}': Métrica não presente na medida")
 
 class CommentedFileDensitySchema(Schema):
     #1 Validação : Se contém uma lista de métricas
     metrics = fields.List(fields.Nested(MetricSchema), required=True)
 
+    @staticmethod
+    def validate_metrics(metrics):
+        for metric in metrics: 
+            #2 Validação : Se foi passada alguma métrica não pertencente a medida
+            if metric['key'] not in ['comment_lines_density']:
+                raise ValidationError(f"'{metric['key']}': Métrica não presente na medida")
 
 class DuplicationAbsenceSchema(Schema):
     #1 Validação : Se contém uma lista de métricas
     metrics = fields.List(fields.Nested(MetricSchema), required=True)
 
-
+    @staticmethod
+    def validate_metrics(metrics):
+        for metric in metrics: 
+            #2 Validação : Se foi passada alguma métrica não pertencente a medida
+            if metric['key'] not in ['duplicated_lines_density']:
+                raise ValidationError(f"'{metric['key']}': Métrica não presente na medida")
+            
 class PassedTestsSchema(Schema):
 
     #1 Validação : Se contém uma lista de métricas
@@ -201,9 +219,6 @@ class PassedTestsSchema(Schema):
                 if not isinstance(metric['value'][0], float): 
                     raise ValidationError(f"'{metric['key']}': Deveria ser um valor flutuante")
 
-
-
-
 class TestBuildsSchema(Schema):
     #1 Validação : Se contém uma lista de métricas
     metrics = fields.List(fields.Nested(MetricSchema), required=True)
@@ -215,12 +230,16 @@ class TestBuildsSchema(Schema):
             if metric['key'] not in ['test_execution_time','tests']:
                 raise ValidationError(f"'{metric['key']}': Métrica não presente na medida")
 
-
-
-
 class TestCoverageSchema(Schema):
     #1 Validação : Se contém uma lista de métricas
     metrics = fields.List(fields.Nested(MetricSchema), required=True)
+
+    @staticmethod
+    def validate_metrics(metrics):
+        for metric in metrics:
+            #2 Validação : Se foi passada alguma métrica não pertencente a medida
+            if metric['key'] not in ['coverage']:
+                raise ValidationError(f"'{metric['key']}': Métrica não presente na medida")
 
 class TeamThroughputSchema(Schema):
     
