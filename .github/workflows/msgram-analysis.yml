@@ -1,3 +1,4 @@
+name: MSG Action
 on:
   pull_request:
     branches: [ develop ]
