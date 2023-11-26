@@ -8,10 +8,9 @@ from src.core.schemas import (
     CalculateTSQMISchema,
 )
 from src.core.transformations import calculate_aggregated_weighted_value
-from src.util.constants import AGGREGATED_NORMALIZED_MEASURES_MAPPING
+from src.resources.constants import AGGREGATED_NORMALIZED_MEASURES_MAPPING
 from src.util.exceptions import MeasureKeyNotSupported
 
-#Todo : Colocar na pasta UTILS
 def convert_metrics_to_dict(metrics_list):
     metrics_dict = {}
     for metric in metrics_list:

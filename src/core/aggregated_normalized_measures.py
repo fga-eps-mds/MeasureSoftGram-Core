@@ -1,8 +1,8 @@
 import numpy as np
 
-import core.measures_functions as ems_functions
-import core.transformations as transformations
-from util.check import Checker
+import src.core.measures_functions as ems_functions
+import src.core.transformations as transformations
+from src.util.check import Checker
 
 
 def non_complex_files_density(
