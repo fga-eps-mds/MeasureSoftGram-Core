@@ -275,8 +275,8 @@ def passed_tests(data_frame, min_threshold: float = 0, max_threshold: float = 1)
 
 def team_throughput(
     data_frame,
-    min_threshold: float = 0,
-    max_threshold: float = 1,
+    min_threshold: float = 45,
+    max_threshold: float = 100,
 ):
     """
     Calculates team throughput (em7).
