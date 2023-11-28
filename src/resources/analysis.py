@@ -11,10 +11,11 @@ from src.core.transformations import calculate_aggregated_weighted_value
 from src.resources.constants import AGGREGATED_NORMALIZED_MEASURES_MAPPING
 from src.util.exceptions import MeasureKeyNotSupported
 
+
 def convert_metrics_to_dict(metrics_list):
     metrics_dict = {}
     for metric in metrics_list:
-        if  len(metric["value"]) == 1:
+        if len(metric["value"]) == 1:
             metrics_dict[metric["key"]] = float(metric["value"][0])
         else:
             metrics_dict[metric["key"]] = metric["value"]
@@ -24,13 +25,17 @@ def convert_metrics_to_dict(metrics_list):
 
 def calculate_measures(
     extracted_measures: CalculateMeasureSchema,
-    config: dict = {"characteristics": [{"subcharacteristics": [{"measures": [{"key": ""}]}]}]},
+    config: dict = {
+        "characteristics": [{"subcharacteristics": [{"measures": [{"key": ""}]}]}]
+    },
 ):
     # Validate if outter keys is valid
     try:
         data = CalculateMeasureSchema().load(extracted_measures)
     except ValidationError as error:
-        raise ValidationError(f"error: Failed to validate input.\nschema_errors: {error.messages}")
+        raise ValidationError(
+            f"error: Failed to validate input.\nschema_errors: {error.messages}"
+        )
 
     # Objeto retornado em caso de sucesso
     result_data = {"measures": []}
@@ -47,18 +52,20 @@ def calculate_measures(
         measure_metrics = measure["metrics"]
 
         try:
-            validated_params = schema().load({'metrics':measure_metrics})
-            #Se o schema da medida tem validações específicas para alguma métrica
-            if hasattr(schema(), 'validate_metrics') and callable(getattr(schema(), 'validate_metrics')):
-                schema().validate_metrics(validated_params['metrics'])
+            validated_params = schema().load({"metrics": measure_metrics})
+            # Se o schema da medida tem validações específicas para alguma métrica
+            if hasattr(schema(), "validate_metrics") and callable(
+                getattr(schema(), "validate_metrics")
+            ):
+                schema().validate_metrics(validated_params["metrics"])
         except ValidationError as exc:
             raise ValidationError(
                 f"error: Metrics in {measure_key} are not valid.\nschema_errors: {exc.messages}"
             )
 
-        aggregated_normalized_measure = AGGREGATED_NORMALIZED_MEASURES_MAPPING[measure_key][
-            "aggregated_normalized_measure"
-        ]
+        aggregated_normalized_measure = AGGREGATED_NORMALIZED_MEASURES_MAPPING[
+            measure_key
+        ]["aggregated_normalized_measure"]
 
         measures = [
             measure
@@ -71,11 +78,14 @@ def calculate_measures(
             key: value
             for measure in measures
             for key, value in measure.items()
-            if measure["key"] == measure_key and ("min_threshold" == key or "max_threshold" == key)
+            if measure["key"] == measure_key
+            and ("min_threshold" == key or "max_threshold" == key)
         }
 
-        validated_params_dict = convert_metrics_to_dict(validated_params['metrics'])
-        result = aggregated_normalized_measure(validated_params_dict, **threshold_config)
+        validated_params_dict = convert_metrics_to_dict(validated_params["metrics"])
+        result = aggregated_normalized_measure(
+            validated_params_dict, **threshold_config
+        )
 
         result_data["measures"].append(
             {
@@ -91,7 +101,9 @@ def calculate_subcharacteristics(extracted_subcharacteristics):
     try:
         data = CalculateSubCharacteristicSchema().load(extracted_subcharacteristics)
     except ValidationError as error:
-        raise ValidationError(f"error: Failed to validate input.\nschema_errors: {error.messages}")
+        raise ValidationError(
+            f"error: Failed to validate input.\nschema_errors: {error.messages}"
+        )
 
     result_data = {"subcharacteristics": []}
 
@@ -102,7 +114,9 @@ def calculate_subcharacteristics(extracted_subcharacteristics):
         vector_weight_aggregated_normalized_measure = np.array([])
 
         for measure in subcharacteristic["measures"]:
-            vector_aggregated_normalized_measure = np.append(vector_aggregated_normalized_measure, measure["value"])
+            vector_aggregated_normalized_measure = np.append(
+                vector_aggregated_normalized_measure, measure["value"]
+            )
             vector_weight_aggregated_normalized_measure = np.append(
                 vector_weight_aggregated_normalized_measure, measure["weight"]
             )
@@ -125,7 +139,9 @@ def calculate_characteristics(extracted_characteristics):
     try:
         data = CalculateCharacteristicSchema().load(extracted_characteristics)
     except ValidationError as error:
-        raise ValidationError(f"error: Failed to validate input.\nschema_errors: {error.messages}")
+        raise ValidationError(
+            f"error: Failed to validate input.\nschema_errors: {error.messages}"
+        )
 
     result_data = {"characteristics": []}
 
@@ -163,7 +179,9 @@ def calculate_tsqmi(extracted_tsqmi):
     try:
         data = CalculateTSQMISchema().load(extracted_tsqmi)
     except ValidationError as error:
-        raise ValidationError(f"error: Failed to validate input.\nschema_errors: {error.messages}")
+        raise ValidationError(
+            f"error: Failed to validate input.\nschema_errors: {error.messages}"
+        )
 
     result_data = {"tsqmi": []}
 

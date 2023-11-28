@@ -2,48 +2,42 @@ EXTRACTED_MEASURES_DATA = {
     "measures": [
         {
             "key": "passed_tests",
-            "metrics":[
-                    {
-                        "key": "tests",
-                        "value":[
-                            3.0,
-                            1.0,
-                            6.0,
-                            3.0,
-                            17.0,
-                            2.0,
-                            2.0,
-                            7.0,
-                            1.0,
-                            1.0,
-                            1.0,
-                            3.0,
-                            2.0,
-                            3.0,
-                            23.0,
-                            2.0,
-                            3.0,
-                            4.0,
-                            7.0,
-                            2.0,
-                        ]
-                    },
-                    {
-                        "key":"test_failures",
-                        "value" : [0.0]
-                    },
-                    {
-                        "key": "test_errors",
-                        "value" : [0.0]
-                    }
-                ],
+            "metrics": [
+                {
+                    "key": "tests",
+                    "value": [
+                        3.0,
+                        1.0,
+                        6.0,
+                        3.0,
+                        17.0,
+                        2.0,
+                        2.0,
+                        7.0,
+                        1.0,
+                        1.0,
+                        1.0,
+                        3.0,
+                        2.0,
+                        3.0,
+                        23.0,
+                        2.0,
+                        3.0,
+                        4.0,
+                        7.0,
+                        2.0,
+                    ],
+                },
+                {"key": "test_failures", "value": [0.0]},
+                {"key": "test_errors", "value": [0.0]},
+            ],
         },
         {
             "key": "test_builds",
-            "metrics":[
+            "metrics": [
                 {
-                    "key":"test_execution_time",
-                    "value":[
+                    "key": "test_execution_time",
+                    "value": [
                         6.0,
                         2.0,
                         18.0,
@@ -64,12 +58,11 @@ EXTRACTED_MEASURES_DATA = {
                         7.0,
                         47.0,
                         5.0,
-                    ]
-
+                    ],
                 },
                 {
                     "key": "tests",
-                    "value":[
+                    "value": [
                         3.0,
                         1.0,
                         6.0,
@@ -90,16 +83,16 @@ EXTRACTED_MEASURES_DATA = {
                         4.0,
                         7.0,
                         2.0,
-                    ]
-                }                
-            ]
+                    ],
+                },
+            ],
         },
         {
-            "key":"test_coverage",
-            "metrics" :[
+            "key": "test_coverage",
+            "metrics": [
                 {
-                    "key":"coverage",
-                    "value":[
+                    "key": "coverage",
+                    "value": [
                         90.7,
                         71.4,
                         44.2,
@@ -119,17 +112,17 @@ EXTRACTED_MEASURES_DATA = {
                         25.8,
                         26.3,
                         93.2,
-                        95.4                        
-                    ]
+                        95.4,
+                    ],
                 }
-            ]
+            ],
         },
         {
-            "key":"non_complex_file_density",
-            "metrics" :[
+            "key": "non_complex_file_density",
+            "metrics": [
                 {
-                    "key":"complexity",
-                    "value":[
+                    "key": "complexity",
+                    "value": [
                         49.3,
                         57.8,
                         32.1,
@@ -149,12 +142,12 @@ EXTRACTED_MEASURES_DATA = {
                         36.7,
                         28.8,
                         53.5,
-                        47.7
-                    ]
+                        47.7,
+                    ],
                 },
                 {
-                    "key":"functions",
-                    "value":[
+                    "key": "functions",
+                    "value": [
                         62.7,
                         95.1,
                         38.4,
@@ -174,17 +167,17 @@ EXTRACTED_MEASURES_DATA = {
                         90.2,
                         37.6,
                         64.3,
-                        51.4
-                    ]
+                        51.4,
+                    ],
                 },
-            ]
+            ],
         },
         {
-            "key":"commented_file_density",
-            "metrics" :[
+            "key": "commented_file_density",
+            "metrics": [
                 {
-                    "key":"comment_lines_density",
-                    "value":[
+                    "key": "comment_lines_density",
+                    "value": [
                         31.2,
                         73.4,
                         88.5,
@@ -204,17 +197,17 @@ EXTRACTED_MEASURES_DATA = {
                         23.9,
                         62.5,
                         37.4,
-                        81.8
-                    ]
+                        81.8,
+                    ],
                 }
-            ]
+            ],
         },
         {
-            "key":"duplication_absense",
-            "metrics" :[
+            "key": "duplication_absense",
+            "metrics": [
                 {
-                    "key":"duplicated_lines_density",
-                    "value":[
+                    "key": "duplicated_lines_density",
+                    "value": [
                         77.2,
                         44.9,
                         59.6,
@@ -234,12 +227,11 @@ EXTRACTED_MEASURES_DATA = {
                         95.0,
                         80.7,
                         15.9,
-                        70.5
-                    ]
+                        70.5,
+                    ],
                 }
-            ]
-        }
-        
+            ],
+        },
     ]
 }
 
@@ -265,15 +257,12 @@ CALCULATE_MEASURES_ERROR_INFOS = [
                 {
                     "key": "inexistent",
                     "metrics": [
-                            {
-                                "key": "inexistent_v2",
-                                "value":[1]
-                            },
-                    ]
+                        {"key": "inexistent_v2", "value": [1]},
+                    ],
                 }
             ]
         },
-        "Measure inexistent is not supported",    
+        "Measure inexistent is not supported",
     ),
     (
         {
@@ -281,15 +270,12 @@ CALCULATE_MEASURES_ERROR_INFOS = [
                 {
                     "key": "passed_tests",
                     "metrics": [
-                            {
-                                "key": "inexistent_v3",
-                                "value": [1]
-                            },     
-                        ],
+                        {"key": "inexistent_v3", "value": [1]},
+                    ],
                 }
             ]
         },
-        "error: Metrics in passed_tests are not valid."
+        "error: Metrics in passed_tests are not valid.",
     ),
 ]
 
@@ -336,11 +322,15 @@ EXTRACTED_CHARACTERISTICS_DATA = {
     "characteristics": [
         {
             "key": "reliability",
-            "subcharacteristics": [{"key": "testing_status", "value": 0.8507086078793112, "weight": 100}],
+            "subcharacteristics": [
+                {"key": "testing_status", "value": 0.8507086078793112, "weight": 100}
+            ],
         },
         {
             "key": "maintainability",
-            "subcharacteristics": [{"key": "modifiability", "value": 0.6642882099299446, "weight": 100}],
+            "subcharacteristics": [
+                {"key": "modifiability", "value": 0.6642882099299446, "weight": 100}
+            ],
         },
     ]
 }
