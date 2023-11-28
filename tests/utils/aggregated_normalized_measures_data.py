@@ -5,7 +5,9 @@ from src.core.aggregated_normalized_measures import (
     non_complex_files_density,
     passed_tests,
 )
-from src.core.aggregated_normalized_measures import test_coverage as interpret_test_coverage
+from src.core.aggregated_normalized_measures import (
+    test_coverage as interpret_test_coverage,
+)
 
 INVALID_METRICS_TEST_DATA = [
     (

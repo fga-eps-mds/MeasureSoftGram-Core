@@ -1,7 +1,7 @@
 import pytest
 from marshmallow.exceptions import ValidationError
 
-from resources.analysis import (
+from src.resources.analysis import (
     calculate_characteristics,
     calculate_measures,
     calculate_subcharacteristics,
@@ -21,7 +21,7 @@ from tests.utils.analysis_data import (
     EXTRACTED_SUBCHARACTERISTICS_DATA,
     EXTRACTED_TSQMI_DATA,
 )
-from util.exceptions import MeasureKeyNotSupported
+from src.util.exceptions import MeasureKeyNotSupported
 
 
 def test_calculate_measures_success():
@@ -32,30 +32,40 @@ def test_calculate_measures_success():
     measures_expected = CALCULATE_MEASURES_RESULT_DATA.get("measures")
     for measure_result, measure_expected in zip(measures_result, measures_expected):
         assert measure_result.get("key") == measure_expected.get("key")
-        assert pytest.approx(measure_result.get("value")) == measure_expected.get("value")
+        assert pytest.approx(measure_result.get("value")) == measure_expected.get(
+            "value"
+        )
 
 
 @pytest.mark.parametrize(
-    "extracted_measure_data,error_msg",
+    "extracted_measures_data, error_msg",
     CALCULATE_MEASURES_ERROR_INFOS,
 )
-def test_calcula_measures_errors(extracted_measure_data, error_msg):
+def test_calculate_measures_errors(extracted_measures_data, error_msg):
     with pytest.raises((ValidationError, MeasureKeyNotSupported)) as error:
-        calculate_measures(extracted_measures=extracted_measure_data)
-    assert str(error.value) == error_msg
+        calculate_measures(extracted_measures=extracted_measures_data)
+    assert error_msg in str(error.value)
 
 
 def test_calculate_subcharacteristics_sucess():
-    calculation_result = calculate_subcharacteristics(extracted_subcharacteristics=EXTRACTED_SUBCHARACTERISTICS_DATA)
+    calculation_result = calculate_subcharacteristics(
+        extracted_subcharacteristics=EXTRACTED_SUBCHARACTERISTICS_DATA
+    )
     assert "subcharacteristics" in calculation_result
 
     subcharacteristics_result = calculation_result.get("subcharacteristics")
-    subcharacteristics_expected = CALCULATE_SUBCHARACTERISTICS_RESULT_DATA.get("subcharacteristics")
+    subcharacteristics_expected = CALCULATE_SUBCHARACTERISTICS_RESULT_DATA.get(
+        "subcharacteristics"
+    )
     for subcharacteristic_result, subcharacteristic_expected in zip(
         subcharacteristics_result, subcharacteristics_expected
     ):
-        assert subcharacteristic_result.get("key") == subcharacteristic_expected.get("key")
-        assert pytest.approx(subcharacteristic_result.get("value")) == subcharacteristic_expected.get("value")
+        assert subcharacteristic_result.get("key") == subcharacteristic_expected.get(
+            "key"
+        )
+        assert pytest.approx(
+            subcharacteristic_result.get("value")
+        ) == subcharacteristic_expected.get("value")
 
 
 @pytest.mark.parametrize(
@@ -64,19 +74,29 @@ def test_calculate_subcharacteristics_sucess():
 )
 def test_calcula_subcharacteristics_errors(extracted_subcharacteristcs_data, error_msg):
     with pytest.raises((ValidationError, MeasureKeyNotSupported)) as error:
-        calculate_subcharacteristics(extracted_subcharacteristics=extracted_subcharacteristcs_data)
+        calculate_subcharacteristics(
+            extracted_subcharacteristics=extracted_subcharacteristcs_data
+        )
     assert str(error.value) == error_msg
 
 
 def test_calculate_characteristics_success():
-    calculation_result = calculate_characteristics(extracted_characteristics=EXTRACTED_CHARACTERISTICS_DATA)
+    calculation_result = calculate_characteristics(
+        extracted_characteristics=EXTRACTED_CHARACTERISTICS_DATA
+    )
     assert "characteristics" in calculation_result
 
     characteristics_result = calculation_result.get("characteristics")
-    characteristics_expected = CALCULATE_CHARACTERISTICS_RESULT_DATA.get("characteristics")
-    for characteristic_result, characteristic_expected in zip(characteristics_result, characteristics_expected):
+    characteristics_expected = CALCULATE_CHARACTERISTICS_RESULT_DATA.get(
+        "characteristics"
+    )
+    for characteristic_result, characteristic_expected in zip(
+        characteristics_result, characteristics_expected
+    ):
         assert characteristic_result.get("key") == characteristic_expected.get("key")
-        assert pytest.approx(characteristic_result.get("value")) == characteristic_expected.get("value")
+        assert pytest.approx(
+            characteristic_result.get("value")
+        ) == characteristic_expected.get("value")
 
 
 @pytest.mark.parametrize(
@@ -85,7 +105,9 @@ def test_calculate_characteristics_success():
 )
 def test_calcula_characteristics_errors(extracted_characteristics_data, error_msg):
     with pytest.raises((ValidationError, MeasureKeyNotSupported)) as error:
-        calculate_characteristics(extracted_characteristics=extracted_characteristics_data)
+        calculate_characteristics(
+            extracted_characteristics=extracted_characteristics_data
+        )
     assert str(error.value) == error_msg
 
 

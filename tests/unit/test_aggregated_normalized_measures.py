@@ -5,7 +5,7 @@ from tests.utils.aggregated_normalized_measures_data import (
     INVALID_THRESHOLD_TEST_DATA,
     SUCCESS_TEST_DATA,
 )
-from util.exceptions import InvalidMetricValue, InvalidThresholdValue
+from src.util.exceptions import InvalidMetricValue, InvalidThresholdValue
 
 
 @pytest.mark.parametrize(

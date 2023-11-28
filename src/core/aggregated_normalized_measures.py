@@ -1,8 +1,8 @@
 import numpy as np
 
-import core.measures_functions as ems_functions
-import core.transformations as transformations
-from util.check import Checker
+import src.core.measures_functions as ems_functions
+import src.core.transformations as transformations
+from src.util.check import Checker
 
 
 def non_complex_files_density(
@@ -45,7 +45,9 @@ def non_complex_files_density(
 
     files_in_thresholds_bool_index = complex_files_density <= max_threshold
     files_functions_gt_zero_bool_index = files_functions > 0
-    x = complex_files_density[files_in_thresholds_bool_index * files_functions_gt_zero_bool_index]
+    x = complex_files_density[
+        files_in_thresholds_bool_index * files_functions_gt_zero_bool_index
+    ]
 
     interpretation_function_value = transformations.interpretation_function(
         x=x,
@@ -60,7 +62,9 @@ def non_complex_files_density(
     return aggregated_and_normalized_measure
 
 
-def commented_files_density(data_frame, min_threshold: float = 10, max_threshold: float = 30):
+def commented_files_density(
+    data_frame, min_threshold: float = 10, max_threshold: float = 30
+):
     """
     Calculates commented files density.
 
@@ -104,7 +108,9 @@ def commented_files_density(data_frame, min_threshold: float = 10, max_threshold
     return aggregated_and_normalized_measure
 
 
-def absence_of_duplications(data_frame, min_threshold: float = 0, max_threshold: float = 5.0):
+def absence_of_duplications(
+    data_frame, min_threshold: float = 0, max_threshold: float = 5.0
+):
     """
     Calculates duplicated files absence (em3).
 
@@ -113,7 +119,9 @@ def absence_of_duplications(data_frame, min_threshold: float = 0, max_threshold:
     """
     files_duplicated_lines_density = data_frame["duplicated_lines_density"]  # m5 metric
 
-    Checker.check_metric_values(files_duplicated_lines_density, "duplicated_lines_density")
+    Checker.check_metric_values(
+        files_duplicated_lines_density, "duplicated_lines_density"
+    )
 
     if len(files_duplicated_lines_density) == 0:
         return 0.0
@@ -177,7 +185,9 @@ def test_coverage(
     return aggregated_and_normalized_measure
 
 
-def fast_test_builds(data_frame, min_threshold: float = 0, max_threshold: float = 300000):
+def fast_test_builds(
+    data_frame, min_threshold: float = 0, max_threshold: float = 300000
+):
     """
     Calculates fast test builds (em5)
     This function gets the dataframe metrics
@@ -256,7 +266,9 @@ def passed_tests(data_frame, min_threshold: float = 0, max_threshold: float = 1)
         gain_interpretation=1,
     )
 
-    aggregated_and_normalized_measure = transformations.calculate_measure(interpretation_function_value)
+    aggregated_and_normalized_measure = transformations.calculate_measure(
+        interpretation_function_value
+    )
 
     return aggregated_and_normalized_measure
 
@@ -294,6 +306,8 @@ def team_throughput(
         gain_interpretation=1,
     )
 
-    aggregated_and_normalized_measure = transformations.calculate_measure(interpretation_function_value)
+    aggregated_and_normalized_measure = transformations.calculate_measure(
+        interpretation_function_value
+    )
 
     return aggregated_and_normalized_measure
