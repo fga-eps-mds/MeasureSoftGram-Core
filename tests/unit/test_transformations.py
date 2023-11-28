@@ -4,7 +4,6 @@ from tests.utils.transformations_data import INVALID_DIFF_DATA, VALID_DIFF_DATA
 from src.util.exceptions import ReleasePlannedAndDevelopedOfDifferentSizes
 import numpy as np
 
-
 @pytest.mark.parametrize(
     "rp,rd,error_msg",
     INVALID_DIFF_DATA,
