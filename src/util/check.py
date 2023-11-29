@@ -114,7 +114,7 @@ class Checker:
             raise ValuesAndWeightsOfDifferentSizes(
                 "The length of weight and values are not equal",
             )
-            
+
     @staticmethod
     def check_team_throughput_threshold(min_threshold: float, max_threshold: float):
         if min_threshold != 45:
@@ -122,4 +122,3 @@ class Checker:
 
         if max_threshold != 100:
             raise InvalidThresholdValue("max_threshold is not equal to 100")
-        
