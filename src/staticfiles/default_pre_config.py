@@ -72,7 +72,7 @@ DEFAULT_PRE_CONFIG = {
                     "measures": [
                         {
                             "key": "team_throughput",
-                            "weight": 100.0,
+                            "weight": 100,
                             "min_threshold": 45,
                             "max_threshold": 100,
                         },
