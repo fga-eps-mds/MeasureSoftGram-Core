@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from src.util.exceptions import ImplicitMetricValueError, InvalidMetricValue
+from util.exceptions import ImplicitMetricValueError, InvalidMetricValue
 
 
 def resolve_metric_list_parameter(metric):
