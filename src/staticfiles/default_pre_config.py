@@ -61,24 +61,24 @@ DEFAULT_PRE_CONFIG = {
                     ],
                 }
             ],
-        },
-        {
-            "key": "functional_suitability",
-            "weight": 33,
-            "subcharacteristics": [
-                {
-                    "key": "functional_completeness",
-                    "weight": 100,
-                    "measures": [
-                        {
-                            "key": "team_throughput",
-                            "weight": 100,
-                            "min_threshold": 45,
-                            "max_threshold": 100,
-                        },
-                    ],
-                }
-            ],
-        },
+        }
+        # {
+        #     "key": "functional_suitability",
+        #     "weight": 33,
+        #     "subcharacteristics": [
+        #         {
+        #             "key": "functional_completeness",
+        #             "weight": 100,
+        #             "measures": [
+        #                 {
+        #                     "key": "team_throughput",
+        #                     "weight": 100,
+        #                     "min_threshold": 45,
+        #                     "max_threshold": 100,
+        #                 },
+        #             ],
+        #         }
+        #     ],
+        # },
     ]
 }
