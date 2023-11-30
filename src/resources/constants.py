@@ -1,5 +1,5 @@
-from src.core import schemas
-from src.core.aggregated_normalized_measures import (
+from core import schemas
+from core.aggregated_normalized_measures import (
     absence_of_duplications,
     commented_files_density,
     fast_test_builds,

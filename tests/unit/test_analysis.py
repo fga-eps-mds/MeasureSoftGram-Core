@@ -21,7 +21,7 @@ from tests.utils.analysis_data import (
     EXTRACTED_SUBCHARACTERISTICS_DATA,
     EXTRACTED_TSQMI_DATA,
 )
-from src.util.exceptions import MeasureKeyNotSupported
+from util.exceptions import MeasureKeyNotSupported
 
 
 def test_calculate_measures_success():

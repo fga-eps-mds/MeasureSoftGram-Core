@@ -2,8 +2,8 @@ from enum import IntEnum
 
 import numpy as np
 
-from src.util.check import Checker
-from src.util.exceptions import (
+from util.check import Checker
+from util.exceptions import (
     InvalidGainInterpretationValue,
     ReleasePlannedAndDevelopedOfDifferentSizes,
 )

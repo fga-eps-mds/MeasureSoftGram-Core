@@ -2,7 +2,7 @@ import math
 
 import numpy as np
 
-from src.util.exceptions import (
+from util.exceptions import (
     InvalidCheckThreshold,
     InvalidMetricValue,
     InvalidThresholdValue,
