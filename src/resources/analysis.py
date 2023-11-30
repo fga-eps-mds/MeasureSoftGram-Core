@@ -1,15 +1,15 @@
 import numpy as np
 from marshmallow.exceptions import ValidationError
 
-from src.core.schemas import (
+from core.schemas import (
     CalculateCharacteristicSchema,
     CalculateMeasureSchema,
     CalculateSubCharacteristicSchema,
     CalculateTSQMISchema,
 )
-from src.core.transformations import calculate_aggregated_weighted_value
-from src.resources.constants import AGGREGATED_NORMALIZED_MEASURES_MAPPING
-from src.util.exceptions import MeasureKeyNotSupported
+from core.transformations import calculate_aggregated_weighted_value
+from resources.constants import AGGREGATED_NORMALIZED_MEASURES_MAPPING
+from util.exceptions import MeasureKeyNotSupported
 
 
 def convert_metrics_to_dict(metrics_list):
