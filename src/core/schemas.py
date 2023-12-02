@@ -288,7 +288,7 @@ class TeamThroughputSchema(Schema):
                 raise ValidationError(
                     f"'{metric['key']}': Deveria ser um array de um único valor"
                 )
-            if not isinstance(metric["value"][0], int):
+            if not isinstance(metric["value"][0], float):
                 raise ValidationError(
-                    f"'{metric['key']}': Deveria ser um valor inteiro"
+                    f"'{metric['key']}': Deveria ser um valor flutuante"
                 )
