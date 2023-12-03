@@ -61,7 +61,7 @@ DEFAULT_PRE_CONFIG = {
                     ],
                 }
             ],
-        }
+        },
         {
             "key": "functional_suitability",
             "weight": 33,
