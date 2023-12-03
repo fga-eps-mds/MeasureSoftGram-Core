@@ -79,6 +79,6 @@ DEFAULT_PRE_CONFIG = {
                     ],
                 }
             ],
-        },
+        }
     ]
 }
