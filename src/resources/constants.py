@@ -7,6 +7,7 @@ from core.aggregated_normalized_measures import (
     passed_tests,
     test_coverage,
     team_throughput,
+    ci_feedback_time
 )
 
 AVAILABLE_PRE_CONFIGS = {
@@ -125,6 +126,10 @@ AGGREGATED_NORMALIZED_MEASURES_MAPPING = {
     },
     "team_throughput": {
         "aggregated_normalized_measure": team_throughput,
+        "schema": schemas.TeamThroughputSchema,
+    },
+    "team_throughput": {
+        "aggregated_normalized_measure": ci_feedback_time,
         "schema": schemas.TeamThroughputSchema,
     },
 }
