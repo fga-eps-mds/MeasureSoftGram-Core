@@ -7,13 +7,14 @@ from core.aggregated_normalized_measures import (
     passed_tests,
     test_coverage,
     team_throughput,
+    ci_feedback_time,
 )
 
 AVAILABLE_PRE_CONFIGS = {
     "characteristics": {
         "reliability": {
             "name": "Reliability",
-            "subcharacteristics": ["testing_status"],
+            "subcharacteristics": ["testing_status", "maturity"],
         },
         "maintainability": {
             "name": "Maintainability",
@@ -32,6 +33,11 @@ AVAILABLE_PRE_CONFIGS = {
                 "test_builds",
                 "test_coverage",
             ],
+            "characteristics": ["reliability"],
+        },
+        "maturity": {
+            "name": "Maturity",
+            "measures": ["ci_feedback_time"],
             "characteristics": ["reliability"],
         },
         "modifiability": {
@@ -68,6 +74,12 @@ AVAILABLE_PRE_CONFIGS = {
             "characteristics": ["reliability"],
             "metrics": ["coverage"],
         },
+        "ci_feedback_time": {
+            "name": "CI Feedback Time",
+            "subcharacteristics": ["maturity"],
+            "characteristics": ["reliability"],
+            "metrics": ["sum_ci_feedback_times", "total_builds"],
+        },
         "non_complex_file_density": {
             "name": "Non complex file density",
             "subcharacteristics": ["modifiability"],
@@ -90,10 +102,7 @@ AVAILABLE_PRE_CONFIGS = {
             "name": "Team Throughput",
             "subcharacteristics": ["functional_completeness"],
             "characteristics": ["functional_suitability"],
-            "metrics": [
-                "total_issues",
-                "resolved_issues",
-            ],
+            "metrics": ["total_issues", "resolved_issues"],
         },
     },
 }
@@ -126,5 +135,9 @@ AGGREGATED_NORMALIZED_MEASURES_MAPPING = {
     "team_throughput": {
         "aggregated_normalized_measure": team_throughput,
         "schema": schemas.TeamThroughputSchema,
+    },
+    "ci_feedback_time": {
+        "aggregated_normalized_measure": ci_feedback_time,
+        "schema": schemas.CIFeedbackTimeSchema,
     },
 }

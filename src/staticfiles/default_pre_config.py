@@ -8,7 +8,7 @@ DEFAULT_PRE_CONFIG = {
             "subcharacteristics": [
                 {
                     "key": "testing_status",
-                    "weight": 100,
+                    "weight": 50,
                     "measures": [
                         {
                             "key": "passed_tests",
@@ -29,7 +29,19 @@ DEFAULT_PRE_CONFIG = {
                             "max_threshold": 100,
                         },
                     ],
-                }
+                },
+                {
+                    "key": "maturity",
+                    "weight": 50,
+                    "measures": [
+                        {
+                            "key": "ci_feedback_time",
+                            "weight": 100,
+                            "min_threshold": 1,
+                            "max_threshold": 900,
+                        }
+                    ],
+                },
             ],
         },
         {
@@ -79,6 +91,6 @@ DEFAULT_PRE_CONFIG = {
                     ],
                 }
             ],
-        }
+        },
     ]
 }

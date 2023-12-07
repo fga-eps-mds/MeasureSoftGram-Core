@@ -311,3 +311,43 @@ def team_throughput(
     )
 
     return aggregated_and_normalized_measure
+
+
+def ci_feedback_time(
+    data_frame,
+    min_threshold: float = 1,
+    max_threshold: float = 900,
+):
+    """
+    Calculates CI Feedback Time (em8).
+
+    This function gets the dataframe metrics
+    and returns the CI Feedback Time (em8).
+    """
+    total_builds = data_frame["total_builds"]
+    sum_ci_feedback_times = data_frame["sum_ci_feedback_times"]
+
+    Checker.check_metric_value(total_builds, "total_builds")
+    Checker.check_metric_value(sum_ci_feedback_times, "sum_ci_feedback_times")
+
+    Checker.check_threshold(min_threshold, max_threshold, "ci_feedback_time")
+
+    ci_feedback_time_value = ems_functions.get_ci_feedback_time(
+        data={
+            "total_builds": int(total_builds),
+            "sum_ci_feedback_times": int(sum_ci_feedback_times),
+        }
+    )
+
+    interpretation_function_value = transformations.interpretation_function(
+        x=ci_feedback_time_value,
+        min_threshold=min_threshold,
+        max_threshold=max_threshold,
+        gain_interpretation=1,
+    )
+
+    aggregated_and_normalized_measure = transformations.calculate_measure(
+        interpretation_function_value
+    )
+
+    return aggregated_and_normalized_measure

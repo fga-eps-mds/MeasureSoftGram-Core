@@ -195,3 +195,17 @@ def get_team_throughput(data: dict[str, int]):
     resolved_issues = data["resolved_issues"]
 
     return 100 * (resolved_issues / total_issues)
+
+
+def get_ci_feedback_time(data: dict[str, int]):
+    """
+    Calculates CI Feedback Time (em8)
+
+    This function calculates the CI Feedback Time measure (em8)
+    used to assess the testing status sub characteristic.
+    """
+
+    total_builds = data["total_builds"]
+    sum_ci_feedback_times = data["sum_ci_feedback_times"]
+
+    return sum_ci_feedback_times // total_builds

@@ -122,3 +122,11 @@ class Checker:
 
         if max_threshold != 100:
             raise InvalidThresholdValue("max_threshold is not equal to 100")
+
+    @staticmethod
+    def check_ci_feedback_time_threshold(min_threshold: float, max_threshold: float):
+        if min_threshold != 1:
+            raise InvalidThresholdValue("min_threshold is not equal to 1")
+
+        if max_threshold != 900:
+            raise InvalidThresholdValue("max_threshold is not equal to 900")
