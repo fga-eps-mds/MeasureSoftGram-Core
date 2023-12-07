@@ -268,6 +268,29 @@ class TestCoverageSchema(Schema):
                     f"'{metric['key']}': Métrica não presente na medida"
                 )
 
+class CIFeedbackTimeSchema(Schema):
+    # 1 Validação : Se contém uma lista de métricas
+    metrics = fields.List(fields.Nested(MetricSchema), required=True)
+
+    @staticmethod
+    def validate_metrics(metrics):
+        for metric in metrics:
+            # 2 Validação : Se foi passada alguma métrica não pertencente a medida
+            if metric["key"] not in ["sum_ci_feedback_times", "total_builds"]:
+                raise ValidationError(
+                    f"'{metric['key']}': Métrica não presente na medida"
+                )
+
+            # 3 Validação: As métricas só podem ser representadas por um array de
+            #             um único elemento
+            if len(metric["value"]) != 1:
+                raise ValidationError(
+                    f"'{metric['key']}': Deveria ser um array de um único valor"
+                )
+            if not isinstance(metric["value"][0], float):
+                raise ValidationError(
+                    f"'{metric['key']}': Deveria ser um valor flutuante"
+                )
 
 class TeamThroughputSchema(Schema):
     # 1 Validação : Se contém uma lista de métricas
@@ -283,7 +306,7 @@ class TeamThroughputSchema(Schema):
                 )
 
             # 3 Validação: As métricas só podem ser representadas por um array de
-            #             um único elemento inteiro
+            #             um único elemento
             if len(metric["value"]) != 1:
                 raise ValidationError(
                     f"'{metric['key']}': Deveria ser um array de um único valor"

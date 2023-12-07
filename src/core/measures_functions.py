@@ -207,4 +207,4 @@ def get_ci_feedback_time(data: dict[str, int]):
     total_builds = data["total_builds"]
     sum_ci_feedback_times = data["sum_ci_feedback_times"]
 
-    return int(sum_ci_feedback_times/total_builds)
+    return sum_ci_feedback_times // total_builds

@@ -314,8 +314,8 @@ def team_throughput(
 
 def ci_feedback_time(
     data_frame,
-    min_threshold: float = 10,
-    max_threshold: float = 1000,
+    min_threshold: float = 1,
+    max_threshold: float = 900,
 ):
     """
     Calculates CI Feedback Time (em8).
