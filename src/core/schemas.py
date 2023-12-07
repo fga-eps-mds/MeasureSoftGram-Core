@@ -268,6 +268,7 @@ class TestCoverageSchema(Schema):
                     f"'{metric['key']}': Métrica não presente na medida"
                 )
 
+
 class CIFeedbackTimeSchema(Schema):
     # 1 Validação : Se contém uma lista de métricas
     metrics = fields.List(fields.Nested(MetricSchema), required=True)
@@ -291,6 +292,7 @@ class CIFeedbackTimeSchema(Schema):
                 raise ValidationError(
                     f"'{metric['key']}': Deveria ser um valor flutuante"
                 )
+
 
 class TeamThroughputSchema(Schema):
     # 1 Validação : Se contém uma lista de métricas

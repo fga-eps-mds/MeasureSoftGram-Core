@@ -312,6 +312,7 @@ def team_throughput(
 
     return aggregated_and_normalized_measure
 
+
 def ci_feedback_time(
     data_frame,
     min_threshold: float = 1,
@@ -350,7 +351,3 @@ def ci_feedback_time(
     )
 
     return aggregated_and_normalized_measure
-
-
-
-

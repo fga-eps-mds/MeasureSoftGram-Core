@@ -196,6 +196,7 @@ def get_team_throughput(data: dict[str, int]):
 
     return 100 * (resolved_issues / total_issues)
 
+
 def get_ci_feedback_time(data: dict[str, int]):
     """
     Calculates CI Feedback Time (em8)

@@ -38,10 +38,10 @@ DEFAULT_PRE_CONFIG = {
                             "key": "ci_feedback_time",
                             "weight": 100,
                             "min_threshold": 1,
-                            "max_threshold": 900
+                            "max_threshold": 900,
                         }
-                    ]
-                }
+                    ],
+                },
             ],
         },
         {
@@ -91,6 +91,6 @@ DEFAULT_PRE_CONFIG = {
                     ],
                 }
             ],
-        }
+        },
     ]
 }
