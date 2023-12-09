@@ -1,7 +1,7 @@
 import pytest
-from src.core.transformations import diff, norm_diff
+from core.transformations import diff, norm_diff
 from tests.utils.transformations_data import INVALID_DIFF_DATA, VALID_DIFF_DATA
-from src.util.exceptions import ReleasePlannedAndDevelopedOfDifferentSizes
+from util.exceptions import ReleasePlannedAndDevelopedOfDifferentSizes
 import numpy as np
 
 
