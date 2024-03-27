@@ -12,29 +12,41 @@ from util.exceptions import (
 
 class Checker:
     @staticmethod
-    def check_non_complex_files_density_threshold(min_threshold: float, max_threshold: float):
+    def check_non_complex_files_density_threshold(
+        min_threshold: float, max_threshold: float
+    ):
         if min_threshold != 0:
             raise InvalidThresholdValue("min_threshold is not equal to 0")
 
         if min_threshold >= max_threshold:
-            raise InvalidThresholdValue("min_threshold is greater or equal to max_threshold")
+            raise InvalidThresholdValue(
+                "min_threshold is greater or equal to max_threshold"
+            )
 
     @staticmethod
-    def check_comment_files_density_threshold(min_threshold: float, max_threshold: float):
+    def check_comment_files_density_threshold(
+        min_threshold: float, max_threshold: float
+    ):
         if min_threshold < 0:
             raise InvalidThresholdValue("min_threshold is lesser than 0")
         if min_threshold >= max_threshold:
-            raise InvalidThresholdValue("min_threshold is greater or equal to max_threshold")
+            raise InvalidThresholdValue(
+                "min_threshold is greater or equal to max_threshold"
+            )
         if max_threshold > 100:
             raise InvalidThresholdValue("max_threshold is greater than 100")
 
     @staticmethod
-    def check_absence_of_duplications_threshold(min_threshold: float, max_threshold: float):
+    def check_absence_of_duplications_threshold(
+        min_threshold: float, max_threshold: float
+    ):
         if min_threshold != 0:
             raise InvalidThresholdValue("min_threshold is not equal to 0")
 
         if min_threshold >= max_threshold:
-            raise InvalidThresholdValue("min_threshold is greater or equal to max_threshold")
+            raise InvalidThresholdValue(
+                "min_threshold is greater or equal to max_threshold"
+            )
 
         if max_threshold > 100:
             raise InvalidThresholdValue("max_threshold is greater than 100")
@@ -45,7 +57,9 @@ class Checker:
             raise InvalidThresholdValue("min_threshold is lesser than 0")
 
         if min_threshold >= max_threshold:
-            raise InvalidThresholdValue("min_threshold is greater or equal to max_threshold")
+            raise InvalidThresholdValue(
+                "min_threshold is greater or equal to max_threshold"
+            )
 
         if max_threshold != 100:
             raise InvalidThresholdValue("max_threshold is not equal to 100")
@@ -56,7 +70,9 @@ class Checker:
             raise InvalidThresholdValue(("min_threshold is not equal to 0"))
 
         if min_threshold >= max_threshold:
-            raise InvalidThresholdValue("min_threshold is greater or equal to max_threshold")
+            raise InvalidThresholdValue(
+                "min_threshold is greater or equal to max_threshold"
+            )
 
     @staticmethod
     def check_passed_tests_threshold(min_threshold: float, max_threshold: float):
@@ -98,3 +114,19 @@ class Checker:
             raise ValuesAndWeightsOfDifferentSizes(
                 "The length of weight and values are not equal",
             )
+
+    @staticmethod
+    def check_team_throughput_threshold(min_threshold: float, max_threshold: float):
+        if min_threshold != 45:
+            raise InvalidThresholdValue("min_threshold is not equal to 45")
+
+        if max_threshold != 100:
+            raise InvalidThresholdValue("max_threshold is not equal to 100")
+
+    @staticmethod
+    def check_ci_feedback_time_threshold(min_threshold: float, max_threshold: float):
+        if min_threshold != 1:
+            raise InvalidThresholdValue("min_threshold is not equal to 1")
+
+        if max_threshold != 900:
+            raise InvalidThresholdValue("max_threshold is not equal to 900")

@@ -45,7 +45,9 @@ def non_complex_files_density(
 
     files_in_thresholds_bool_index = complex_files_density <= max_threshold
     files_functions_gt_zero_bool_index = files_functions > 0
-    x = complex_files_density[files_in_thresholds_bool_index * files_functions_gt_zero_bool_index]
+    x = complex_files_density[
+        files_in_thresholds_bool_index * files_functions_gt_zero_bool_index
+    ]
 
     interpretation_function_value = transformations.interpretation_function(
         x=x,
@@ -60,7 +62,9 @@ def non_complex_files_density(
     return aggregated_and_normalized_measure
 
 
-def commented_files_density(data_frame, min_threshold: float = 10, max_threshold: float = 30):
+def commented_files_density(
+    data_frame, min_threshold: float = 10, max_threshold: float = 30
+):
     """
     Calculates commented files density.
 
@@ -104,7 +108,9 @@ def commented_files_density(data_frame, min_threshold: float = 10, max_threshold
     return aggregated_and_normalized_measure
 
 
-def absence_of_duplications(data_frame, min_threshold: float = 0, max_threshold: float = 5.0):
+def absence_of_duplications(
+    data_frame, min_threshold: float = 0, max_threshold: float = 5.0
+):
     """
     Calculates duplicated files absence (em3).
 
@@ -113,7 +119,9 @@ def absence_of_duplications(data_frame, min_threshold: float = 0, max_threshold:
     """
     files_duplicated_lines_density = data_frame["duplicated_lines_density"]  # m5 metric
 
-    Checker.check_metric_values(files_duplicated_lines_density, "duplicated_lines_density")
+    Checker.check_metric_values(
+        files_duplicated_lines_density, "duplicated_lines_density"
+    )
 
     if len(files_duplicated_lines_density) == 0:
         return 0.0
@@ -177,7 +185,9 @@ def test_coverage(
     return aggregated_and_normalized_measure
 
 
-def fast_test_builds(data_frame, min_threshold: float = 0, max_threshold: float = 300000):
+def fast_test_builds(
+    data_frame, min_threshold: float = 0, max_threshold: float = 300000
+):
     """
     Calculates fast test builds (em5)
     This function gets the dataframe metrics
@@ -256,6 +266,88 @@ def passed_tests(data_frame, min_threshold: float = 0, max_threshold: float = 1)
         gain_interpretation=1,
     )
 
-    aggregated_and_normalized_measure = transformations.calculate_measure(interpretation_function_value)
+    aggregated_and_normalized_measure = transformations.calculate_measure(
+        interpretation_function_value
+    )
+
+    return aggregated_and_normalized_measure
+
+
+def team_throughput(
+    data_frame,
+    min_threshold: float = 45,
+    max_threshold: float = 100,
+):
+    """
+    Calculates team throughput (em7).
+
+    This function gets the dataframe metrics
+    and returns the team throughput measure (em7).
+    """
+    total_issues = data_frame["total_issues"]
+    resolved_issues = data_frame["resolved_issues"]
+
+    Checker.check_metric_value(total_issues, "total_issues")
+    Checker.check_metric_value(resolved_issues, "resolved_issues")
+
+    Checker.check_threshold(min_threshold, max_threshold, "team_throughput")
+
+    team_throughput_value = ems_functions.get_team_throughput(
+        data={
+            "total_issues": int(total_issues),
+            "resolved_issues": int(resolved_issues),
+        }
+    )
+
+    interpretation_function_value = transformations.interpretation_function(
+        x=team_throughput_value,
+        min_threshold=min_threshold,
+        max_threshold=max_threshold,
+        gain_interpretation=1,
+    )
+
+    aggregated_and_normalized_measure = transformations.calculate_measure(
+        interpretation_function_value
+    )
+
+    return aggregated_and_normalized_measure
+
+
+def ci_feedback_time(
+    data_frame,
+    min_threshold: float = 1,
+    max_threshold: float = 900,
+):
+    """
+    Calculates CI Feedback Time (em8).
+
+    This function gets the dataframe metrics
+    and returns the CI Feedback Time (em8).
+    """
+    total_builds = data_frame["total_builds"]
+    sum_ci_feedback_times = data_frame["sum_ci_feedback_times"]
+
+    Checker.check_metric_value(total_builds, "total_builds")
+    Checker.check_metric_value(sum_ci_feedback_times, "sum_ci_feedback_times")
+
+    Checker.check_threshold(min_threshold, max_threshold, "ci_feedback_time")
+
+    ci_feedback_time_value = ems_functions.get_ci_feedback_time(
+        data={
+            "total_builds": int(total_builds),
+            "sum_ci_feedback_times": int(sum_ci_feedback_times),
+        }
+    )
+
+    interpretation_function_value = transformations.interpretation_function(
+        x=ci_feedback_time_value,
+        min_threshold=min_threshold,
+        max_threshold=max_threshold,
+        gain_interpretation=1,
+    )
+
+    aggregated_and_normalized_measure = transformations.calculate_measure(
+        interpretation_function_value
+    )
 
     return aggregated_and_normalized_measure

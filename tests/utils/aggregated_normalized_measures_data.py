@@ -1,11 +1,13 @@
-from src.core.aggregated_normalized_measures import (
+from core.aggregated_normalized_measures import (
     absence_of_duplications,
     commented_files_density,
     fast_test_builds,
     non_complex_files_density,
     passed_tests,
 )
-from src.core.aggregated_normalized_measures import test_coverage as interpret_test_coverage
+from core.aggregated_normalized_measures import (
+    test_coverage as interpret_test_coverage,
+)
 
 INVALID_METRICS_TEST_DATA = [
     (

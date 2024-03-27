@@ -6,21 +6,23 @@ from core.aggregated_normalized_measures import (
     non_complex_files_density,
     passed_tests,
     test_coverage,
+    team_throughput,
+    ci_feedback_time,
 )
 
 AVAILABLE_PRE_CONFIGS = {
     "characteristics": {
         "reliability": {
             "name": "Reliability",
-            "subcharacteristics": ["testing_status"],
+            "subcharacteristics": ["testing_status", "maturity"],
         },
         "maintainability": {
             "name": "Maintainability",
             "subcharacteristics": ["modifiability"],
         },
-        "productivity": {
-            "name": "Productivity",
-            "subcharacteristics": ["issues_velocity"],
+        "functional_suitability": {
+            "name": "Functional Suitability",
+            "subcharacteristics": ["functional_completeness"],
         },
     },
     "subcharacteristics": {
@@ -33,6 +35,11 @@ AVAILABLE_PRE_CONFIGS = {
             ],
             "characteristics": ["reliability"],
         },
+        "maturity": {
+            "name": "Maturity",
+            "measures": ["ci_feedback_time"],
+            "characteristics": ["reliability"],
+        },
         "modifiability": {
             "name": "Modifiability",
             "measures": [
@@ -42,10 +49,10 @@ AVAILABLE_PRE_CONFIGS = {
             ],
             "characteristics": ["maintainability"],
         },
-        "issues_velocity": {
-            "name": "Issues Velocity",
+        "functional_completeness": {
+            "name": "Functional Completeness",
             "measures": ["team_throughput"],
-            "characteristics": ["productivity"],
+            "characteristics": ["functional_suitability"],
         },
     },
     "measures": {
@@ -66,6 +73,12 @@ AVAILABLE_PRE_CONFIGS = {
             "subcharacteristics": ["testing_status"],
             "characteristics": ["reliability"],
             "metrics": ["coverage"],
+        },
+        "ci_feedback_time": {
+            "name": "CI Feedback Time",
+            "subcharacteristics": ["maturity"],
+            "characteristics": ["reliability"],
+            "metrics": ["sum_ci_feedback_times", "total_builds"],
         },
         "non_complex_file_density": {
             "name": "Non complex file density",
@@ -89,10 +102,7 @@ AVAILABLE_PRE_CONFIGS = {
             "name": "Team Throughput",
             "subcharacteristics": ["functional_completeness"],
             "characteristics": ["functional_suitability"],
-            "metrics": [
-                "number_of_resolved_issues_with_US_label_in_the_last_x_days",
-                "total_number_of_issues_with_US_label_in_the_last_x_days",
-            ],
+            "metrics": ["total_issues", "resolved_issues"],
         },
     },
 }
@@ -123,7 +133,11 @@ AGGREGATED_NORMALIZED_MEASURES_MAPPING = {
         "schema": schemas.TestCoverageSchema,
     },
     "team_throughput": {
-        "aggregated_normalized_measure": ...,
+        "aggregated_normalized_measure": team_throughput,
         "schema": schemas.TeamThroughputSchema,
+    },
+    "ci_feedback_time": {
+        "aggregated_normalized_measure": ci_feedback_time,
+        "schema": schemas.CIFeedbackTimeSchema,
     },
 }

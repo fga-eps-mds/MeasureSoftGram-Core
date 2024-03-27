@@ -4,11 +4,11 @@ DEFAULT_PRE_CONFIG = {
     "characteristics": [
         {
             "key": "reliability",
-            "weight": 50,
+            "weight": 34,
             "subcharacteristics": [
                 {
                     "key": "testing_status",
-                    "weight": 100,
+                    "weight": 50,
                     "measures": [
                         {
                             "key": "passed_tests",
@@ -29,12 +29,24 @@ DEFAULT_PRE_CONFIG = {
                             "max_threshold": 100,
                         },
                     ],
-                }
+                },
+                {
+                    "key": "maturity",
+                    "weight": 50,
+                    "measures": [
+                        {
+                            "key": "ci_feedback_time",
+                            "weight": 100,
+                            "min_threshold": 1,
+                            "max_threshold": 900,
+                        }
+                    ],
+                },
             ],
         },
         {
             "key": "maintainability",
-            "weight": 50,
+            "weight": 33,
             "subcharacteristics": [
                 {
                     "key": "modifiability",
@@ -62,21 +74,23 @@ DEFAULT_PRE_CONFIG = {
                 }
             ],
         },
-        # {
-        #   "key": "functional_suitability",
-        #   "weight": 34.0,
-        #   "subcharacteristics": [
-        #     {
-        #       "key": "functional_completeness",
-        #       "weight": 100.0,
-        #       "measures": [
-        #         {
-        #           "key": "team_throughput",
-        #           "weight": 100.0
-        #         }
-        #       ]
-        #     }
-        #   ]
-        # }
+        {
+            "key": "functional_suitability",
+            "weight": 33,
+            "subcharacteristics": [
+                {
+                    "key": "functional_completeness",
+                    "weight": 100,
+                    "measures": [
+                        {
+                            "key": "team_throughput",
+                            "weight": 100,
+                            "min_threshold": 45,
+                            "max_threshold": 100,
+                        },
+                    ],
+                }
+            ],
+        },
     ]
 }
