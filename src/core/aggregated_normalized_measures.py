@@ -6,6 +6,12 @@ import core.transformations as transformations
 from util.check import Checker
 from util.run_time_data_operations import RunTimeDataOperations
 
+# Sem builds no periodo significa ausencia de dado de feedback do CI.
+# Nesse caso a medida recebe um score neutro (nem premia com 1.0, o que
+# trataria a falta de CI como o pipeline mais rapido possivel, nem pune
+# com 0.0). Ver issue #24.
+NO_BUILDS_NEUTRAL_SCORE = 0.5
+
 
 def non_complex_files_density(
     data_frame,
@@ -334,6 +340,14 @@ def ci_feedback_time(
 
     Checker.check_threshold(min_threshold, max_threshold, "ci_feedback_time")
 
+    # Sem builds no periodo nao ha dado de feedback do CI; retorna score
+    # neutro para nao premiar a ausencia de pipeline com nota maxima.
+    # O check e explicito em total_builds porque get_ci_feedback_time
+    # tambem retorna 0 para builds muito rapidos (sum // total == 0),
+    # o que tornaria o sinal ambiguo. Ver issue #24.
+    if int(total_builds) == 0:
+        return NO_BUILDS_NEUTRAL_SCORE
+
     ci_feedback_time_value = ems_functions.get_ci_feedback_time(
         data={
             "total_builds": int(total_builds),
@@ -345,7 +359,7 @@ def ci_feedback_time(
         x=ci_feedback_time_value,
         min_threshold=min_threshold,
         max_threshold=max_threshold,
-        gain_interpretation=1,
+        gain_interpretation=-1,
     )
 
     aggregated_and_normalized_measure = transformations.calculate_measure(
@@ -358,7 +372,7 @@ def ci_feedback_time(
 def run_time_measure(
     data_frame,
     min_threshold: float = 0,
-    max_threshold: float = 0.33,
+    max_threshold: float = 0.66,
 ):
     """
     Calculates any run time measure.

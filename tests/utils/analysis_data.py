@@ -274,7 +274,7 @@ CALCULATE_MEASURES_RESULT_DATA = {
         {"key": "passed_tests", "value": 1.0},
         {"key": "test_builds", "value": 0.9995933399758454},
         {"key": "test_coverage", "value": 0.23425},
-        {"key": "ci_feedback_time", "value": 0.0},
+        {"key": "ci_feedback_time", "value": 0.5},
         {"key": "non_complex_file_density", "value": 0.8603745807930887},
         {"key": "commented_file_density", "value": 0.0935},
         {"key": "duplication_absense", "value": 0.0},
@@ -400,9 +400,9 @@ EXTRACTED_RUNTIME_MEASURES_DATA = {
 
 CALCULATE_RUNTIME_MEASURES_RESULT_DATA = {
     "measures": [
-        {"key": "cpu_utilization", "value": 0.66329966},
-        {"key": "memory_utilization", "value": 0.66329966},
-        {"key": "response_time", "value": 0.66329966},
+        {"key": "cpu_utilization", "value": 0.8316498316498316},
+        {"key": "memory_utilization", "value": 0.8316498316498316},
+        {"key": "response_time", "value": 0.8316498316498316},
     ]
 }
 
