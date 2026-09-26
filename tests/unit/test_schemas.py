@@ -48,10 +48,9 @@ def test_duplication_absence_schema_validation():
 
 
 def test_technical_debt_ratio_schema_validation():
-    try:
-        TechnicalDebtRatioSchema().load(TECHNICAL_DEBT_RATIO_METRICS_DATA)
-    except ValidationError as e:
-        pytest.fail(f"Unexpected error: {e}")
+    loaded = TechnicalDebtRatioSchema().load(TECHNICAL_DEBT_RATIO_METRICS_DATA)
+
+    assert loaded == TECHNICAL_DEBT_RATIO_METRICS_DATA
 
 
 def test_technical_debt_ratio_schema_rejects_unknown_metric():

@@ -51,20 +51,8 @@ class Checker:
         if max_threshold > 100:
             raise InvalidThresholdValue("max_threshold is greater than 100")
 
-    @staticmethod
-    def check_technical_debt_ratio_threshold(
-        min_threshold: float, max_threshold: float
-    ):
-        if min_threshold != 0:
-            raise InvalidThresholdValue("min_threshold is not equal to 0")
-
-        if min_threshold >= max_threshold:
-            raise InvalidThresholdValue(
-                "min_threshold is greater or equal to max_threshold"
-            )
-
-        if max_threshold > 100:
-            raise InvalidThresholdValue("max_threshold is greater than 100")
+    # Mesmas regras da absence_of_duplications: percentual com minimo 0 e maximo 100.
+    check_technical_debt_ratio_threshold = check_absence_of_duplications_threshold
 
     @staticmethod
     def check_test_coverage_threshold(min_threshold, max_threshold):

@@ -135,10 +135,7 @@ def get_technical_debt_ratio(
 
     number_of_files = data.get("number_of_files", len(files_sqale_debt_ratio))
 
-    has_none = files_sqale_debt_ratio is None
-    has_zero = len(files_sqale_debt_ratio) == 0
-
-    if has_none or has_zero:
+    if len(files_sqale_debt_ratio) == 0:
         return 0
 
     if files_sqale_debt_ratio.sum() < 0:
