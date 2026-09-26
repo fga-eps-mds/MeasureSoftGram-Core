@@ -9,6 +9,7 @@ from core.aggregated_normalized_measures import (
     team_throughput,
     ci_feedback_time,
     run_time_measure,
+    technical_debt_ratio,
 )
 
 AVAILABLE_PRE_CONFIGS = {
@@ -51,6 +52,7 @@ AVAILABLE_PRE_CONFIGS = {
                 "non_complex_file_density",
                 "commented_file_density",
                 "duplication_absense",
+                "technical_debt_ratio",
             ],
             "characteristics": ["maintainability"],
         },
@@ -113,6 +115,12 @@ AVAILABLE_PRE_CONFIGS = {
             "characteristics": ["maintainability"],
             "metrics": ["duplicated_lines_density"],
         },
+        "technical_debt_ratio": {
+            "name": "Technical debt ratio",
+            "subcharacteristics": ["modifiability"],
+            "characteristics": ["maintainability"],
+            "metrics": ["sqale_debt_ratio"],
+        },
         "team_throughput": {
             "name": "Team Throughput",
             "subcharacteristics": ["functional_completeness"],
@@ -152,6 +160,10 @@ AGGREGATED_NORMALIZED_MEASURES_MAPPING = {
     "duplication_absense": {
         "aggregated_normalized_measure": absence_of_duplications,
         "schema": schemas.DuplicationAbsenceSchema,
+    },
+    "technical_debt_ratio": {
+        "aggregated_normalized_measure": technical_debt_ratio,
+        "schema": schemas.TechnicalDebtRatioSchema,
     },
     "passed_tests": {
         "aggregated_normalized_measure": passed_tests,

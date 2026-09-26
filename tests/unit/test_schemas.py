@@ -5,6 +5,7 @@ from core.schemas import (
     NonComplexFileDensitySchema,
     CommentedFileDensitySchema,
     DuplicationAbsenceSchema,
+    TechnicalDebtRatioSchema,
     PassedTestsSchema,
     TestBuildsSchema,
     TestCoverageSchema,
@@ -16,6 +17,7 @@ from tests.utils.schemas_data import (
     NON_COMPLEX_FILES_DENSITY_METRICS_DATA,
     COMMENTED_FILE_DENSITY_METRICS_DATA,
     DUPLICATION_ABSENCE_METRICS_DATA,
+    TECHNICAL_DEBT_RATIO_METRICS_DATA,
     PASSED_TESTS_METRICS_DATA,
     TEST_BUILDS_METRICS_DATA,
     TEST_COVERAGE_METRICS_DATA,
@@ -43,6 +45,20 @@ def test_duplication_absence_schema_validation():
         DuplicationAbsenceSchema().load(DUPLICATION_ABSENCE_METRICS_DATA)
     except ValidationError as e:
         pytest.fail(f"Unexpected error: {e}")
+
+
+def test_technical_debt_ratio_schema_validation():
+    try:
+        TechnicalDebtRatioSchema().load(TECHNICAL_DEBT_RATIO_METRICS_DATA)
+    except ValidationError as e:
+        pytest.fail(f"Unexpected error: {e}")
+
+
+def test_technical_debt_ratio_schema_rejects_unknown_metric():
+    with pytest.raises(ValidationError):
+        TechnicalDebtRatioSchema.validate_metrics(
+            [{"key": "duplicated_lines_density", "value": [0.1]}]
+        )
 
 
 def test_passed_tests_schema_validation():

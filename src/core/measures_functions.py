@@ -121,6 +121,34 @@ def get_absence_of_duplications(
     return files_duplicated_lines_density, number_of_files
 
 
+def get_technical_debt_ratio(
+    data: dict,
+):
+    """
+    Calculates technical debt ratio.
+
+    This function calculates the technical debt ratio measure
+    used to assess the modifiability quality sub characteristic.
+    """
+
+    files_sqale_debt_ratio = resolve_metric_list_parameter(data["sqale_debt_ratio"])
+
+    number_of_files = data.get("number_of_files", len(files_sqale_debt_ratio))
+
+    has_none = files_sqale_debt_ratio is None
+    has_zero = len(files_sqale_debt_ratio) == 0
+
+    if has_none or has_zero:
+        return 0
+
+    if files_sqale_debt_ratio.sum() < 0:
+        raise InvalidMetricValue(
+            "The number of files technical debt ratio is lesser than 0"
+        )
+
+    return files_sqale_debt_ratio, number_of_files
+
+
 def get_passed_tests(data: dict[str, float]):
     """
     Calculates passed tests (em4)
