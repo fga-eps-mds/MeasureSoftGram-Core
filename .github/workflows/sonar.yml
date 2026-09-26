@@ -49,6 +49,7 @@ jobs:
           repository: ${{ steps.meta.outputs.head_repo }}
           ref: ${{ steps.meta.outputs.head_sha }}
           fetch-depth: 0
+          allow-unsafe-pr-checkout: true
 
       - name: Restaurar relatórios para a raiz do workspace
         run: |
