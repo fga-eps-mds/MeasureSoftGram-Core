@@ -2,6 +2,7 @@
 confs.txt
 /src/jsonteste.py
 /src/*.checkpoint.ipynb
+build
 __pycache__
 
 # Coverage
@@ -18,6 +19,10 @@ coverage.xml
 
 trash
 .venv
+env
 
 # analytics-raw-data
 analytics-raw-data/
+
+dist/
+**/*.egg-info/

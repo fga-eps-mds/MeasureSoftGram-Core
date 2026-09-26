@@ -1,0 +1,20 @@
+name: MSG Action
+on:
+  pull_request:
+    branches: [ develop ]
+    types: [opened, closed, reopened, synchronize]
+  workflow_dispatch:
+jobs:
+  msgram_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: 2023.2 Action MeasureSoftGram
+        uses: fga-eps-mds/2023-2-MeasureSoftGram-Action@v2.2    
+        id: msgram
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }} # Token do GitHub
+          sonarProjectKey: "fga-eps-mds_2023-2-MeasureSoftGram-Core" # (opcional) Chave do projeto no SonarQube
+          msgramServiceToken: ${{ secrets.MSGRAM_SERVICE_TOKEN }} # Token para acessar o serviço MeasureSoftGram
+          productName: "MeasureSoftGram" # Nome do produto
