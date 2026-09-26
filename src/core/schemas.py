@@ -215,6 +215,20 @@ class DuplicationAbsenceSchema(Schema):
                 )
 
 
+class TechnicalDebtRatioSchema(Schema):
+    # 1 Validação : Se contém uma lista de métricas
+    metrics = fields.List(fields.Nested(MetricSchema), required=True)
+
+    @staticmethod
+    def validate_metrics(metrics):
+        for metric in metrics:
+            # 2 Validação : Se foi passada alguma métrica não pertencente a medida
+            if metric["key"] not in ["sqale_debt_ratio"]:
+                raise ValidationError(
+                    f"'{metric['key']}': Métrica não presente na medida"
+                )
+
+
 class PassedTestsSchema(Schema):
     # 1 Validação : Se contém uma lista de métricas
     metrics = fields.List(fields.Nested(MetricSchema), required=True)
