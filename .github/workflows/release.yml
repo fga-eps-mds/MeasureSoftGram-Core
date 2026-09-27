@@ -125,28 +125,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Salvar artefatos de distribuição
-        if: steps.check_release.outputs.should_publish == 'true'
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist-release
-          path: dist/
-          retention-days: 1
-
-  publish-pypi:
-    name: Publicar no PyPI Oficial (Trusted Publisher)
-    needs: release
-    if: needs.release.outputs.should_publish == 'true'
-    runs-on: ubuntu-latest
-    environment: pypi
-    permissions:
-      id-token: write
-    steps:
-      - name: Baixar artefatos de distribuição
-        uses: actions/download-artifact@v4
-        with:
-          name: dist-release
-          path: dist/
-
-      - name: Publicar no PyPI via Trusted Publisher
-        uses: pypa/gh-action-pypi-publish@release/v1
