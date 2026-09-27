@@ -64,6 +64,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
+            -Dsonar.projectKey=${{ github.repository_owner }}_${{ github.event.repository.name }}
+            -Dsonar.organization=${{ github.repository_owner }}
             -Dsonar.pullrequest.key=${{ steps.meta.outputs.pr_number }}
             -Dsonar.pullrequest.branch=${{ steps.meta.outputs.head_ref }}
             -Dsonar.pullrequest.base=${{ steps.meta.outputs.base_ref }}
@@ -77,4 +79,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
+            -Dsonar.projectKey=${{ github.repository_owner }}_${{ github.event.repository.name }}
+            -Dsonar.organization=${{ github.repository_owner }}
             -Dsonar.branch.name=${{ steps.meta.outputs.head_ref }}
