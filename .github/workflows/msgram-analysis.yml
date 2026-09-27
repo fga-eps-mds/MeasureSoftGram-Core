@@ -9,9 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
       - name: 2023.2 Action MeasureSoftGram
-        uses: fga-eps-mds/2023-2-MeasureSoftGram-Action@v2.2    
+        uses: fga-eps-mds/2023-2-MeasureSoftGram-Action@6de321eae2a60ebf8267b108e333d3887fa314f5 # v2.2    
         id: msgram
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }} # Token do GitHub
