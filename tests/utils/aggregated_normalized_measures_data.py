@@ -5,6 +5,7 @@ from core.aggregated_normalized_measures import (
     non_complex_files_density,
     passed_tests,
     run_time_measure,
+    technical_debt_ratio,
 )
 from core.aggregated_normalized_measures import (
     test_coverage as interpret_test_coverage,
@@ -40,6 +41,21 @@ INVALID_METRICS_TEST_DATA = [
         absence_of_duplications,
         {"duplicated_lines_density": ["abc"]},
         '"duplicated_lines_density" has an invalid metric value',
+    ),
+    (
+        technical_debt_ratio,
+        {"sqale_debt_ratio": [None]},
+        '"sqale_debt_ratio" has an invalid metric value',
+    ),
+    (
+        technical_debt_ratio,
+        {"sqale_debt_ratio": ["abc"]},
+        '"sqale_debt_ratio" has an invalid metric value',
+    ),
+    (
+        technical_debt_ratio,
+        {"files": [10.0]},
+        '"sqale_debt_ratio" metric is missing',
     ),
     (
         interpret_test_coverage,
@@ -304,6 +320,26 @@ SUCCESS_TEST_DATA = [
     (
         absence_of_duplications,
         {"duplicated_lines_density": []},
+        0.0,
+    ),
+    (
+        technical_debt_ratio,
+        {"sqale_debt_ratio": [0.0, 0.0, 0.0]},
+        1.0,
+    ),
+    (
+        technical_debt_ratio,
+        {"sqale_debt_ratio": [20.0, 35.0, 100.0]},
+        0.0,
+    ),
+    (
+        technical_debt_ratio,
+        {"sqale_debt_ratio": [0.0, 5.0, 10.0, 20.0, 40.0]},
+        0.45,
+    ),
+    (
+        technical_debt_ratio,
+        {"sqale_debt_ratio": []},
         0.0,
     ),
     (
@@ -1347,5 +1383,32 @@ INVALID_THRESHOLD_TEST_DATA = [
             "max_threshold": 900,
         },
         "max_threshold is not equal to 100",
+    ),
+    (
+        technical_debt_ratio,
+        {
+            "data_frame": {"sqale_debt_ratio": [0.0, 5.0]},
+            "min_threshold": 1,
+            "max_threshold": 20,
+        },
+        "min_threshold is not equal to 0",
+    ),
+    (
+        technical_debt_ratio,
+        {
+            "data_frame": {"sqale_debt_ratio": [0.0, 5.0]},
+            "min_threshold": 0,
+            "max_threshold": 0,
+        },
+        "min_threshold is greater or equal to max_threshold",
+    ),
+    (
+        technical_debt_ratio,
+        {
+            "data_frame": {"sqale_debt_ratio": [0.0, 5.0]},
+            "min_threshold": 0,
+            "max_threshold": 101,
+        },
+        "max_threshold is greater than 100",
     ),
 ]

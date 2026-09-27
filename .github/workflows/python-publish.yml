@@ -44,7 +44,7 @@ jobs:
           import os, sys, tomllib
           from packaging.version import Version
 
-          ref = os.environ["GITHUB_REF_NAME"]          # ex: v1.5.4rc1
+          ref = os.environ.get("GITHUB_REF_NAME", "")          # ex: v1.5.4rc1
           tag_version = ref[1:] if ref.startswith("v") else ref
 
           with open("pyproject.toml", "rb") as f:

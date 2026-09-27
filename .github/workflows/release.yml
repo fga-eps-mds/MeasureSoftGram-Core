@@ -1,0 +1,127 @@
+name: Release Oficial e Publicação
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Bump, Tag e Release Oficial
+    runs-on: ubuntu-latest
+    outputs:
+      should_publish: ${{ steps.check_release.outputs.should_publish }}
+      tag: ${{ steps.versioning.outputs.tag }}
+      final_version: ${{ steps.versioning.outputs.final_version }}
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Extrair versão e calcular bump estável
+        id: versioning
+        run: |
+          python - <<'PY'
+          import os, re, tomllib
+
+          with open("pyproject.toml", "rb") as f:
+              data = tomllib.load(f)["project"]
+
+          raw_version = data["version"]
+          print(f"Versao encontrada no pyproject.toml: {raw_version}")
+
+          match = re.match(r"^(\d+\.\d+\.\d+)", raw_version)
+          if match:
+              final_version = match.group(1)
+          else:
+              final_version = raw_version
+
+          is_prerelease = (raw_version != final_version)
+          tag = f"v{final_version}"
+
+          with open(os.environ["GITHUB_OUTPUT"], "a") as out:
+              out.write(f"raw_version={raw_version}\n")
+              out.write(f"final_version={final_version}\n")
+              out.write(f"is_prerelease={str(is_prerelease).lower()}\n")
+              out.write(f"tag={tag}\n")
+
+          print(f"Versao estavel: {final_version}")
+          print(f"Tag Git: {tag}")
+          print(f"E pre-release: {is_prerelease}")
+          PY
+
+      - name: Checar se a release já foi efetuada
+        id: check_release
+        run: |
+          TAG="${{ steps.versioning.outputs.tag }}"
+          IS_PRERELEASE="${{ steps.versioning.outputs.is_prerelease }}"
+          
+          if [ "$IS_PRERELEASE" = "true" ]; then
+            echo "should_publish=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::Pre-release detectada ($TAG). Procedendo com auto-bump para versao estavel e release."
+          else
+            if git rev-parse "$TAG" >/dev/null 2>&1; then
+              echo "should_publish=false" >> "$GITHUB_OUTPUT"
+              echo "::notice::Tag $TAG ja existe e versao ja esta estavel. Nenhuma acao de release necessaria."
+            else
+              echo "should_publish=true" >> "$GITHUB_OUTPUT"
+              echo "::notice::Versao estavel sem tag existente. Procedendo com release."
+            fi
+          fi
+
+      - name: Bump automático de versão no pyproject.toml
+        if: steps.check_release.outputs.should_publish == 'true' && steps.versioning.outputs.is_prerelease == 'true'
+        run: |
+          RAW_VERSION="${{ steps.versioning.outputs.raw_version }}"
+          FINAL_VERSION="${{ steps.versioning.outputs.final_version }}"
+
+          echo "Atualizando pyproject.toml de $RAW_VERSION para $FINAL_VERSION..."
+          sed -i "s/version = \"$RAW_VERSION\"/version = \"$FINAL_VERSION\"/" pyproject.toml
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pyproject.toml
+          git commit -m "chore(release): bump version to $FINAL_VERSION [skip ci]"
+          git push origin main
+
+      - name: Criar Git Tag correspondente
+        if: steps.check_release.outputs.should_publish == 'true'
+        run: |
+          TAG="${{ steps.versioning.outputs.tag }}"
+          git tag -f "$TAG"
+          git push origin "$TAG" --force
+
+      - name: Instalar dependências de build
+        if: steps.check_release.outputs.should_publish == 'true'
+        run: python -m pip install --upgrade pip build twine
+
+      - name: Compilar distribuição (python -m build)
+        if: steps.check_release.outputs.should_publish == 'true'
+        run: |
+          python -m build
+          python -m twine check dist/*
+
+      - name: Criar GitHub Release oficial
+        if: steps.check_release.outputs.should_publish == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.versioning.outputs.tag }}
+          name: ${{ steps.versioning.outputs.tag }}
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+          files: dist/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
