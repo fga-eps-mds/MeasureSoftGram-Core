@@ -106,4 +106,4 @@ jobs:
 
       - name: Publicar no PyPI oficial via Trusted Publishing (OIDC)
         if: ${{ steps.release.outputs.release_created }}
-        uses: pypa/gh-action-pypi-publish@76f52e663a01b56fe7666a29bd44447b0cc80a41 # v1.12.4
+        uses: pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc # v1.12.4
