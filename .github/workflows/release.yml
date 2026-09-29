@@ -19,13 +19,13 @@ jobs:
       final_version: ${{ steps.versioning.outputs.final_version }}
     steps:
       - name: Checkout do repositório
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
         with:
           python-version: "3.12"
 
@@ -114,7 +114,7 @@ jobs:
 
       - name: Criar GitHub Release oficial
         if: steps.check_release.outputs.should_publish == 'true'
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@c95fe1489396fe8a9eb87c0abf8aa5b2ef267fda # v2.2.1
         with:
           tag_name: ${{ steps.versioning.outputs.tag }}
           name: ${{ steps.versioning.outputs.tag }}
