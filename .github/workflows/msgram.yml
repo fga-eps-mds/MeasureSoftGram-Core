@@ -1,0 +1,26 @@
+name: MSG Action
+
+# Este workflow executa a MeasureSoftGram Action, que analisa o projeto e comenta uma tabela de métricas nos Pull Requests.
+
+on:
+  pull_request:
+    branches: [ develop ]
+    types: [opened, closed, reopened, synchronize]
+  workflow_dispatch:
+
+jobs:
+  msgram_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      
+      - name: MeasureSoftGram Action
+        uses: fga-eps-mds/MeasureSoftGram-Action@main
+        id: msgram
+        continue-on-error: true
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          sonarProjectKey: "fga-eps-mds_MeasureSoftGram-Core"
+          msgramServiceToken: ${{ secrets.MSGRAM_SERVICE_TOKEN }}
+          productName: "MeasureSoftGram"
