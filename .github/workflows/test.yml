@@ -69,7 +69,6 @@ jobs:
         with:
           args: >
             -Dsonar.projectKey=${{ github.repository_owner }}_${{ github.event.repository.name }}
-            -Dsonar.organization=fga-eps-mds-1
 
       - name: Notificação de SonarCloud desacoplado
         if: env.SONAR_TOKEN == ''

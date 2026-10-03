@@ -1,4 +1,4 @@
-name: Release Oficial e Publicação
+name: Release Oficial Python
 
 on:
   push:
@@ -8,120 +8,102 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
+  id-token: write # Necessário para Trusted Publishing (OIDC) no PyPI
 
 jobs:
-  release:
-    name: Bump, Tag e Release Oficial
+  release-please:
     runs-on: ubuntu-latest
-    outputs:
-      should_publish: ${{ steps.check_release.outputs.should_publish }}
-      tag: ${{ steps.versioning.outputs.tag }}
-      final_version: ${{ steps.versioning.outputs.final_version }}
+    environment: pypi
     steps:
-      - name: Checkout do repositório
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: googleapis/release-please-action@a02a34c4d625f9be7cb89156071d8567266a2445 # v4.2.0
+        id: release
         with:
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: python
+          target-branch: main
+
+      - name: Checkout do código pós-release
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Setup Python
-        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
           python-version: "3.12"
 
-      - name: Extrair versão e calcular bump estável
-        id: versioning
-        run: |
-          python - <<'PY'
-          import os, re, tomllib
+      - name: Instalar dependências de build e validação
+        if: ${{ steps.release.outputs.release_created }}
+        run: python -m pip install --upgrade pip build twine packaging
 
-          with open("pyproject.toml", "rb") as f:
-              data = tomllib.load(f)["project"]
-
-          raw_version = data["version"]
-          print(f"Versao encontrada no pyproject.toml: {raw_version}")
-
-          match = re.match(r"^(\d+\.\d+\.\d+)", raw_version)
-          if match:
-              final_version = match.group(1)
-          else:
-              final_version = raw_version
-
-          is_prerelease = (raw_version != final_version)
-          tag = f"v{final_version}"
-
-          with open(os.environ["GITHUB_OUTPUT"], "a") as out:
-              out.write(f"raw_version={raw_version}\n")
-              out.write(f"final_version={final_version}\n")
-              out.write(f"is_prerelease={str(is_prerelease).lower()}\n")
-              out.write(f"tag={tag}\n")
-
-          print(f"Versao estavel: {final_version}")
-          print(f"Tag Git: {tag}")
-          print(f"E pre-release: {is_prerelease}")
-          PY
-
-      - name: Checar se a release já foi efetuada
-        id: check_release
-        run: |
-          TAG="${{ steps.versioning.outputs.tag }}"
-          IS_PRERELEASE="${{ steps.versioning.outputs.is_prerelease }}"
-          
-          if [ "$IS_PRERELEASE" = "true" ]; then
-            echo "should_publish=true" >> "$GITHUB_OUTPUT"
-            echo "::notice::Pre-release detectada ($TAG). Procedendo com auto-bump para versao estavel e release."
-          else
-            if git rev-parse "$TAG" >/dev/null 2>&1; then
-              echo "should_publish=false" >> "$GITHUB_OUTPUT"
-              echo "::notice::Tag $TAG ja existe e versao ja esta estavel. Nenhuma acao de release necessaria."
-            else
-              echo "should_publish=true" >> "$GITHUB_OUTPUT"
-              echo "::notice::Versao estavel sem tag existente. Procedendo com release."
-            fi
-          fi
-
-      - name: Bump automático de versão no pyproject.toml
-        if: steps.check_release.outputs.should_publish == 'true' && steps.versioning.outputs.is_prerelease == 'true'
-        run: |
-          RAW_VERSION="${{ steps.versioning.outputs.raw_version }}"
-          FINAL_VERSION="${{ steps.versioning.outputs.final_version }}"
-
-          echo "Atualizando pyproject.toml de $RAW_VERSION para $FINAL_VERSION..."
-          sed -i "s/version = \"$RAW_VERSION\"/version = \"$FINAL_VERSION\"/" pyproject.toml
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add pyproject.toml
-          git commit -m "chore(release): bump version to $FINAL_VERSION [skip ci]"
-          git push origin main
-
-      - name: Criar Git Tag correspondente
-        if: steps.check_release.outputs.should_publish == 'true'
-        run: |
-          TAG="${{ steps.versioning.outputs.tag }}"
-          git tag -f "$TAG"
-          git push origin "$TAG" --force
-
-      - name: Instalar dependências de build
-        if: steps.check_release.outputs.should_publish == 'true'
-        run: python -m pip install --upgrade pip build twine
-
-      - name: Compilar distribuição (python -m build)
-        if: steps.check_release.outputs.should_publish == 'true'
+      - name: Compilar distribuição (sdist e wheel)
+        if: ${{ steps.release.outputs.release_created }}
         run: |
           python -m build
           python -m twine check dist/*
 
-      - name: Criar GitHub Release oficial
-        if: steps.check_release.outputs.should_publish == 'true'
-        uses: softprops/action-gh-release@c95fe1489396fe8a9eb87c0abf8aa5b2ef267fda # v2.2.1
-        with:
-          tag_name: ${{ steps.versioning.outputs.tag }}
-          name: ${{ steps.versioning.outputs.tag }}
-          generate_release_notes: true
-          draft: false
-          prerelease: false
-          files: dist/*
+      - name: Gate de Segurança PyPI (Versão Superior e Pré-Releases)
+        if: ${{ steps.release.outputs.release_created }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET_VERSION: ${{ steps.release.outputs.version }}
+        run: |
+          python - <<'PY'
+          import json, os, sys, urllib.request, urllib.error
+          from packaging.version import Version
 
+          target_version_str = os.environ.get("TARGET_VERSION", "")
+          if not target_version_str:
+              print("::error::TARGET_VERSION nao definida.")
+              sys.exit(1)
+
+          target_version = Version(target_version_str)
+          pkg = "msgram-core"
+          url = f"https://pypi.org/pypi/{pkg}/json"
+
+          try:
+              with urllib.request.urlopen(url, timeout=30) as r:
+                  data = json.load(r)
+          except urllib.error.HTTPError as e:
+              print(f"::error::Nao foi possivel consultar o PyPI ({e.code}).")
+              sys.exit(1)
+
+          all_releases = [Version(v) for v in data.get("releases", {}).keys()]
+          stable_releases = sorted([v for v in all_releases if not v.is_prerelease])
+
+          # Regra 1: Versao estritamente superior a ultima estavel no PyPI
+          if stable_releases:
+              latest_stable = stable_releases[-1]
+              print(f"Ultima versao estavel no PyPI: {latest_stable}")
+              print(f"Versao alvo: {target_version}")
+              if target_version <= latest_stable:
+                  print(f"::error::Gate bloqueou a publicacao: a versao alvo ({target_version}) "
+                        f"deve ser estritamente superior a versao estavel atual no PyPI ({latest_stable}).")
+                  sys.exit(1)
+          else:
+              print("Nenhuma versao estavel anterior encontrada no PyPI.")
+
+          # Regra 2: Ja existe ao menos uma release candidate (rc) da mesma versao base no PyPI
+          base_version = target_version.base_version
+          rcs = sorted(
+              v for v in data.get("releases", {})
+              if Version(v).base_version == base_version and Version(v).is_prerelease
+          )
+          if not rcs:
+              print(f"::error::Gate bloqueou a publicacao da versao final: nenhuma "
+                    f"release candidate de {base_version} encontrada no PyPI. Crie e homologue "
+                    f"a tag v{base_version}rc1 antes de publicar a versao final.")
+              sys.exit(1)
+          print(f"Gate ok: release candidate(s) encontrada(s) no PyPI para {base_version}: {rcs}")
+          print("Todas as validacoes do Gate de Seguranca PyPI foram aprovadas com sucesso!")
+          PY
+
+      - name: Anexar artefatos à GitHub Release oficial
+        if: ${{ steps.release.outputs.release_created }}
+        uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191 # v2.0.8
+        with:
+          tag_name: ${{ steps.release.outputs.tag_name }}
+          files: dist/*
+
+      - name: Publicar no PyPI oficial via Trusted Publishing (OIDC)
+        if: ${{ steps.release.outputs.release_created }}
+        uses: pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc # v1.12.4
