@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: 2023.2 Action MeasureSoftGram
         uses: fga-eps-mds/2023-2-MeasureSoftGram-Action@6de321eae2a60ebf8267b108e333d3887fa314f5 # v2.2    
         id: msgram
