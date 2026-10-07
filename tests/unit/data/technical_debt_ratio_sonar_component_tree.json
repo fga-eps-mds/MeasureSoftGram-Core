@@ -1,0 +1,68 @@
+{
+  "paging": {"pageIndex": 1, "pageSize": 500, "total": 5},
+  "baseComponent": {
+    "key": "fga-eps-mds_2026.2-MeasureSoftGram-Core",
+    "name": "2026.2-MeasureSoftGram-Core",
+    "qualifier": "TRK",
+    "measures": [
+      {"metric": "files", "value": "4"},
+      {"metric": "sqale_debt_ratio", "value": "6.1"}
+    ]
+  },
+  "components": [
+    {
+      "key": "fga-eps-mds_2026.2-MeasureSoftGram-Core:src/util",
+      "name": "util",
+      "qualifier": "DIR",
+      "path": "src/util",
+      "measures": [
+        {"metric": "files", "value": "2"},
+        {"metric": "sqale_debt_ratio", "value": "4.2"}
+      ]
+    },
+    {
+      "key": "fga-eps-mds_2026.2-MeasureSoftGram-Core:src/__init__.py",
+      "name": "__init__.py",
+      "qualifier": "FIL",
+      "path": "src/__init__.py",
+      "language": "py",
+      "measures": [
+        {"metric": "files", "value": "1"},
+        {"metric": "sqale_debt_ratio", "value": "0.0", "bestValue": true}
+      ]
+    },
+    {
+      "key": "fga-eps-mds_2026.2-MeasureSoftGram-Core:src/util/__init__.py",
+      "name": "__init__.py",
+      "qualifier": "FIL",
+      "path": "src/util/__init__.py",
+      "language": "py",
+      "measures": [
+        {"metric": "files", "value": "1"},
+        {"metric": "sqale_debt_ratio", "value": "8.3", "bestValue": false}
+      ]
+    },
+    {
+      "key": "fga-eps-mds_2026.2-MeasureSoftGram-Core:src/util/check.py",
+      "name": "check.py",
+      "qualifier": "FIL",
+      "path": "src/util/check.py",
+      "language": "py",
+      "measures": [
+        {"metric": "files", "value": "1"},
+        {"metric": "sqale_debt_ratio", "value": "4.0", "bestValue": false}
+      ]
+    },
+    {
+      "key": "fga-eps-mds_2026.2-MeasureSoftGram-Core:src/core/legacy.py",
+      "name": "legacy.py",
+      "qualifier": "FIL",
+      "path": "src/core/legacy.py",
+      "language": "py",
+      "measures": [
+        {"metric": "files", "value": "1"},
+        {"metric": "sqale_debt_ratio", "value": "32.5", "bestValue": false}
+      ]
+    }
+  ]
+}

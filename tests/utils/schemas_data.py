@@ -17,6 +17,12 @@ DUPLICATION_ABSENCE_METRICS_DATA = {
     ]
 }
 
+TECHNICAL_DEBT_RATIO_METRICS_DATA = {
+    "metrics": [
+        {"key": "sqale_debt_ratio", "value": [1.5, 0.0]},
+    ]
+}
+
 PASSED_TESTS_METRICS_DATA = {
     "metrics": [
         {"key": "tests", "value": [10.0]},

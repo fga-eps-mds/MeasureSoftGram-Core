@@ -4,6 +4,7 @@ import pandas as pd
 import core.measures_functions as ems_functions
 import core.transformations as transformations
 from util.check import Checker
+from util.exceptions import InvalidMetricValue
 from util.run_time_data_operations import RunTimeDataOperations
 
 # Sem builds no periodo significa ausencia de dado de feedback do CI.
@@ -144,6 +145,48 @@ def absence_of_duplications(
     )
 
     x = files_duplicated_lines_density[files_duplicated_lines_density <= max_threshold]
+
+    interpretation_function_value = transformations.interpretation_function(
+        x=x,
+        min_threshold=min_threshold,
+        max_threshold=max_threshold,
+        gain_interpretation=-1,
+    )
+    aggregated_and_normalized_measure = transformations.calculate_measure(
+        interpretation_function_value, number_of_files
+    )
+    return aggregated_and_normalized_measure
+
+
+def technical_debt_ratio(
+    data_frame, min_threshold: float = 0, max_threshold: float = 20.0
+):
+    """
+    Calculates technical debt ratio.
+
+    This function gets the dataframe metrics
+    and returns the technical debt ratio measure.
+    """
+    if "sqale_debt_ratio" not in data_frame:
+        raise InvalidMetricValue('"sqale_debt_ratio" metric is missing')
+
+    files_sqale_debt_ratio = data_frame["sqale_debt_ratio"]
+
+    Checker.check_metric_values(files_sqale_debt_ratio, "sqale_debt_ratio")
+
+    if len(files_sqale_debt_ratio) == 0:
+        return 0.0
+
+    Checker.check_threshold(min_threshold, max_threshold, "technical_debt_ratio")
+
+    (
+        files_sqale_debt_ratio,
+        number_of_files,
+    ) = ems_functions.get_technical_debt_ratio(
+        data={"sqale_debt_ratio": files_sqale_debt_ratio},
+    )
+
+    x = files_sqale_debt_ratio[files_sqale_debt_ratio <= max_threshold]
 
     interpretation_function_value = transformations.interpretation_function(
         x=x,

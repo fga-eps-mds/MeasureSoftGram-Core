@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: Baixar artefatos de cobertura e metadados
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e # v4.2.1
         with:
           name: test-coverage-artifacts
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -44,7 +44,7 @@ jobs:
           echo "base_ref=$BASE_REF" >> "$GITHUB_OUTPUT"
 
       - name: Checkout do código do commit analisado
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           repository: ${{ steps.meta.outputs.head_repo }}
           ref: ${{ steps.meta.outputs.head_sha }}
@@ -64,6 +64,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
+            -Dsonar.projectKey=${{ github.repository_owner }}_${{ github.event.repository.name }}
+            -Dsonar.organization=fga-eps-mds-1
             -Dsonar.pullrequest.key=${{ steps.meta.outputs.pr_number }}
             -Dsonar.pullrequest.branch=${{ steps.meta.outputs.head_ref }}
             -Dsonar.pullrequest.base=${{ steps.meta.outputs.base_ref }}
@@ -77,4 +79,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
+            -Dsonar.projectKey=${{ github.repository_owner }}_${{ github.event.repository.name }}
+            -Dsonar.organization=fga-eps-mds-1
             -Dsonar.branch.name=${{ steps.meta.outputs.head_ref }}
