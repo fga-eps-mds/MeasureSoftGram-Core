@@ -13,6 +13,8 @@ permissions:
 
 jobs:
   release-please:
+    # Publicação só no repositório central; nos forks semestrais o job é pulado.
+    if: github.repository == 'fga-eps-mds/MeasureSoftGram-Core'
     runs-on: ubuntu-latest
     environment: pypi
     steps:
