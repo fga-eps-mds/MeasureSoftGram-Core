@@ -21,6 +21,6 @@ classifiers = [
 ]
 keywords = ["core", "measures", "quality", "algebraic model"]
 requires-python = ">=3.10"
-dependencies = ["pandas>=2.2.0","marshmallow==3.21.0","numpy>=2.0","scikit-learn>=1.5.1","scipy>=1.14.1"]
+dependencies = ["pandas>=2.2.0","marshmallow==4.3.1","numpy>=2.0","scikit-learn>=1.5.1","scipy>=1.14.1"]
 [tool.mypy]
 strict = true
