@@ -105,9 +105,6 @@ class Checker:
         if not isinstance(metric_values, (list, np.ndarray)):
             raise InvalidMetricValue(f'"{metric}" is not a list or a np.ndarray')
 
-        # if not len(metric_values):
-        #     raise InvalidMetricValue(f'"{metric}" is empty')
-
         for value in metric_values:
             Checker.check_metric_value(value, metric)
 

@@ -20,8 +20,6 @@ def interpretation_function(
     max_threshold: float,
     gain_interpretation: GainInterpretation,
 ) -> np.array:
-    #  TODO: create docstring in sphinx format
-
     x = interpolation(x, min_threshold, max_threshold)
 
     if gain_interpretation == GainInterpretation.POSITIVE_SLOPE:
