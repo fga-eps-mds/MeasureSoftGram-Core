@@ -40,8 +40,14 @@ jobs:
       - name: Rodar testes
         run: tox -e test_core
 
+      # O SonarCloud só deve ser executado se:
+      # 1. Não for disparado pelo Dependabot (que não possui acesso aos secrets de Actions)
+      # 2. O evento for push (merge) OU um PR interno do próprio repositório (não fork externo)
       - name: Scanner do SonarCloud
-        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        if: >-
+          github.actor != 'dependabot[bot]' &&
+          (github.event_name != 'pull_request' ||
+           github.event.pull_request.head.repo.full_name == github.repository)
         uses: SonarSource/sonarqube-scan-action@d209202bc7d53ff1cc128f7f907dac145c9d6ae9 # v8.3.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -50,7 +56,10 @@ jobs:
           args: >
             -Dsonar.projectKey=${{ github.repository_owner }}_${{ github.event.repository.name }}
 
-      - name: Notificação de SonarCloud ignorado (PR cross-repo sem segredos)
-        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
+      - name: Notificação de SonarCloud ignorado (Fork ou Dependabot)
+        if: >-
+          github.actor == 'dependabot[bot]' ||
+          (github.event_name == 'pull_request' &&
+           github.event.pull_request.head.repo.full_name != github.repository)
         run: |
-          echo "::notice::PR cross-repository detectado (secrets bloqueados pelo GitHub). Testes concluídos com sucesso; análise estática será consolidada no push da branch principal."
+          echo "::notice title=SonarCloud Ignorado::O scan foi ignorado pois foi disparado pelo Dependabot ou originou-se de um fork externo sem acesso aos secrets de repositório."
