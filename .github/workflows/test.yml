@@ -9,68 +9,61 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
       - name: Setup Python
-        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.10"
           cache: pip
 
-      - name: Instalar requirements
-        run: pip install -r requirements.txt
+      - name: Instalar dependências
+        run: |
+          pip install -r requirements.txt
+          pip install tox flake8 black build
 
-      - name: Instalar tox
-        run: pip install tox
+      - name: Linter e Sintaxe
+        run: |
+          black --check src tests
+          flake8 .
+          python -m compileall -q src tests
+
+      - name: Empacotamento
+        run: |
+          python -m pip install build
+          python -m build
 
       - name: Rodar testes
-        run: tox
+        run: tox -e test_core
 
-      - name: Corrige reports path
-        run: |
-          sed -i "s#<source>${GITHUB_WORKSPACE}</source>#<source>/github/workspace</source>#g" coverage.xml
-
-      - name: Gerar metadados do PR / Execução
-        run: |
-          mkdir -p pr_metadata
-          cat << 'EOF' > pr_metadata/metadata.json
-          {
-            "event_name": "${{ github.event_name }}",
-            "pr_number": "${{ github.event.pull_request.number }}",
-            "head_ref": "${{ github.event.pull_request.head.ref || github.ref_name }}",
-            "head_repo": "${{ github.event.pull_request.head.repo.full_name || github.repository }}",
-            "head_sha": "${{ github.event.pull_request.head.sha || github.sha }}",
-            "base_ref": "${{ github.event.pull_request.base.ref || github.ref_name }}"
-          }
-          EOF
-
-      - name: Upload de artefatos de cobertura e metadados
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
-        with:
-          name: test-coverage-artifacts
-          path: |
-            coverage.xml
-            junit.xml
-            pr_metadata/metadata.json
-          retention-days: 1
-
-      - name: Scanner do SonarCloud (Fallback para contexto com secrets)
-        if: env.SONAR_TOKEN != ''
-        uses: SonarSource/sonarqube-scan-action@ba9859eae8dd6bd29e412f25ddbbef3d032000f4 # v8.2.2
+      # O SonarCloud só deve ser executado se:
+      # 1. Não for disparado pelo Dependabot (que não possui acesso aos secrets de Actions)
+      # 2. O evento for push (merge) OU um PR interno do próprio repositório (não fork externo)
+      - name: Scanner do SonarCloud
+        if: >-
+          github.actor != 'dependabot[bot]' &&
+          (github.event_name != 'pull_request' ||
+           github.event.pull_request.head.repo.full_name == github.repository)
+        uses: SonarSource/sonarqube-scan-action@d209202bc7d53ff1cc128f7f907dac145c9d6ae9 # v8.3.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        # 'sonar.qualitygate.wait=true' pausa a execução do step e consulta a API do SonarCloud
+        # até a conclusão da análise. Se o Quality Gate for reprovado (cobertura insuficiente, bugs,
+        # code smells), o scanner encerra com código de erro diferente de zero e quebra o CI na hora.
         with:
           args: >
             -Dsonar.projectKey=${{ github.repository_owner }}_${{ github.event.repository.name }}
+            -Dsonar.qualitygate.wait=true
 
-      - name: Notificação de SonarCloud desacoplado
-        if: env.SONAR_TOKEN == ''
+      - name: Notificação de SonarCloud ignorado (Fork ou Dependabot)
+        if: >-
+          github.actor == 'dependabot[bot]' ||
+          (github.event_name == 'pull_request' &&
+           github.event.pull_request.head.repo.full_name != github.repository)
         run: |
-          echo "::notice::SONAR_TOKEN não disponível neste contexto (PR de fork). Testes concluídos com sucesso e artefatos (coverage.xml e junit.xml) salvos para a esteira do SonarCloud."
+          echo "::notice title=SonarCloud Ignorado::O scan foi ignorado pois foi disparado pelo Dependabot ou originou-se de um fork externo sem acesso aos secrets de repositório."
