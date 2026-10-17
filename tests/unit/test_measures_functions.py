@@ -14,34 +14,37 @@ import inspect
 from core.aggregated_normalized_measures import run_time_measure
 from staticfiles.default_pre_config import DEFAULT_PRE_CONFIG
 
+# Limite canônico do response_time. A característica performance_efficiency
+# saiu do DEFAULT_PRE_CONFIG (decisão do P.O., US01.01), mas a medida continua
+# suportada pelo Core e calculada pela CLI a partir dos arquivos perf-eff.
+RESPONSE_TIME_MAX_THRESHOLD = 0.66
 
-def _find_measure_threshold(config, measure_key):
-    """Walk DEFAULT_PRE_CONFIG looking for the named measure's max_threshold."""
-    for characteristic in config["characteristics"]:
-        for subcharacteristic in characteristic["subcharacteristics"]:
-            for measure in subcharacteristic["measures"]:
-                if measure["key"] == measure_key:
-                    return measure["max_threshold"]
-    raise AssertionError(f"measure {measure_key!r} not found in DEFAULT_PRE_CONFIG")
+
+def _measure_keys(config):
+    return {
+        measure["key"]
+        for characteristic in config["characteristics"]
+        for subcharacteristic in characteristic["subcharacteristics"]
+        for measure in subcharacteristic["measures"]
+    }
 
 
 def test_run_time_measure_default_max_threshold_matches_response_time_config():
     """
-    Issue #14: run_time_measure has max_threshold default 0.33 hardcoded, but
-    DEFAULT_PRE_CONFIG declares response_time with max_threshold 0.66. The
-    function default must equal the canonical config value, otherwise
-    direct calls (without a config) silently produce a different normalization
-    than the production pipeline that always passes the config threshold.
+    Issue #14: run_time_measure tinha max_threshold padrão 0.33 fixo no código,
+    divergente do limite canônico 0.66 do response_time. O padrão da função
+    precisa ser igual ao limite canônico; senão, chamadas diretas (sem config)
+    normalizam de forma diferente do pipeline que passa o limite da config.
     """
-    canonical_max_threshold = _find_measure_threshold(
-        DEFAULT_PRE_CONFIG, "response_time"
-    )
-
     signature = inspect.signature(run_time_measure)
     function_default = signature.parameters["max_threshold"].default
 
-    assert function_default == canonical_max_threshold, (
+    assert function_default == RESPONSE_TIME_MAX_THRESHOLD, (
         f"run_time_measure default max_threshold={function_default} diverges "
-        f"from DEFAULT_PRE_CONFIG response_time max_threshold="
-        f"{canonical_max_threshold}"
+        f"from the canonical response_time max_threshold="
+        f"{RESPONSE_TIME_MAX_THRESHOLD}"
     )
+
+
+def test_response_time_is_not_in_default_pre_config():
+    assert "response_time" not in _measure_keys(DEFAULT_PRE_CONFIG)
