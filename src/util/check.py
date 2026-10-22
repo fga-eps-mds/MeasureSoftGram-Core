@@ -5,6 +5,7 @@ import numpy as np
 from util.exceptions import (
     InvalidCheckThreshold,
     InvalidMetricValue,
+    InvalidReleaseMatrix,
     InvalidThresholdValue,
     ValuesAndWeightsOfDifferentSizes,
 )
@@ -113,6 +114,17 @@ class Checker:
         if len(values) != len(weights):
             raise ValuesAndWeightsOfDifferentSizes(
                 "The length of weight and values are not equal",
+            )
+
+    @staticmethod
+    def check_release_matrix(rd):
+        if rd.ndim != 2 or rd.shape[0] < 3 or rd.shape[1] < 2:
+            raise InvalidReleaseMatrix(
+                "The release matrix must have at least 3 releases and 2 characteristics"
+            )
+        if np.isnan(rd).any() or (rd < 0).any() or (rd > 1).any():
+            raise InvalidReleaseMatrix(
+                "The release matrix values must be between 0 and 1"
             )
 
     @staticmethod

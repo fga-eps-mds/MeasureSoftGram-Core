@@ -50,7 +50,7 @@ jobs:
           TARGET_VERSION: ${{ steps.release.outputs.version }}
         run: |
           python - <<'PY'
-          import json, os, sys, urllib.request, urllib.error
+          import json, os, sys, tomllib, urllib.request, urllib.error
           from packaging.version import Version
 
           target_version_str = os.environ.get("TARGET_VERSION", "")
@@ -59,7 +59,8 @@ jobs:
               sys.exit(1)
 
           target_version = Version(target_version_str)
-          pkg = "msgram-core"
+          with open("pyproject.toml", "rb") as f:
+              pkg = tomllib.load(f)["project"]["name"]
           url = f"https://pypi.org/pypi/{pkg}/json"
 
           try:
@@ -75,7 +76,7 @@ jobs:
           # Regra 1: Versao estritamente superior a ultima estavel no PyPI
           if stable_releases:
               latest_stable = stable_releases[-1]
-              print(f"Ultima versao estavel no PyPI: {latest_stable}")
+              print(f"Ultima versao estavel no PyPI ({pkg}): {latest_stable}")
               print(f"Versao alvo: {target_version}")
               if target_version <= latest_stable:
                   print(f"::error::Gate bloqueou a publicacao: a versao alvo ({target_version}) "

@@ -1,6 +1,7 @@
 from enum import IntEnum
 
 import numpy as np
+from scipy import stats
 
 from util.check import Checker
 from util.exceptions import (
@@ -87,3 +88,38 @@ def diff(rp, rd):
             "The size between planned and developed release vectors is not equal.",
         )
     return [max(0, x - y) for x, y in zip(rp, rd)]
+
+
+def correlation_function(rd):
+    """The correlation function (f_sigma) performs a vector transformation on the release matrix RD, where each row is
+    a release and each column is a quality characteristic. It generates RD_Corr, the correlation matrix that expresses
+    the mutual and multiple relations between the characteristics. Pearson is applied if every column of RD has a
+    normal distribution (Shapiro-Wilk), and Spearman otherwise. A constant column is not normal and has no correlation.
+    """
+    Checker.check_release_matrix(rd)
+
+    constant = [bool(np.ptp(column) == 0) for column in rd.T]
+    normal = [
+        not is_constant and bool(stats.shapiro(column).pvalue >= 0.05)
+        for column, is_constant in zip(rd.T, constant)
+    ]
+    method = "pearson" if all(normal) else "spearman"
+    correlate = stats.pearsonr if method == "pearson" else stats.spearmanr
+
+    size = rd.shape[1]
+    coefficients = [[None] * size for _ in range(size)]
+    p_values = [[None] * size for _ in range(size)]
+    for i in range(size):
+        for j in range(size):
+            if constant[i] or constant[j]:
+                continue
+            result = correlate(rd[:, i], rd[:, j])
+            coefficients[i][j] = float(result.statistic)
+            p_values[i][j] = float(result.pvalue)
+
+    return {
+        "method": method,
+        "coefficients": coefficients,
+        "p_values": p_values,
+        "normal": normal,
+    }
