@@ -59,3 +59,9 @@ class ReleasePlannedAndDevelopedOfDifferentSizes(MeasureSoftGramCoreException):
     """Raised when the sizes of the planned and developed release vectors are different"""
 
     pass
+
+
+class InvalidReleaseMatrix(MeasureSoftGramCoreException):
+    """Raised when the release matrix RD is invalid for the correlation function"""
+
+    pass
