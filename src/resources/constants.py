@@ -10,6 +10,10 @@ from core.aggregated_normalized_measures import (
     ci_feedback_time,
     run_time_measure,
     technical_debt_ratio,
+    security_rating_measure,
+    security_review_rating_measure,
+    absence_of_vulnerabilities,
+    security_alerts_resolution,
 )
 
 AVAILABLE_PRE_CONFIGS = {
@@ -29,6 +33,10 @@ AVAILABLE_PRE_CONFIGS = {
         "performance_efficiency": {
             "name": "Performance Efficiency",
             "subcharacteristics": ["time_behaviour", "resource_utilization"],
+        },
+        "security": {
+            "name": "Security",
+            "subcharacteristics": ["confidentiality", "integrity"],
         },
     },
     "subcharacteristics": {
@@ -70,6 +78,22 @@ AVAILABLE_PRE_CONFIGS = {
             "name": "Resource Utilization",
             "measures": ["cpu_utilization", "memory_utilization"],
             "characteristics": ["performance_efficiency"],
+        },
+        "confidentiality": {
+            "name": "Confidentiality",
+            "measures": [
+                "security_rating_measure",
+                "absence_of_vulnerabilities",
+            ],
+            "characteristics": ["security"],
+        },
+        "integrity": {
+            "name": "Integrity",
+            "measures": [
+                "security_review_rating_measure",
+                "security_alerts_resolution",
+            ],
+            "characteristics": ["security"],
         },
     },
     "measures": {
@@ -145,6 +169,30 @@ AVAILABLE_PRE_CONFIGS = {
             "characteristics": ["performance_efficiency"],
             "metrics": ["endpoint_calls", "memory_usage"],
         },
+        "security_rating_measure": {
+            "name": "Security Rating",
+            "subcharacteristics": ["confidentiality"],
+            "characteristics": ["security"],
+            "metrics": ["security_rating"],
+        },
+        "absence_of_vulnerabilities": {
+            "name": "Absence of vulnerabilities",
+            "subcharacteristics": ["confidentiality"],
+            "characteristics": ["security"],
+            "metrics": ["vulnerabilities", "ncloc"],
+        },
+        "security_review_rating_measure": {
+            "name": "Security Review Rating",
+            "subcharacteristics": ["integrity"],
+            "characteristics": ["security"],
+            "metrics": ["security_review_rating"],
+        },
+        "security_alerts_resolution": {
+            "name": "Security Alerts Resolution",
+            "subcharacteristics": ["integrity"],
+            "characteristics": ["security"],
+            "metrics": ["security_alerts_open", "security_alerts_closed"],
+        },
     },
 }
 
@@ -160,6 +208,22 @@ AGGREGATED_NORMALIZED_MEASURES_MAPPING = {
     "duplication_absense": {
         "aggregated_normalized_measure": absence_of_duplications,
         "schema": schemas.DuplicationAbsenceSchema,
+    },
+    "security_rating_measure": {
+        "aggregated_normalized_measure": security_rating_measure,
+        "schema": schemas.SecurityRatingSchema,
+    },
+    "security_review_rating_measure": {
+        "aggregated_normalized_measure": security_review_rating_measure,
+        "schema": schemas.SecurityReviewRatingSchema,
+    },
+    "absence_of_vulnerabilities": {
+        "aggregated_normalized_measure": absence_of_vulnerabilities,
+        "schema": schemas.AbsenceOfVulnerabilitiesSchema,
+    },
+    "security_alerts_resolution": {
+        "aggregated_normalized_measure": security_alerts_resolution,
+        "schema": schemas.SecurityAlertsResolutionSchema,
     },
     "technical_debt_ratio": {
         "aggregated_normalized_measure": technical_debt_ratio,

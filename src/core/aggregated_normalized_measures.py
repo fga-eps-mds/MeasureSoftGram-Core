@@ -14,6 +14,20 @@ from util.run_time_data_operations import RunTimeDataOperations
 NO_BUILDS_NEUTRAL_SCORE = 0.5
 
 
+def _as_metric_list(metric_values):
+    """
+    Garante que uma metrica por arquivo chegue as medidas como lista.
+
+    `analysis.convert_metrics_to_dict` colapsa metrica de valor unico em
+    escalar, o que acontece em projeto de um unico arquivo analisado. Sem essa
+    normalizacao, `Checker.check_metric_values` recusaria o escalar e a medida
+    quebraria em vez de ser calculada.
+    """
+    if isinstance(metric_values, (list, np.ndarray)):
+        return metric_values
+    return [metric_values]
+
+
 def non_complex_files_density(
     data_frame,
     min_threshold: float = 0,
@@ -469,6 +483,173 @@ def run_time_measure(
         min_threshold=min_threshold,
         max_threshold=max_threshold,
         gain_interpretation=-1,
+    )
+
+    aggregated_and_normalized_measure = transformations.calculate_measure(
+        interpretation_function_value
+    )
+
+    return aggregated_and_normalized_measure
+
+
+def security_rating_measure(
+    data_frame,
+    min_threshold: float = 1,
+    max_threshold: float = 5,
+):
+    """
+    Calculates the security rating measure (em9).
+
+    This function gets the dataframe metrics
+    and returns the security rating measure (em9).
+    """
+    security_rating = _as_metric_list(data_frame["security_rating"])
+
+    Checker.check_metric_values(security_rating, "security_rating")
+
+    if len(security_rating) == 0:
+        return 0.0
+
+    Checker.check_threshold(min_threshold, max_threshold, "security_rating_measure")
+
+    ratings, number_of_files = ems_functions.get_security_rating(
+        data={"security_rating": security_rating},
+    )
+
+    x = ratings[ratings <= max_threshold]
+
+    interpretation_function_value = transformations.interpretation_function(
+        x=x,
+        min_threshold=min_threshold,
+        max_threshold=max_threshold,
+        gain_interpretation=-1,
+    )
+
+    aggregated_and_normalized_measure = transformations.calculate_measure(
+        interpretation_function_value, number_of_files
+    )
+
+    return aggregated_and_normalized_measure
+
+
+def security_review_rating_measure(
+    data_frame,
+    min_threshold: float = 1,
+    max_threshold: float = 5,
+):
+    """
+    Calculates the security review rating measure (em10).
+
+    This function gets the dataframe metrics
+    and returns the security review rating measure (em10).
+    """
+    security_review_rating = _as_metric_list(data_frame["security_review_rating"])
+
+    Checker.check_metric_values(security_review_rating, "security_review_rating")
+
+    if len(security_review_rating) == 0:
+        return 0.0
+
+    Checker.check_threshold(
+        min_threshold, max_threshold, "security_review_rating_measure"
+    )
+
+    ratings, number_of_files = ems_functions.get_security_review_rating(
+        data={"security_review_rating": security_review_rating},
+    )
+
+    x = ratings[ratings <= max_threshold]
+
+    interpretation_function_value = transformations.interpretation_function(
+        x=x,
+        min_threshold=min_threshold,
+        max_threshold=max_threshold,
+        gain_interpretation=-1,
+    )
+
+    aggregated_and_normalized_measure = transformations.calculate_measure(
+        interpretation_function_value, number_of_files
+    )
+
+    return aggregated_and_normalized_measure
+
+
+def absence_of_vulnerabilities(
+    data_frame,
+    min_threshold: float = 0,
+    max_threshold: float = 1,
+):
+    """
+    Calculates absence of vulnerabilities (em11).
+
+    This function gets the dataframe metrics
+    and returns the absence of vulnerabilities measure (em11).
+    """
+    vulnerabilities = _as_metric_list(data_frame["vulnerabilities"])
+    ncloc = _as_metric_list(data_frame["ncloc"])
+
+    Checker.check_metric_values(vulnerabilities, "vulnerabilities")
+    Checker.check_metric_values(ncloc, "ncloc")
+
+    if len(vulnerabilities) == len(ncloc) == 0:
+        return 0.0
+
+    Checker.check_threshold(min_threshold, max_threshold, "absence_of_vulnerabilities")
+
+    (
+        vulnerabilities_density,
+        number_of_files,
+    ) = ems_functions.get_absence_of_vulnerabilities(
+        data={"vulnerabilities": vulnerabilities, "ncloc": ncloc},
+    )
+
+    x = vulnerabilities_density[vulnerabilities_density <= max_threshold]
+
+    interpretation_function_value = transformations.interpretation_function(
+        x=x,
+        min_threshold=min_threshold,
+        max_threshold=max_threshold,
+        gain_interpretation=-1,
+    )
+
+    aggregated_and_normalized_measure = transformations.calculate_measure(
+        interpretation_function_value, number_of_files
+    )
+
+    return aggregated_and_normalized_measure
+
+
+def security_alerts_resolution(
+    data_frame,
+    min_threshold: float = 45,
+    max_threshold: float = 100,
+):
+    """
+    Calculates security alerts resolution (em12).
+
+    This function gets the dataframe metrics
+    and returns the security alerts resolution measure (em12).
+    """
+    security_alerts_open = data_frame["security_alerts_open"]
+    security_alerts_closed = data_frame["security_alerts_closed"]
+
+    Checker.check_metric_value(security_alerts_open, "security_alerts_open")
+    Checker.check_metric_value(security_alerts_closed, "security_alerts_closed")
+
+    Checker.check_threshold(min_threshold, max_threshold, "security_alerts_resolution")
+
+    security_alerts_resolution_value = ems_functions.get_security_alerts_resolution(
+        data={
+            "security_alerts_open": int(security_alerts_open),
+            "security_alerts_closed": int(security_alerts_closed),
+        }
+    )
+
+    interpretation_function_value = transformations.interpretation_function(
+        x=security_alerts_resolution_value,
+        min_threshold=min_threshold,
+        max_threshold=max_threshold,
+        gain_interpretation=1,
     )
 
     aggregated_and_normalized_measure = transformations.calculate_measure(
