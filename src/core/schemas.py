@@ -436,3 +436,73 @@ class CalculateRuntimeMeasureSchema(Schema):
     """
 
     measures = fields.List(fields.Nested(CompareRunTimeMeasureSchema), required=True)
+
+
+class SecurityRatingSchema(Schema):
+    # 1 Validação : Se contém uma lista de métricas
+    metrics = fields.List(fields.Nested(MetricSchema), required=True)
+
+    @staticmethod
+    def validate_metrics(metrics):
+        for metric in metrics:
+            # 2 Validação : Se foi passada alguma métrica não pertencente a medida
+            if metric["key"] not in ["security_rating"]:
+                raise ValidationError(
+                    f"'{metric['key']}': Métrica não presente na medida"
+                )
+
+
+class SecurityReviewRatingSchema(Schema):
+    # 1 Validação : Se contém uma lista de métricas
+    metrics = fields.List(fields.Nested(MetricSchema), required=True)
+
+    @staticmethod
+    def validate_metrics(metrics):
+        for metric in metrics:
+            # 2 Validação : Se foi passada alguma métrica não pertencente a medida
+            if metric["key"] not in ["security_review_rating"]:
+                raise ValidationError(
+                    f"'{metric['key']}': Métrica não presente na medida"
+                )
+
+
+class AbsenceOfVulnerabilitiesSchema(Schema):
+    # 1 Validação : Se contém uma lista de métricas
+    metrics = fields.List(fields.Nested(MetricSchema), required=True)
+
+    @staticmethod
+    def validate_metrics(metrics):
+        for metric in metrics:
+            # 2 Validação : Se foi passada alguma métrica não pertencente a medida
+            if metric["key"] not in ["vulnerabilities", "ncloc"]:
+                raise ValidationError(
+                    f"'{metric['key']}': Métrica não presente na medida"
+                )
+
+
+class SecurityAlertsResolutionSchema(Schema):
+    # 1 Validação : Se contém uma lista de métricas
+    metrics = fields.List(fields.Nested(MetricSchema), required=True)
+
+    @staticmethod
+    def validate_metrics(metrics):
+        for metric in metrics:
+            # 2 Validação : Se foi passada alguma métrica não pertencente a medida
+            if metric["key"] not in [
+                "security_alerts_open",
+                "security_alerts_closed",
+            ]:
+                raise ValidationError(
+                    f"'{metric['key']}': Métrica não presente na medida"
+                )
+
+            # 3 Validação: As métricas só podem ser representadas por um array de
+            #             um único elemento
+            if len(metric["value"]) != 1:
+                raise ValidationError(
+                    f"'{metric['key']}': Deveria ser um array de um único valor"
+                )
+            if not isinstance(metric["value"][0], float):
+                raise ValidationError(
+                    f"'{metric['key']}': Deveria ser um valor flutuante"
+                )

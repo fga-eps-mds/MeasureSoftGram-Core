@@ -3,6 +3,11 @@ import pandas as pd
 
 from util.exceptions import ImplicitMetricValueError, InvalidMetricValue
 
+# Repositorio sem nenhum alerta de seguranca (aberto ou fechado) nao tem
+# nada pendente de resolucao. Isso e a melhor postura possivel, nao uma
+# ausencia de dado, entao a medida recebe a taxa de resolucao cheia.
+NO_ALERTS_RESOLUTION_RATE = 100.0
+
 
 def resolve_metric_list_parameter(metric):
     """
@@ -246,3 +251,124 @@ def get_ci_feedback_time(data: dict[str, int]):
         return 0
 
     return sum_ci_feedback_times // total_builds
+
+
+def _get_security_rating(data: dict, metric: str):
+    """
+    Resolves a SonarQube security rating metric (scale 1 to 5, where 1 is the
+    best rating) into the pair consumed by the normalization step.
+
+    Shared by `get_security_rating` and `get_security_review_rating` because
+    both ratings use the same scale and the same aggregation per file.
+    """
+
+    ratings = resolve_metric_list_parameter(data[metric])
+
+    number_of_files = data.get("number_of_files", len(ratings))
+
+    if len(ratings) == 0:
+        return 0
+
+    if (np.array(ratings) < 0).any():
+        raise InvalidMetricValue(f'"{metric}" has a value lesser than 0')
+
+    return ratings, number_of_files
+
+
+def get_security_rating(data: dict):
+    """
+    Calculates the security rating measure (em9).
+
+    This function calculates the security rating measure (em9)
+    used to assess the confidentiality quality sub characteristic.
+    """
+
+    return _get_security_rating(data, "security_rating")
+
+
+def get_security_review_rating(data: dict):
+    """
+    Calculates the security review rating measure (em10).
+
+    This function calculates the security review rating measure (em10)
+    used to assess the integrity quality sub characteristic.
+    """
+
+    return _get_security_rating(data, "security_review_rating")
+
+
+def get_absence_of_vulnerabilities(data: dict):
+    """
+    Calculates absence of vulnerabilities (em11).
+
+    This function calculates the absence of vulnerabilities measure (em11)
+    used to assess the confidentiality quality sub characteristic.
+
+    The measure is expressed as a density - vulnerabilities per thousand lines
+    of code - so that files of different sizes are comparable. Files without
+    executable lines (`ncloc` equal to 0) cannot host vulnerabilities, so their
+    density is 0 instead of a division by zero.
+    """
+
+    vulnerabilities = resolve_metric_list_parameter(data["vulnerabilities"])
+    ncloc = resolve_metric_list_parameter(data["ncloc"])
+
+    if len(vulnerabilities) != len(ncloc):
+        raise ImplicitMetricValueError(
+            (
+                "Unable to get the implicit value of metric `number_of_files` "
+                "because the size of the lists of values of metrics "
+                "`vulnerabilities` and `ncloc` are not equal."
+            )
+        )
+
+    number_of_files = data.get("number_of_files", len(vulnerabilities))
+
+    if len(vulnerabilities) == 0:
+        return 0
+
+    vulnerabilities = np.array(vulnerabilities, dtype=np.float64)
+    ncloc = np.array(ncloc, dtype=np.float64)
+
+    if (vulnerabilities < 0).any():
+        raise InvalidMetricValue('"vulnerabilities" has a value lesser than 0')
+
+    if (ncloc < 0).any():
+        raise InvalidMetricValue('"ncloc" has a value lesser than 0')
+
+    thousands_of_lines = ncloc / 1000
+
+    vulnerabilities_density = np.divide(
+        vulnerabilities,
+        thousands_of_lines,
+        out=np.zeros_like(vulnerabilities),
+        where=thousands_of_lines > 0,
+    )
+
+    return vulnerabilities_density, number_of_files
+
+
+def get_security_alerts_resolution(data: dict[str, int]):
+    """
+    Calculates security alerts resolution (em12).
+
+    This function calculates the security alerts resolution measure (em12)
+    used to assess the integrity quality sub characteristic.
+
+    A repository without any security alert has nothing left to resolve, which
+    is the best possible posture - not a missing measurement - so it scores the
+    full resolution rate instead of 0.
+    """
+
+    open_alerts = data["security_alerts_open"]
+    closed_alerts = data["security_alerts_closed"]
+
+    total_alerts = open_alerts + closed_alerts
+
+    if total_alerts < 0:
+        raise InvalidMetricValue("The total number of security alerts is lesser than 0")
+
+    if total_alerts == 0:
+        return NO_ALERTS_RESOLUTION_RATE
+
+    return 100 * (closed_alerts / total_alerts)

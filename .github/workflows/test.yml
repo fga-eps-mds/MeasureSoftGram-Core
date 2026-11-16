@@ -67,3 +67,15 @@ jobs:
            github.event.pull_request.head.repo.full_name != github.repository)
         run: |
           echo "::notice title=SonarCloud Ignorado::O scan foi ignorado pois foi disparado pelo Dependabot ou originou-se de um fork externo sem acesso aos secrets de repositório."
+
+      # Artefatos salvos no CI para auditoria manual
+      - name: Preservar relatórios de testes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          retention-days: 14
+          if-no-files-found: ignore
+          path: |
+            coverage.xml
+            junit.xml
