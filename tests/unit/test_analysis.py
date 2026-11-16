@@ -147,3 +147,35 @@ def test_calcula_tsqmi_errors(extracted_tsqmi_data, error_msg):
     with pytest.raises((ValidationError, MeasureKeyNotSupported)) as error:
         calculate_tsqmi(extracted_tsqmi=extracted_tsqmi_data)
     assert str(error.value) == error_msg
+
+
+@pytest.mark.parametrize(
+    "measure_key,metrics,expected",
+    [
+        ("technical_debt_ratio", {"sqale_debt_ratio": [8.3]}, 0.585),
+        ("test_coverage", {"coverage": [85.0]}, 0.625),
+        ("commented_file_density", {"comment_lines_density": [20.0]}, 0.5),
+        ("duplication_absense", {"duplicated_lines_density": [0.0]}, 1.0),
+        ("non_complex_file_density", {"complexity": [4.0], "functions": [2.0]}, 0.8),
+        (
+            "passed_tests",
+            {"tests": [10.0], "test_errors": [1.0], "test_failures": [1.0]},
+            0.8,
+        ),
+        ("test_builds", {"test_execution_time": [600.0], "tests": [10.0]}, 0.9998),
+    ],
+)
+def test_calculate_measures_single_file(measure_key, metrics, expected):
+    extracted_measures = {
+        "measures": [
+            {
+                "key": measure_key,
+                "metrics": [
+                    {"key": key, "value": value} for key, value in metrics.items()
+                ],
+            }
+        ]
+    }
+    result = calculate_measures(extracted_measures=extracted_measures)
+    assert result["measures"][0]["key"] == measure_key
+    assert pytest.approx(result["measures"][0]["value"]) == expected

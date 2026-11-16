@@ -16,11 +16,23 @@ from util.exceptions import MeasureKeyNotSupported
 
 MEASURE_TYPE = Enum("MEASURE_TYPE", ["STATIC", "RUN_TIME"])
 
+# Métricas com um valor por arquivo: continuam como lista mesmo com um único arquivo.
+PER_FILE_METRICS = {
+    "coverage",
+    "complexity",
+    "functions",
+    "comment_lines_density",
+    "duplicated_lines_density",
+    "sqale_debt_ratio",
+    "tests",
+    "test_execution_time",
+}
+
 
 def convert_metrics_to_dict(metrics_list):
     metrics_dict = {}
     for metric in metrics_list:
-        if len(metric["value"]) == 1:
+        if metric["key"] not in PER_FILE_METRICS and len(metric["value"]) == 1:
             metrics_dict[metric["key"]] = float(metric["value"][0])
         else:
             metrics_dict[metric["key"]] = metric["value"]
