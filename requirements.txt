@@ -3,3 +3,4 @@ marshmallow==3.21.*
 numpy==2.0.*
 scikit-learn==1.5.1
 scipy==1.14.1
+ahpy==2.1
