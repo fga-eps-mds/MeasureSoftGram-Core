@@ -34,6 +34,15 @@ SAATY_PHRASES: Dict[str, str] = {
 
 # Limite da razão de consistência definido por Saaty (D5).
 CR_THRESHOLD = 0.10
+
+# Valores da escala usados para arredondar a sugestão do diagnóstico.
+_SCALE_BY_VALUE = {v: k for k, v in SAATY_SCALE.items()}
+
+# Tolerância relativa para considerar dois desvios empatados no diagnóstico.
+# A AHPy calcula o autovetor por iteração (tolerance=0.0001), então empates
+# exatos na teoria chegam com uma pequena diferença numérica.
+_TIE_TOLERANCE = 1e-3
+
 _REMAINDER_DECIMALS = 6
 Answer = Tuple[str, str, Optional[str], str]
 
@@ -131,3 +140,68 @@ def calculate_group(entities: Sequence[str], answers: Sequence[Answer]) -> Group
     cr = float(compare.consistency_ratio) if len(entities) >= 3 else None
 
     return GroupResult(priorities, priorities_to_weights(priorities), cr)
+
+
+# ------------------------------------------------------------------ diagnóstico
+
+
+@dataclass(frozen=True)
+class Conflict:
+    """Comparação mais distante da consistência e a resposta sugerida para ela."""
+
+    a: str
+    b: str
+    answer: Answer
+    suggested: Answer
+    suggested_ratio: (
+        float  # quantas vezes a é mais importante que b, pelas demais respostas
+    )
+
+
+def nearest_scale_value(ratio: float) -> int:
+    """Valor da escala (1, 3, 5, 7, 9) mais próximo de uma razão >= 1; em empate, o menor."""
+    return min(sorted(SAATY_SCALE.values()), key=lambda v: abs(v - ratio))
+
+
+def _suggested_answer(a: str, b: str, ratio: float) -> Answer:
+    preferred, value = (a, ratio) if ratio >= 1 else (b, 1 / ratio)
+    intensity = _SCALE_BY_VALUE[nearest_scale_value(value)]
+    if intensity == "igual":
+        return (a, b, None, "igual")
+    return (a, b, preferred, intensity)
+
+
+def most_inconsistent(
+    entities: Sequence[str], answers: Sequence[Answer], result: GroupResult
+) -> Optional[Conflict]:
+    """Aponta a comparação mais distante da consistência (Saaty, 2003, seção 4).
+
+    Para cada comparação a_ij, calcula e_ij = a_ij * w_j / w_i; a de maior e_ij
+    é a mais inconsistente, e o valor coerente com as demais é w_i / w_j.
+    Só se aplica a grupos inconsistentes. Em empate, nenhuma é apontada
+    (em grupos de 3 entidades as três comparações sempre empatam).
+    """
+    if result.consistent:
+        return None
+
+    w = result.priorities
+    deviations = []
+    for answer in answers:
+        (x, y), value = answer_to_comparison(*answer)
+        e = value * w[y] / w[x]
+        deviations.append((max(e, 1 / e), answer))
+
+    deviations.sort(key=lambda d: -d[0])
+    if (
+        len(deviations) > 1
+        and deviations[0][0] - deviations[1][0] <= _TIE_TOLERANCE * deviations[0][0]
+    ):
+        return None
+
+    answer = deviations[0][1]
+    a, b = answer[0], answer[1]
+    order = list(entities)
+    if order.index(a) > order.index(b):
+        a, b = b, a
+    ratio = w[a] / w[b]
+    return Conflict(a, b, answer, _suggested_answer(a, b, ratio), ratio)

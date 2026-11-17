@@ -7,6 +7,8 @@ from core.ahp import (
     SAATY_SCALE,
     answer_to_comparison,
     calculate_group,
+    most_inconsistent,
+    nearest_scale_value,
     pairs,
     priorities_to_weights,
 )
@@ -246,3 +248,79 @@ def test_entidade_desconhecida_gera_erro():
 def test_grupo_vazio_gera_erro():
     with pytest.raises(ValueError):
         calculate_group([], [])
+
+
+# ---------------------------------------------------------------- diagnóstico (Saaty 2003)
+
+GRUPO_4 = ["A", "B", "C", "D"]
+RESPOSTAS_4_COM_CONFLITO = [
+    ("A", "B", "A", "moderadamente"),
+    ("A", "C", "A", "fortemente"),
+    ("A", "D", "D", "moderadamente"),  # contradiz: A > B > D, mas D > A
+    ("B", "C", "B", "moderadamente"),
+    ("B", "D", "B", "fortemente"),
+    ("C", "D", "C", "moderadamente"),
+]
+
+
+def test_diagnostico_aponta_a_comparacao_em_conflito():
+    result = calculate_group(GRUPO_4, RESPOSTAS_4_COM_CONFLITO)
+    assert not result.consistent
+
+    conflito = most_inconsistent(GRUPO_4, RESPOSTAS_4_COM_CONFLITO, result)
+
+    assert (conflito.a, conflito.b) == ("A", "D")  # na ordem do grupo
+    assert conflito.answer == ("A", "D", "D", "moderadamente")
+    assert conflito.suggested_ratio == pytest.approx(1.58, abs=0.01)
+    # 1,58 está mais perto de 1 do que de 3: sugestão "igualmente"
+    assert conflito.suggested == ("A", "D", None, "igual")
+
+
+def test_diagnostico_nao_aponta_em_empate_no_caso_circular():
+    respostas = [
+        ("A", "B", "A", "muito_fortemente"),
+        ("A", "C", "C", "muito_fortemente"),
+        ("B", "C", "B", "muito_fortemente"),
+    ]
+    result = calculate_group(["A", "B", "C"], respostas)
+    assert most_inconsistent(["A", "B", "C"], respostas, result) is None
+
+
+def test_diagnostico_nunca_aponta_em_grupo_de_tres():
+    # com 3 entidades as três comparações sempre empatam
+    respostas = [
+        ("A", "B", "A", "fortemente"),
+        ("A", "C", "A", "moderadamente"),
+        ("B", "C", "B", "moderadamente"),
+    ]
+    result = calculate_group(["A", "B", "C"], respostas)
+    assert not result.consistent
+    assert most_inconsistent(["A", "B", "C"], respostas, result) is None
+
+
+def test_diagnostico_nao_se_aplica_a_grupo_consistente():
+    respostas = [
+        ("A", "B", None, "igual"),
+        ("A", "C", "A", "moderadamente"),
+        ("B", "C", "B", "moderadamente"),
+    ]
+    result = calculate_group(["A", "B", "C"], respostas)
+    assert most_inconsistent(["A", "B", "C"], respostas, result) is None
+
+
+@pytest.mark.parametrize(
+    "ratio,expected",
+    [
+        (1.0, 1),
+        (1.58, 1),
+        (1.99, 1),
+        (2.0, 1),
+        (2.2, 3),
+        (4.5, 5),
+        (6.1, 7),
+        (8.4, 9),
+        (15, 9),
+    ],
+)
+def test_arredondamento_para_a_escala(ratio, expected):
+    assert nearest_scale_value(ratio) == expected
